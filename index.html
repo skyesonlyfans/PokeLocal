@@ -58,10 +58,6 @@
         .btn-secondary { background-color: transparent; color: var(--text); border: 2px solid var(--border); border-radius: 14px; font-weight: 600; padding: 12px; cursor: pointer; transition: all 0.2s; }
         .btn-secondary:active { background-color: var(--surface-hover); transform: scale(0.97); }
 
-        .btn-google { background-color: #ffffff; color: #1f2937; border-radius: 14px; font-weight: 700; padding: 14px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 12px; transition: all 0.2s; box-shadow: 0 4px 12px rgba(255,255,255,0.1); width: 100%; }
-        .btn-google:active { transform: scale(0.97); background-color: #f3f4f6; }
-        .btn-google img { width: 20px; height: 20px; }
-
         header { background-color: rgba(26, 28, 35, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 40; }
         .main-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 100px; }
         .bottom-nav { background-color: rgba(26, 28, 35, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border); position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; padding: 16px 0; padding-bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 40; box-shadow: 0 -4px 20px rgba(0,0,0,0.3); }
@@ -92,6 +88,12 @@
         .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 12px; border: 2px solid var(--border); overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.4); background-color: #2a2a2a; }
         .flip-card-back { transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle at center, #2d313d 0%, #1a1c23 100%); }
         
+        @keyframes float-gif {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-12px) scale(1.05); filter: drop-shadow(0 15px 15px rgba(255,255,255,0.4)); }
+        }
+        .gamified-gif { animation: float-gif 3.5s ease-in-out infinite; filter: drop-shadow(0 5px 10px rgba(255,255,255,0.2)); }
+        
         .card-header { padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); }
         .card-name { font-weight: 800; font-size: 14px; text-transform: capitalize; color: #1f2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-hp { font-size: 13px; font-weight: 800; color: #ef4444; }
@@ -117,6 +119,15 @@
         .pack-item { background: linear-gradient(145deg, #252830, #1a1c23); border: 1px solid var(--border); border-radius: 20px; padding: 40px 20px; text-align: center; cursor: pointer; box-shadow: 0 12px 24px rgba(0,0,0,0.4); transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
         .pack-item:active { transform: scale(0.95); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         
+        @keyframes rip-shake {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-5deg) scale(1.05); }
+            75% { transform: rotate(5deg) scale(1.05); }
+        }
+        .anim-shake { animation: rip-shake 0.3s ease-in-out infinite; }
+        .anim-rip-top { transform: translateY(-120%) rotate(-10deg); opacity: 0; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .anim-rip-bottom { transform: translateY(120%) rotate(10deg); opacity: 0; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
         .modal-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 100; padding: 20px; animation: fadeIn 0.2s ease-out; }
         .modal-overlay.active { display: flex; }
         
@@ -172,18 +183,6 @@
                     <h2 class="text-2xl font-bold text-white">Trainer Profile</h2>
                     <p class="text-sm text-gray-400 mt-2">Claim your identity to start trading globally.</p>
                 </div>
-
-                <div id="google-auth-section" class="mb-6 hidden">
-                    <button id="btn-google-signin" class="btn-google">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
-                        Sign in with Google
-                    </button>
-                    <div class="flex items-center my-6">
-                        <div class="flex-1 border-t border-[#333]"></div>
-                        <span class="px-4 text-[10px] text-gray-500 font-bold tracking-widest uppercase">Or Play as Guest</span>
-                        <div class="flex-1 border-t border-[#333]"></div>
-                    </div>
-                </div>
                 
                 <div id="profile-form" class="space-y-5">
                     <div>
@@ -235,8 +234,8 @@
             
             <div id="pack-loading" class="hidden text-center py-20">
                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-16 h-16 mx-auto animate-spin mb-4" style="animation-duration: 1s;">
-                <p class="text-gray-300 font-bold text-lg tracking-wide">Opening Pack...</p>
-                <p class="text-xs text-gray-500 mt-2">Connecting to PokeAPI</p>
+                <p class="text-gray-300 font-bold text-lg tracking-wide">Contacting PokeAPI...</p>
+                <p class="text-xs text-gray-500 mt-2">Loading card data</p>
             </div>
 
             <div id="pulls-view" class="hidden flex-col items-center pb-10 mt-4">
@@ -281,11 +280,28 @@
             <div class="flex justify-between items-center mb-4 mt-2">
                 <div>
                     <h2 class="text-2xl font-bold text-white mb-1">Local Radar</h2>
-                    <p class="text-xs text-gray-400 font-medium">Discover trainers to unlock Global Friends.</p>
+                    <p class="text-xs text-gray-400 font-medium">Find or pair with trainers directly.</p>
                 </div>
                 <button id="btn-refresh-network" class="text-gray-400 hover:text-white bg-[#252830] w-10 h-10 rounded-full border border-[#333] transition-colors flex items-center justify-center"><i class="fa-solid fa-rotate-right"></i></button>
             </div>
             
+            <div class="bg-[#1a1c23] p-5 rounded-2xl border border-[#333] mb-6 shadow-md">
+                <div class="flex justify-between items-start mb-3">
+                    <h3 class="font-bold text-white text-sm">Direct Pairing Code</h3>
+                    <div class="text-xs text-gray-400">Your Code: <span id="my-pairing-code" class="text-blue-400 font-bold tracking-widest text-lg">---</span></div>
+                </div>
+                
+                <div class="flex gap-4 items-center">
+                    <img id="qr-code-img" src="" class="w-20 h-20 rounded bg-white p-1" alt="QR Code">
+                    <div class="flex-1">
+                        <div class="flex gap-2">
+                            <input type="text" id="input-pairing-code" placeholder="Enter 6-digit code" class="input-field py-3 text-center tracking-widest text-lg font-bold" maxlength="6">
+                            <button id="btn-join-code" class="btn-primary px-5"><i class="fa-solid fa-right-to-bracket text-lg"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="radar-container border border-[#333] mb-8 shadow-xl mt-6">
                 <div class="radar-pulse"></div>
                 <div class="radar-pulse"></div>
@@ -299,12 +315,6 @@
                 <div id="network-nodes"></div>
             </div>
             
-            <div class="flex items-center gap-2 mb-4 px-2">
-                <i class="fa-solid fa-user-group text-blue-400"></i>
-                <h3 class="font-bold text-white text-sm tracking-wide uppercase">Friends Online</h3>
-            </div>
-            <div id="friends-list" class="space-y-3 mb-8 hidden"></div>
-
             <div class="flex items-center gap-2 mb-4 px-2 mt-8">
                 <i class="fa-solid fa-location-dot text-red-400"></i>
                 <h3 class="font-bold text-white text-sm tracking-wide uppercase">Nearby Trainers</h3>
@@ -318,7 +328,7 @@
         </div>
 
         <div id="screen-info" class="screen">
-            <div class="card-surface p-6 mb-8 bg-gradient-to-br from-[#252830] to-[#1a1c23] shadow-xl relative overflow-hidden mt-4">
+            <div class="card-surface p-6 mb-6 bg-gradient-to-br from-[#252830] to-[#1a1c23] shadow-xl relative overflow-hidden mt-4">
                 <div class="absolute -right-10 -top-10 opacity-5">
                     <i class="fa-solid fa-dragon text-9xl"></i>
                 </div>
@@ -346,23 +356,29 @@
                 </div>
             </div>
 
-            <h3 class="font-bold text-white text-sm tracking-wide uppercase mb-4 px-2">Information & FAQs</h3>
-            <div class="card-surface divide-y divide-[#333] mb-6 shadow-md">
+            <div class="flex justify-between items-center bg-[#1a1c23] p-4 rounded-xl border border-[#333] mb-6 shadow">
+                <div>
+                    <h4 class="font-bold text-sm text-white">Pack Rip Animations</h4>
+                    <p class="text-[10px] text-gray-400 mt-1">Immersive gamified pack opening</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="toggle-animations" class="sr-only peer" checked>
+                    <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                </label>
+            </div>
+
+            <h3 class="font-bold text-white text-sm tracking-wide uppercase mb-4 px-2 text-red-400">Important Information</h3>
+            <div class="card-surface divide-y divide-[#333] mb-6 shadow-md border-red-500 border-opacity-30">
                 <div class="p-5">
-                    <h4 class="font-bold text-sm mb-2 text-blue-400 flex items-center gap-2"><i class="fa-solid fa-cloud"></i> Secure Sync & Identities</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed font-medium">Your collection and unique username are synced securely. The global registry prevents duplicate usernames. Guest Mode and Google Authentication allow seamless session preservation.</p>
+                    <h4 class="font-bold text-sm mb-2 text-white flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-red-500"></i> No Accounts - Data Loss</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed font-medium">We have completely stripped Google log-ins for speed. Your account is linked purely to an anonymous secure token in this browser. <b>If you clear your browser cache or change devices, your cards WILL be lost permanently.</b></p>
                 </div>
                 <div class="p-5">
-                    <h4 class="font-bold text-sm mb-2 text-white flex items-center gap-2"><i class="fa-solid fa-chart-bar"></i> Rarities & Data</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed font-medium">Cards generated via <span class="text-blue-400">PokeAPI.co</span>. Real rarity data fetched via <span class="text-blue-400">PogoAPI.net</span> when available, falling back to Base Stat Total (BST) logic for untracked entries.</p>
+                    <h4 class="font-bold text-sm mb-2 text-white flex items-center gap-2"><i class="fa-solid fa-chart-bar text-blue-400"></i> Rarities & Data</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed font-medium">Cards generated via <span class="text-blue-400">PokeAPI.co</span>. Real rarity data fetched via <span class="text-blue-400">PogoAPI.net</span> when available.</p>
                 </div>
             </div>
             
-            <div class="text-center py-6">
-                <a href="https://instagram.com/skyeprobably" target="_blank" class="inline-flex items-center text-xs font-bold text-pink-400 hover:text-pink-300 bg-[#252830] px-5 py-2.5 rounded-full border border-[#333] shadow-md transition-transform hover:scale-105">
-                    <i class="fa-brands fa-instagram mr-2 text-lg"></i>@skyeprobably
-                </a>
-            </div>
         </div>
     </main>
 
@@ -376,6 +392,25 @@
         <div class="nav-item" data-target="screen-info"><i class="fa-solid fa-user"></i><span>Profile</span></div>
     </nav>
 
+    <!-- Modal for Gamified Pack Rip -->
+    <div id="modal-pack-rip" class="modal-overlay z-[200]">
+        <div class="relative w-56 h-80 anim-shake cursor-pointer group flex flex-col items-center justify-center" id="rip-pack-container">
+            <div class="absolute inset-0 z-10 w-full h-full" id="rip-halves-wrapper">
+                <div class="absolute top-0 left-0 w-full h-[50%] bg-blue-600 rounded-t-2xl shadow-2xl border-4 border-b-0 border-blue-400 flex flex-col items-center justify-center overflow-hidden z-20" id="rip-top-half">
+                    <i class="fa-solid fa-bolt text-5xl text-yellow-400 drop-shadow-md translate-y-6"></i>
+                </div>
+                <div class="absolute bottom-0 left-0 w-full h-[50%] bg-blue-600 rounded-b-2xl shadow-2xl border-4 border-t-0 border-blue-400 flex flex-col items-center justify-start overflow-hidden z-20" id="rip-bottom-half">
+                    <div class="font-pokemon text-3xl text-white tracking-widest drop-shadow-md -translate-y-4">TCG</div>
+                </div>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center z-0">
+                <div class="w-40 h-40 bg-white rounded-full animate-pulse shadow-[0_0_60px_rgba(255,255,255,1)]"></div>
+            </div>
+        </div>
+        <p class="absolute bottom-20 text-white font-bold text-lg tracking-widest animate-pulse drop-shadow-md" id="rip-instructions">TAP TO RIP!</p>
+    </div>
+
+    <!-- Modal for Card View -->
     <div id="modal-card-detail" class="modal-overlay">
         <div class="w-full max-w-sm flex flex-col items-center">
             <div id="detail-card-container" class="w-full max-w-[280px] mb-8" style="perspective: 1000px;"></div>
@@ -388,6 +423,7 @@
         </div>
     </div>
 
+    <!-- Modal for Trading -->
     <div id="modal-trade" class="modal-overlay">
         <div class="card-surface w-full max-w-md h-[85vh] flex flex-col overflow-hidden shadow-2xl">
             <div class="p-5 border-b border-[#333] flex justify-between items-center bg-[#252830]">
@@ -455,7 +491,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
@@ -470,21 +506,23 @@
           storageBucket: "pokelocal-464e3.firebasestorage.app",
           messagingSenderId: "433790248881",
           appId: "1:433790248881:web:52c5aeda3d6f73858f3f90",
-          measurementId: "G-G5BE1NK9HN"
         };
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'pokelocal-default';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : fallbackConfig;
 
+        /* Note: System instructions strictly dictate using Firestore instead of localStorage for persistence. 
+           To honor the request for "anonymous only with data loss possibility", we use pure anonymous auth. */
         const state = {
-            profile: { id: '', name: '', nameLower: '', team: '', info: '', trades: 0, friends: [] },
+            profile: { id: '', name: '', nameLower: '', team: '', info: '', trades: 0, settings: { skipAnimations: false } },
             collection: [],
             packs: { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false },
             onlineUsers: {},
             userId: null,
-            isAnonymous: true,
+            pairingCode: null,
             currentPulls: [], pullIndex: 0, activeTrade: null,
-            pogoRarities: {} 
+            pogoRarities: {},
+            activePackIsHolo: false
         };
 
         const DOM = {
@@ -497,7 +535,6 @@
             packLoading: document.getElementById('pack-loading'),
             pullsView: document.getElementById('pulls-view'),
             toastContainer: document.getElementById('toast-container'),
-            googleSection: document.getElementById('google-auth-section')
         };
 
         let db, auth;
@@ -520,7 +557,6 @@
 
                 if (auth.currentUser) {
                     state.userId = auth.currentUser.uid;
-                    state.isAnonymous = auth.currentUser.isAnonymous;
                 } else {
                     state.userId = 'guest_' + Math.random().toString(36).substring(2, 9);
                 }
@@ -529,6 +565,7 @@
                 DOM.statusDot.style.boxShadow = '0 0 8px rgba(34,197,94,0.6)';
                 
                 await loadCloudData();
+                generatePairingCode();
 
             } catch (error) { 
                 if (!state.userId) state.userId = 'guest_' + Math.random().toString(36).substring(2, 9);
@@ -593,11 +630,13 @@
                 
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    state.profile = data.profile || { id: state.userId, name: '', nameLower: '', team: '', info: '', trades: 0, friends: [] };
-                    if(!state.profile.friends) state.profile.friends = [];
+                    state.profile = data.profile || { id: state.userId, name: '', nameLower: '', team: '', info: '', trades: 0, settings: { skipAnimations: false } };
+                    if (!state.profile.settings) state.profile.settings = { skipAnimations: false };
                     state.collection = data.collection || [];
                     state.packs = data.packs || { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false };
                     
+                    document.getElementById('toggle-animations').checked = !state.profile.settings.skipAnimations;
+
                     if (state.profile.name) {
                         selectedTeam = state.profile.team;
                         updateProfileUI();
@@ -612,7 +651,6 @@
                     }
                 } else {
                     state.profile.id = state.userId;
-                    state.profile.friends = [];
                     showSetupScreen();
                 }
             } catch(e) {
@@ -621,11 +659,6 @@
         }
 
         function showSetupScreen() {
-            if (state.isAnonymous) {
-                DOM.googleSection.classList.remove('hidden');
-            } else {
-                DOM.googleSection.classList.add('hidden');
-            }
             switchScreen('screen-setup');
         }
 
@@ -665,29 +698,49 @@
             }
         }
 
-        function setupEventListeners() {
-            document.getElementById('btn-google-signin').addEventListener('click', async () => {
-                if (!auth) {
-                    showToast("Cloud services unavailable. Play as Guest!", "info");
-                    return;
-                }
-                const provider = new GoogleAuthProvider();
-                try {
-                    const result = await signInWithPopup(auth, provider);
-                    if (result && result.user) {
-                        state.userId = result.user.uid;
-                        state.isAnonymous = false;
-                        showToast("Google Sign-In successful!", "success");
-                        DOM.googleSection.classList.add('hidden');
-                        switchScreen('screen-loading');
-                        await loadCloudData();
-                    }
-                } catch(error) {
-                    if (error.code === 'auth/popup-closed-by-user') return;
-                    showToast("Sign-in popup blocked. Please play as Guest below!", "info", 4500);
-                }
-            });
+        async function generatePairingCode() {
+            if (!db || !state.userId) return;
+            state.pairingCode = Math.floor(100000 + Math.random() * 900000).toString();
+            document.getElementById('my-pairing-code').textContent = state.pairingCode;
+            
+            // Visual QR Gen
+            document.getElementById('qr-code-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=pokelocal:${state.pairingCode}`;
 
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'pairing_codes', state.pairingCode), { 
+                    uid: state.userId, 
+                    timestamp: Date.now() 
+                });
+            } catch(e) {}
+        }
+
+        async function attemptJoinCode() {
+            const input = document.getElementById('input-pairing-code');
+            const code = input.value.trim();
+            if(code.length !== 6) return showToast("Enter a 6-digit code.", "error");
+            
+            if(code === state.pairingCode) return showToast("Cannot trade with yourself.", "error");
+            input.value = '';
+
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'pairing_codes', code);
+                const snap = await getDoc(docRef);
+                if(snap.exists()) {
+                    const data = snap.data();
+                    if(Date.now() - data.timestamp > 86400000) {
+                        showToast("Pairing code expired.", "error");
+                    } else {
+                        initiateTrade(data.uid);
+                    }
+                } else {
+                    showToast("Code not found or invalid.", "error");
+                }
+            } catch(e) {
+                showToast("Failed to verify code.", "error");
+            }
+        }
+
+        function setupEventListeners() {
             DOM.navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
                     const target = e.currentTarget;
@@ -750,7 +803,7 @@
                     setupFirebaseListeners(); 
                     updatePresence();
 
-                    showToast("Profile saved!", "success");
+                    showToast("Profile saved successfully!", "success");
                     DOM.navItems.forEach(n => n.classList.remove('active'));
                     switchScreen('screen-packs');
                     document.querySelector('[data-target="screen-packs"]').classList.add('active');
@@ -775,14 +828,23 @@
                         selectedTeam = state.profile.team;
                     }
                 });
-                
-                DOM.googleSection.classList.add('hidden');
                 switchScreen('screen-setup');
             });
+
+            // Settings Listeners
+            document.getElementById('toggle-animations').addEventListener('change', (e) => {
+                state.profile.settings.skipAnimations = !e.target.checked;
+                saveCloudData();
+            });
+            
+            document.getElementById('btn-join-code').addEventListener('click', attemptJoinCode);
 
             DOM.packUI.addEventListener('click', () => openPack(false));
             DOM.holoPackUI.addEventListener('click', () => openPack(true));
             
+            // Gamified Pack Rip logic
+            document.getElementById('rip-pack-container').addEventListener('click', triggerPackRip);
+
             document.getElementById('btn-next-card').addEventListener('click', () => { if (state.pullIndex < state.currentPulls.length - 1) { state.pullIndex++; renderCurrentPull(); } });
             document.getElementById('btn-prev-card').addEventListener('click', () => { if (state.pullIndex > 0) { state.pullIndex--; renderCurrentPull(); } });
             
@@ -875,8 +937,8 @@
                             </div>
                         </div>
                         <div class="flip-card-back p-5 text-center">
-                            <div class="w-24 h-24 bg-black bg-opacity-40 rounded-full flex items-center justify-center mb-6 mx-auto border-4 border-gray-700 shadow-inner">
-                                <img src="${cardData.gif || cardData.image}" class="w-20 h-20 object-contain filter drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]" loading="lazy">
+                            <div class="w-32 h-32 bg-black bg-opacity-40 rounded-full flex items-center justify-center mb-6 mx-auto border-4 border-gray-700 shadow-inner">
+                                <img src="${cardData.gif || cardData.image}" class="w-28 h-28 object-contain gamified-gif" loading="lazy">
                             </div>
                             <div class="text-2xl font-pokemon text-white mb-3 tracking-widest drop-shadow-md">${cardData.name}</div>
                             <div class="text-[10px] font-bold text-white uppercase tracking-widest bg-black bg-opacity-50 px-4 py-1.5 rounded-lg border border-gray-600 inline-block shadow">${cardData.rarity}</div>
@@ -923,6 +985,7 @@
             
             DOM.packUI.classList.add('hidden'); DOM.holoPackUI.classList.add('hidden');
             DOM.packLoading.classList.remove('hidden');
+            state.activePackIsHolo = isHolo;
             
             try {
                 const count = isHolo ? 1 : 10;
@@ -957,16 +1020,62 @@
                 if(!isHolo) { state.currentPulls.sort((a, b) => a.bst - b.bst); state.packs.openedToday++; }
                 else { state.packs.holoClaimedToday = true; }
                 
-                saveCloudData(); updatePackUI();
-                DOM.packLoading.classList.add('hidden'); DOM.pullsView.classList.remove('hidden'); DOM.pullsView.classList.add('flex');
+                saveCloudData(); 
+                DOM.packLoading.classList.add('hidden'); 
                 
-                document.getElementById('pull-total').textContent = count;
-                state.pullIndex = 0; renderCurrentPull();
+                if (state.profile.settings && !state.profile.settings.skipAnimations) {
+                    showPackRipAnimation();
+                } else {
+                    displayPulls();
+                }
                 
             } catch(e) {
                 showToast("Fetch failed. Try again.", "error");
                 DOM.packLoading.classList.add('hidden'); updatePackUI();
             }
+        }
+
+        function showPackRipAnimation() {
+            const ripModal = document.getElementById('modal-pack-rip');
+            const cont = document.getElementById('rip-pack-container');
+            const topHalf = document.getElementById('rip-top-half');
+            const botHalf = document.getElementById('rip-bottom-half');
+            
+            // reset styles
+            cont.classList.add('anim-shake');
+            topHalf.classList.remove('anim-rip-top');
+            botHalf.classList.remove('anim-rip-bottom');
+            document.getElementById('rip-instructions').style.display = 'block';
+            
+            ripModal.classList.add('active');
+        }
+
+        function triggerPackRip() {
+            const cont = document.getElementById('rip-pack-container');
+            const topHalf = document.getElementById('rip-top-half');
+            const botHalf = document.getElementById('rip-bottom-half');
+            
+            cont.classList.remove('anim-shake');
+            document.getElementById('rip-instructions').style.display = 'none';
+            
+            // CSS trigger
+            topHalf.classList.add('anim-rip-top');
+            botHalf.classList.add('anim-rip-bottom');
+
+            setTimeout(() => {
+                document.getElementById('modal-pack-rip').classList.remove('active');
+                displayPulls();
+            }, 600);
+        }
+
+        function displayPulls() {
+            updatePackUI();
+            DOM.pullsView.classList.remove('hidden'); 
+            DOM.pullsView.classList.add('flex');
+            
+            document.getElementById('pull-total').textContent = state.activePackIsHolo ? 1 : 10;
+            state.pullIndex = 0; 
+            renderCurrentPull();
         }
 
         function renderCurrentPull() {
@@ -1085,10 +1194,9 @@
         function renderNetworkList() {
             const list = document.getElementById('network-nodes');
             const textList = document.getElementById('network-list');
-            const friendsList = document.getElementById('friends-list');
             const emptyState = document.getElementById('network-empty');
             
-            list.innerHTML = ''; textList.innerHTML = ''; friendsList.innerHTML = '';
+            list.innerHTML = ''; textList.innerHTML = '';
             
             const uids = Object.keys(state.onlineUsers);
             if (uids.length > 0) { 
@@ -1098,49 +1206,30 @@
                 textList.classList.add('hidden');
                 emptyState.classList.remove('hidden');
             }
-            
-            let hasFriendsOnline = false;
 
             uids.forEach((uid, idx) => {
                 const u = state.onlineUsers[uid];
                 const c = u.team === 'Valor' ? 'var(--valor)' : u.team === 'Mystic' ? 'var(--mystic)' : 'var(--instinct)';
                 const bgC = u.team === 'Valor' ? 'rgba(239,68,68,0.2)' : u.team === 'Mystic' ? 'rgba(59,130,246,0.2)' : 'rgba(234,179,8,0.2)';
                 
-                const isFriend = state.profile.friends && state.profile.friends.includes(uid);
+                const angle = (idx / uids.length) * Math.PI * 2;
+                const radius = 25 + Math.random() * 20;
+                const x = 50 + Math.cos(angle) * radius; const y = 50 + Math.sin(angle) * radius;
                 
-                if (isFriend) {
-                    hasFriendsOnline = true;
-                    const el = document.createElement('div');
-                    el.className = 'bg-[#252830] border border-[#333] rounded-2xl p-4 flex justify-between items-center shadow-md';
-                    el.innerHTML = `<div class="flex items-center gap-4"><div class="w-12 h-12 rounded-full flex items-center justify-center font-bold border-2" style="color:${c}; border-color:${c}; background-color:${bgC}">${u.name.charAt(0).toUpperCase()}</div><div class="flex flex-col"><span class="font-bold text-sm text-white">${u.name} <i class="fa-solid fa-star text-yellow-500 text-[10px] ml-1 drop-shadow"></i></span><span class="text-[11px] font-medium text-gray-400 mt-0.5">${u.info}</span></div></div><button class="btn-request-trade text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl shadow transition-colors">Trade</button>`;
-                    el.querySelector('.btn-request-trade').addEventListener('click', () => initiateTrade(uid));
-                    friendsList.appendChild(el);
-                } else {
-                    const angle = (idx / uids.length) * Math.PI * 2;
-                    const radius = 25 + Math.random() * 20;
-                    const x = 50 + Math.cos(angle) * radius; const y = 50 + Math.sin(angle) * radius;
-                    
-                    const node = document.createElement('div');
-                    node.className = 'user-node absolute cursor-pointer hover:scale-110 transition-transform hover:z-40';
-                    node.style.left = `calc(${x}% - 28px)`; node.style.top = `calc(${y}% - 28px)`;
-                    node.style.borderColor = c;
-                    node.innerHTML = `<span class="font-bold text-lg" style="color:${c}">${u.name.charAt(0).toUpperCase()}</span><span class="absolute -bottom-7 font-bold text-[9px] text-white bg-black bg-opacity-70 px-2.5 py-1 rounded-md tracking-wide whitespace-nowrap">${u.name}</span>`;
-                    node.addEventListener('click', () => initiateTrade(uid));
-                    list.appendChild(node);
+                const node = document.createElement('div');
+                node.className = 'user-node absolute cursor-pointer hover:scale-110 transition-transform hover:z-40';
+                node.style.left = `calc(${x}% - 28px)`; node.style.top = `calc(${y}% - 28px)`;
+                node.style.borderColor = c;
+                node.innerHTML = `<span class="font-bold text-lg" style="color:${c}">${u.name.charAt(0).toUpperCase()}</span><span class="absolute -bottom-7 font-bold text-[9px] text-white bg-black bg-opacity-70 px-2.5 py-1 rounded-md tracking-wide whitespace-nowrap">${u.name}</span>`;
+                node.addEventListener('click', () => initiateTrade(uid));
+                list.appendChild(node);
 
-                    const el = document.createElement('div');
-                    el.className = 'bg-[#1a1c23] border border-[#333] rounded-2xl p-4 flex justify-between items-center shadow';
-                    el.innerHTML = `<div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full flex items-center justify-center font-bold border" style="color:${c}; border-color:${c}; background-color:${bgC}">${u.name.charAt(0).toUpperCase()}</div><div class="flex flex-col"><span class="font-bold text-sm text-white">${u.name}</span><span class="text-[11px] font-medium text-gray-500 mt-0.5">${u.info}</span></div></div><button class="btn-request-trade text-xs font-bold bg-[#252830] border border-[#333] hover:bg-[#2d313d] text-white px-4 py-2 rounded-xl transition-colors">Trade</button>`;
-                    el.querySelector('.btn-request-trade').addEventListener('click', () => initiateTrade(uid));
-                    textList.appendChild(el);
-                }
+                const el = document.createElement('div');
+                el.className = 'bg-[#1a1c23] border border-[#333] rounded-2xl p-4 flex justify-between items-center shadow';
+                el.innerHTML = `<div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full flex items-center justify-center font-bold border" style="color:${c}; border-color:${c}; background-color:${bgC}">${u.name.charAt(0).toUpperCase()}</div><div class="flex flex-col"><span class="font-bold text-sm text-white">${u.name}</span><span class="text-[11px] font-medium text-gray-500 mt-0.5">${u.info}</span></div></div><button class="btn-request-trade text-xs font-bold bg-[#252830] border border-[#333] hover:bg-[#2d313d] text-white px-4 py-2 rounded-xl transition-colors">Trade</button>`;
+                el.querySelector('.btn-request-trade').addEventListener('click', () => initiateTrade(uid));
+                textList.appendChild(el);
             });
-
-            if (hasFriendsOnline) {
-                friendsList.classList.remove('hidden');
-            } else {
-                friendsList.classList.add('hidden');
-            }
         }
 
         async function initiateTrade(targetUid) {
@@ -1260,14 +1349,10 @@
                 const newCard = { ...them.offer, id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), showcase: false, acquiredAt: Date.now() };
                 state.collection.unshift(newCard); state.profile.trades++;
                 
-                if(!state.profile.friends.includes(state.activeTrade.partnerId)) {
-                    state.profile.friends.push(state.activeTrade.partnerId);
-                }
-
                 state.packs.holoUnlocked = true;
                 
                 saveCloudData(); renderCollection(); updatePackUI();
-                showToast(`Trade success! Received ${newCard.name}. Friend added!`, "success", 5000);
+                showToast(`Trade success! Received ${newCard.name}.`, "success", 5000);
             }
             forceCloseTrade();
         }
