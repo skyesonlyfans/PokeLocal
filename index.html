@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pokemon: TCG Local</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.cdnfonts.com/css/pokemon-solid');
+
+        :root {
+            --bg: #121212;
+            --surface: #1e1e1e;
+            --surface-hover: #2a2a2a;
+            --text: #ffffff;
+            --text-muted: #a0a0a0;
+            --primary: #3b82f6;
+            --border: #333333;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #eab308;
+            --holo: linear-gradient(135deg, #ff00cc, #3333ff, #00ffff);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overscroll-behavior-y: none;
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .font-pokemon {
+            font-family: 'Pokemon Solid', sans-serif;
+            letter-spacing: 2px;
+            -webkit-text-stroke: 1px #3b82f6;
+            color: #ffcb05;
+        }
+
+        .card-surface {
+            background-color: var(--surface);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .input-field {
+            background-color: #2a2a2a;
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 12px;
+            padding: 12px;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .input-field:focus { border-color: var(--primary); }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border-radius: 12px;
+            font-weight: 600;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        .btn-primary:active { transform: scale(0.96); }
+        .btn-primary:disabled { opacity: 0.5; pointer-events: none; }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-weight: 600;
+            padding: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-secondary:active { background-color: var(--surface-hover); }
+
+        header {
+            background-color: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 90px;
+        }
+
+        .bottom-nav {
+            background-color: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            z-index: 40;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 11px;
+            cursor: pointer;
+            width: 64px;
+            transition: color 0.2s;
+        }
+        .nav-item.active { color: var(--text); font-weight: 600; }
+        .nav-item i { font-size: 22px; margin-bottom: 4px; transition: transform 0.2s; }
+        .nav-item.active i { transform: translateY(-2px); color: var(--primary); }
+
+        .screen { display: none; animation: fadeIn 0.2s ease-out; max-width: 800px; margin: 0 auto; }
+        .screen.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .flip-card {
+            background-color: transparent;
+            aspect-ratio: 63/88;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            background-color: #2a2a2a;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #3a3a3a 0%, #1e1e1e 100%);
+        }
+
+        .card-header { padding: 8px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.2); }
+        .card-name { font-weight: 700; font-size: 13px; text-transform: capitalize; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-hp { font-size: 12px; font-weight: 700; color: #ff6b6b; }
+        .card-img-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 10px; position: relative; background: #e0e0e0; }
+        .card-img { width: 100%; height: 100%; object-fit: contain; z-index: 2; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
+        .card-stats { padding: 8px; background: rgba(0,0,0,0.4); font-size: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; color: #ddd; }
+        
+        .rarity-legendary, .holo-effect { 
+            border-color: #fbbf24;
+            position: relative;
+        }
+        .rarity-legendary::after, .holo-effect::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(125deg, transparent 20%, rgba(255,255,255,0.4) 40%, transparent 60%);
+            background-size: 200% 200%;
+            animation: shimmer 2.5s infinite linear;
+            pointer-events: none; z-index: 10; mix-blend-mode: overlay;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        .type-badge { padding: 2px 6px; border-radius: 4px; font-size: 9px; color: white; text-transform: uppercase; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+        
+        .radar-container { position: relative; height: 300px; display: flex; justify-content: center; align-items: center; }
+        .radar-pulse {
+            position: absolute; width: 60px; height: 60px; border-radius: 50%;
+            background: rgba(59, 130, 246, 0.4);
+            animation: pulse 3s infinite ease-out;
+        }
+        .radar-pulse:nth-child(2) { animation-delay: 1s; }
+        .radar-pulse:nth-child(3) { animation-delay: 2s; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(6); opacity: 0; } }
+        
+        .user-node {
+            position: absolute; width: 50px; height: 50px; border-radius: 50%;
+            background: var(--surface); border: 2px solid var(--primary);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer; transition: transform 0.2s; z-index: 10;
+        }
+        .user-node:hover, .user-node:active { transform: scale(1.1); z-index: 20; }
+        .user-node-name { position: absolute; bottom: -24px; font-size: 10px; white-space: nowrap; font-weight: 600; background: rgba(0,0,0,0.6); padding: 2px 6px; border-radius: 8px; }
+
+        .pack-item {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border: 1px solid var(--border);
+            border-radius: 16px; padding: 30px 20px;
+            text-align: center; cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            transition: transform 0.1s; position: relative; overflow: hidden;
+        }
+        .pack-item:active { transform: scale(0.96); }
+        .pack-item.holo { background: var(--holo); color: white; border: none; }
+        .pack-item.holo::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.2); pointer-events: none; }
+
+        .modal-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        
+        .toast-container { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 110; display: flex; flex-direction: column; gap: 8px; pointer-events: none; width: 90%; max-width: 400px; }
+        .toast { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 12px 16px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto; }
+        .toast.hiding { animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-20px); opacity: 0; } }
+
+        .trade-slot { aspect-ratio: 63/88; border: 2px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; background-color: #1a1a1a; position: relative; }
+        .trade-slot img { width: 100%; height: 100%; object-fit: contain; padding: 8px; position: absolute; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="font-pokemon text-xl">PokeLocal</div>
+        <div class="flex items-center text-xs bg-[#2a2a2a] px-3 py-1.5 rounded-full border border-[#333]">
+            <div id="status-dot" class="w-2 h-2 rounded-full bg-red-500 mr-2 shadow-[0_0_8px_rgba(239,68,68,0.6)]"></div>
+            <span id="header-name" class="font-medium text-gray-300">Offline</span>
+        </div>
+    </header>
+    
+    <div id="toast-container" class="toast-container"></div>
+
+    <main class="main-content">
+        
+        <div id="screen-setup" class="screen">
+            <div class="card-surface p-6 max-w-sm mx-auto mt-10">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-white">Join Network</h2>
+                    <p class="text-sm text-gray-400 mt-2">Connect with nearby trainers.</p>
+                </div>
+                
+                <div class="space-y-5">
+                    <div>
+                        <input type="text" id="setup-name" class="input-field" placeholder="Trainer Name" maxlength="15">
+                    </div>
+                    <div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 py-3 rounded-xl border border-[#333] text-red-500 font-bold team-btn transition-colors" data-team="Valor">Valor</button>
+                            <button class="flex-1 py-3 rounded-xl border border-[#333] text-blue-500 font-bold team-btn transition-colors" data-team="Mystic">Mystic</button>
+                            <button class="flex-1 py-3 rounded-xl border border-[#333] text-yellow-500 font-bold team-btn transition-colors" data-team="Instinct">Instinct</button>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="text" id="setup-info" class="input-field" placeholder="Status (e.g., Looking for Charizard)" maxlength="30">
+                    </div>
+                    <button id="btn-save-profile" class="btn-primary w-full mt-4 py-4 text-lg">Connect</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="screen-packs" class="screen active">
+            <div class="text-center mb-8 mt-4">
+                <h2 class="text-2xl font-bold">Daily Packs</h2>
+                <p class="text-sm text-gray-400 mt-1">Available: <span id="packs-count" class="font-bold text-white">2</span></p>
+                <p class="text-xs text-blue-400 mt-2 font-medium" id="pack-timer"></p>
+            </div>
+
+            <div id="pack-container" class="max-w-xs mx-auto flex flex-col gap-5">
+                <div id="the-pack" class="pack-item">
+                    <i class="fa-solid fa-box-open text-5xl mb-4 text-gray-300"></i>
+                    <h3 class="font-bold text-xl text-white">Digital Booster</h3>
+                    <p class="text-xs text-gray-400 mt-2">10 Cards</p>
+                </div>
+                
+                <div id="holo-pack" class="pack-item holo hidden">
+                    <i class="fa-solid fa-star text-5xl mb-4 text-white drop-shadow-md"></i>
+                    <h3 class="font-bold text-xl text-white relative z-10">Daily Holo Pull</h3>
+                    <p class="text-xs text-white opacity-90 mt-2 relative z-10">Unlocked via Trade!</p>
+                </div>
+            </div>
+            
+            <div id="pack-loading" class="hidden text-center py-16">
+                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-blue-500 mb-4"></i>
+                <p class="text-gray-400 font-medium">Connecting to PokeAPI...</p>
+            </div>
+
+            <div id="pulls-view" class="hidden flex-col items-center pb-10">
+                <div class="w-full flex justify-between items-center mb-6">
+                    <span class="text-sm font-semibold text-gray-400">Card <span id="pull-current" class="text-white">1</span> / <span id="pull-total">10</span></span>
+                    <button id="btn-collect-all" class="text-sm font-bold text-blue-400 px-4 py-2 bg-[#2a2a2a] rounded-full border border-[#333]">Save to Binder</button>
+                </div>
+                
+                <div id="single-pull-container" class="w-full max-w-[260px] mx-auto relative mb-8" style="perspective: 1000px;"></div>
+                
+                <div class="flex gap-4 w-full justify-center">
+                    <button id="btn-prev-card" class="btn-secondary px-8 rounded-full"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button id="btn-next-card" class="btn-primary px-8 rounded-full"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+                <p class="text-xs text-gray-500 mt-6 text-center">Tap card to flip</p>
+            </div>
+        </div>
+
+        <div id="screen-collection" class="screen">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold">Binder</h2>
+                    <p class="text-sm text-gray-400"><span id="collection-total">0</span> Cards</p>
+                </div>
+                <select id="filter-collection" class="text-sm border border-[#333] rounded-lg px-3 py-2 bg-[#2a2a2a] text-white outline-none">
+                    <option value="all">All Cards</option>
+                    <option value="showcase">Showcase</option>
+                    <option value="legendary">Legendary</option>
+                </select>
+            </div>
+
+            <div id="collection-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
+            
+            <div id="empty-collection" class="hidden text-center py-24 text-gray-500">
+                <i class="fa-solid fa-folder-open text-5xl mb-4 opacity-50"></i>
+                <p class="font-medium">No cards found.</p>
+            </div>
+        </div>
+
+        <div id="screen-network" class="screen">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-2xl font-bold">Radar</h2>
+                <button id="btn-refresh-network" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <p class="text-sm text-gray-400 mb-8">Discover trainers online to trade.</p>
+            
+            <div class="radar-container bg-[#1a1a1a] rounded-2xl border border-[#333] overflow-hidden">
+                <div class="radar-pulse"></div>
+                <div class="radar-pulse"></div>
+                <div class="radar-pulse"></div>
+                
+                <div class="user-node shadow-[0_0_15px_rgba(59,130,246,0.5)]" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <i class="fa-solid fa-user text-xl text-blue-500"></i>
+                    <span class="user-node-name text-white">You</span>
+                </div>
+                
+                <div id="network-nodes"></div>
+            </div>
+            
+            <div id="network-list" class="mt-8 space-y-3 hidden"></div>
+        </div>
+
+        <div id="screen-info" class="screen">
+            <div class="card-surface p-5 mb-6 bg-gradient-to-br from-[#2a2a2a] to-[#1e1e1e]">
+                <div class="flex justify-between items-start mb-3">
+                    <h3 class="font-bold text-xl text-white" id="info-name">Trainer</h3>
+                    <button id="btn-edit-profile" class="text-blue-400 text-sm font-semibold bg-[#1a1a1a] px-3 py-1 rounded-lg">Edit</button>
+                </div>
+                <div class="flex gap-2 mb-4">
+                    <span id="info-team" class="text-xs px-2 py-1 rounded font-bold uppercase tracking-wider border"></span>
+                    <span id="info-status" class="text-xs px-2 py-1 bg-[#1a1a1a] border border-[#333] rounded text-gray-300"></span>
+                </div>
+                <div class="flex gap-4 text-sm border-t border-[#333] pt-4 mt-2">
+                    <div class="flex-1 text-center bg-[#1a1a1a] rounded-lg p-2"><div class="text-gray-400 text-xs">Cards</div><div class="font-bold text-white text-lg" id="info-card-count">0</div></div>
+                    <div class="flex-1 text-center bg-[#1a1a1a] rounded-lg p-2"><div class="text-gray-400 text-xs">Trades</div><div class="font-bold text-white text-lg" id="info-trade-count">0</div></div>
+                </div>
+            </div>
+
+            <h3 class="font-bold text-white mb-3 px-1">Information & FAQs</h3>
+            <div class="card-surface divide-y divide-[#333] mb-6">
+                <div class="p-4">
+                    <h4 class="font-semibold text-sm mb-2 text-red-400 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> Data Storage</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Your collection is saved <strong>locally</strong> on this browser using localStorage. Clearing your browser data or using incognito mode will permanently delete your cards. Firebase is utilized exclusively for live presence and temporary trade sessions.</p>
+                </div>
+                <div class="p-4">
+                    <h4 class="font-semibold text-sm mb-2 text-white">Rarities & Data</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Cards generated via <span class="text-blue-400">PokeAPI.co</span>. Real rarity data fetched via <span class="text-blue-400">PogoAPI.net</span> when available, falling back to Base Stat Total (BST) calculations for untracked entries.</p>
+                </div>
+            </div>
+            
+            <div class="text-center py-6">
+                <a href="https://instagram.com/skyeprobably" target="_blank" class="text-sm font-medium text-pink-500 hover:text-pink-400 bg-[#2a2a2a] px-4 py-2 rounded-full border border-[#333]">
+                    <i class="fa-brands fa-instagram mr-2"></i>@skyeprobably
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <div class="nav-item active" data-target="screen-packs"><i class="fa-solid fa-box-open"></i><span>Packs</span></div>
+        <div class="nav-item" data-target="screen-collection"><i class="fa-solid fa-book"></i><span>Binder</span></div>
+        <div class="nav-item relative" data-target="screen-network">
+            <div id="trade-badge" class="absolute top-0 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-[#1e1e1e] hidden animate-bounce"></div>
+            <i class="fa-solid fa-radar"></i><span>Radar</span>
+        </div>
+        <div class="nav-item" data-target="screen-info"><i class="fa-solid fa-user"></i><span>Profile</span></div>
+    </nav>
+
+    <div id="modal-card-detail" class="modal-overlay">
+        <div class="w-full max-w-sm flex flex-col items-center">
+            <div id="detail-card-container" class="w-full max-w-[260px] mb-6" style="perspective: 1000px;"></div>
+            <div class="flex w-full gap-3 bg-[#1e1e1e] p-4 rounded-2xl border border-[#333]">
+                <button id="btn-toggle-showcase" class="btn-secondary flex-1 flex items-center justify-center gap-2">
+                    <i class="fa-regular fa-star" id="showcase-icon"></i> Showcase
+                </button>
+                <button class="btn-primary flex-1 close-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-trade" class="modal-overlay">
+        <div class="card-surface w-full max-w-md h-[85vh] flex flex-col overflow-hidden">
+            <div class="p-4 border-b border-[#333] flex justify-between items-center bg-[#2a2a2a]">
+                <div class="font-bold text-white">Trade w/ <span id="trade-partner-name" class="text-blue-400">Trainer</span></div>
+                <button class="close-trade text-gray-400 hover:text-white bg-[#1a1a1a] w-8 h-8 rounded-full flex items-center justify-center"><i class="fa-solid fa-times"></i></button>
+            </div>
+            
+            <div class="flex-1 flex flex-col p-4 overflow-y-auto bg-[#121212]">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="w-[45%] flex flex-col items-center">
+                        <span class="text-[10px] font-bold text-gray-500 mb-2 tracking-wider">YOU OFFER</span>
+                        <div id="my-offer-slot" class="trade-slot w-full cursor-pointer hover:border-blue-400 transition-colors bg-[#1e1e1e]">
+                            <i class="fa-solid fa-plus text-gray-600 text-2xl" id="my-offer-plus"></i>
+                            <img src="" id="my-offer-img" class="hidden rounded-lg">
+                            <button id="btn-remove-offer" class="absolute -top-3 -right-3 bg-red-500 text-white rounded-full w-8 h-8 text-sm hidden shadow-lg z-10"><i class="fa-solid fa-times"></i></button>
+                        </div>
+                        <span id="my-trade-status" class="text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-[#2a2a2a] text-gray-400">Selecting...</span>
+                    </div>
+                    
+                    <i class="fa-solid fa-right-left text-gray-600 text-xl"></i>
+                    
+                    <div class="w-[45%] flex flex-col items-center">
+                        <span class="text-[10px] font-bold text-gray-500 mb-2 tracking-wider">THEY OFFER</span>
+                        <div id="their-offer-slot" class="trade-slot w-full bg-[#1e1e1e]">
+                            <i class="fa-solid fa-question text-gray-700 text-2xl" id="their-offer-q"></i>
+                            <img src="" id="their-offer-img" class="hidden rounded-lg">
+                        </div>
+                        <span id="their-trade-status" class="text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-[#2a2a2a] text-gray-400">Selecting...</span>
+                    </div>
+                </div>
+                
+                <div class="flex-1 border border-[#333] rounded-xl flex flex-col overflow-hidden bg-[#1e1e1e]">
+                    <div id="trade-chat-messages" class="flex-1 p-3 overflow-y-auto flex flex-col gap-3"></div>
+                    <div class="flex border-t border-[#333] bg-[#2a2a2a] p-2">
+                        <input type="text" id="trade-chat-input" class="flex-1 px-3 py-2 text-sm outline-none bg-transparent text-white" placeholder="Message...">
+                        <button id="btn-send-chat" class="px-3 text-blue-400 font-bold hover:text-blue-300"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-4 border-t border-[#333] bg-[#2a2a2a] flex gap-3">
+                <button id="btn-trade-lock" class="btn-secondary flex-1 py-3 text-white border-gray-500">Lock Offer</button>
+                <button id="btn-trade-accept" class="btn-primary flex-1 hidden bg-green-500 py-3">Accept Trade</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-select-card" class="modal-overlay" style="z-index: 110;">
+        <div class="card-surface w-full max-w-md h-[75vh] flex flex-col overflow-hidden bg-[#1e1e1e]">
+            <div class="p-4 border-b border-[#333] flex justify-between items-center bg-[#2a2a2a]">
+                <h3 class="font-bold text-white">Select Card</h3>
+                <button class="close-select text-gray-400 hover:text-white bg-[#1a1a1a] w-8 h-8 rounded-full"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-4 no-scrollbar">
+                <div id="trade-collection-grid" class="grid grid-cols-3 gap-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
+        const TOTAL_POKEMON = 1025;
+        
+        const typeColors = { normal: '#A8A77A', fire: '#EE8130', water: '#6390F0', electric: '#F7D02C', grass: '#7AC74C', ice: '#96D9D6', fighting: '#C22E28', poison: '#A33EA1', ground: '#E2BF65', flying: '#A98FF3', psychic: '#F95587', bug: '#A6B91A', rock: '#B6A136', ghost: '#735797', dragon: '#6F35FC', dark: '#705848', steel: '#B7B7CE', fairy: '#D685AD' };
+
+        const state = {
+            profile: { id: '', name: '', team: '', info: '', trades: 0 },
+            collection: [],
+            packs: { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false },
+            onlineUsers: {},
+            userId: null,
+            currentPulls: [], pullIndex: 0, activeTrade: null,
+            pogoRarities: {} 
+        };
+
+        const DOM = {
+            screens: document.querySelectorAll('.screen'),
+            navItems: document.querySelectorAll('.nav-item'),
+            statusDot: document.getElementById('status-dot'),
+            headerName: document.getElementById('header-name'),
+            packUI: document.getElementById('the-pack'),
+            holoPackUI: document.getElementById('holo-pack'),
+            packLoading: document.getElementById('pack-loading'),
+            pullsView: document.getElementById('pulls-view'),
+            toastContainer: document.getElementById('toast-container')
+        };
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'pokelocal-default';
+        let db, auth;
+        let firebaseListeners = { presence: null, incomingTrade: null, activeTrade: null };
+
+        async function initApp() {
+            loadLocalData();
+            fetchPogoRarities();
+            
+            try {
+                if (typeof __firebase_config !== 'undefined') {
+                    const firebaseConfig = JSON.parse(__firebase_config);
+                    const app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    auth = getAuth(app);
+
+                    if (typeof __initial_auth_token !== 'undefined') {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    
+                    state.userId = auth.currentUser.uid;
+                    if(!state.profile.id) state.profile.id = state.userId;
+                    
+                    DOM.statusDot.classList.replace('bg-red-500', 'bg-green-500');
+                    DOM.statusDot.style.boxShadow = '0 0 8px rgba(34,197,94,0.6)';
+                    if(state.profile.name) {
+                        setupFirebaseListeners();
+                        updatePresence();
+                    }
+                } else {
+                    state.userId = 'local_' + Math.random().toString(36).substr(2, 9);
+                }
+            } catch (error) { console.error(error); showToast("Network error. Running offline.", "error"); }
+            
+            setupEventListeners();
+            checkPackReset();
+        }
+
+        async function fetchPogoRarities() {
+            try {
+                const res = await fetch('https://pogoapi.net/api/v1/pokemon_rarity.json');
+                const data = await res.json();
+                for (const rarity in data) {
+                    data[rarity].forEach(p => {
+                        state.pogoRarities[p.pokemon_id] = rarity.replace('1_','').replace('2_','').replace('3_','').replace('4_','').replace('_', ' ');
+                    });
+                }
+            } catch (e) { console.log("Using fallback rarity calc."); }
+        }
+
+        function showToast(msg, type = 'info', duration = 3000, actions = null) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            
+            let icon = '<i class="fa-solid fa-circle-info text-blue-500"></i>';
+            if (type === 'success') icon = '<i class="fa-solid fa-circle-check text-green-500"></i>';
+            if (type === 'error') icon = '<i class="fa-solid fa-circle-xmark text-red-500"></i>';
+            if (type === 'trade') icon = '<i class="fa-solid fa-right-left text-purple-500"></i>';
+
+            let actionHtml = '';
+            if (actions) {
+                actionHtml = `<div class="flex gap-2 ml-auto">
+                    <button class="bg-[#2a2a2a] border border-[#333] px-3 py-1.5 rounded-lg text-xs font-bold btn-decline">Decline</button>
+                    <button class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold btn-accept">Accept</button>
+                </div>`;
+            }
+
+            toast.innerHTML = `${icon}<div class="text-sm font-medium flex-1">${msg}</div>${actionHtml}`;
+            DOM.toastContainer.appendChild(toast);
+
+            if (actions) {
+                toast.querySelector('.btn-accept').addEventListener('click', () => { actions.onAccept(); removeToast(toast); });
+                toast.querySelector('.btn-decline').addEventListener('click', () => { actions.onDecline(); removeToast(toast); });
+                if(duration > 0) setTimeout(() => { if(toast.parentNode) { actions.onDecline(); removeToast(toast); } }, duration);
+            } else {
+                setTimeout(() => removeToast(toast), duration);
+            }
+        }
+
+        function removeToast(toast) {
+            toast.classList.add('hiding');
+            toast.addEventListener('animationend', () => toast.remove());
+        }
+
+        function loadLocalData() {
+            const p = localStorage.getItem('pokelocal_profile');
+            if (p) { state.profile = JSON.parse(p); updateProfileUI(); switchScreen('screen-packs'); }
+            else { switchScreen('screen-setup'); }
+
+            const c = localStorage.getItem('pokelocal_collection');
+            if (c) { state.collection = JSON.parse(c); renderCollection(); }
+
+            const pk = localStorage.getItem('pokelocal_packs');
+            if (pk) { state.packs = JSON.parse(pk); }
+        }
+
+        function saveLocalData() {
+            localStorage.setItem('pokelocal_profile', JSON.stringify(state.profile));
+            localStorage.setItem('pokelocal_collection', JSON.stringify(state.collection));
+            localStorage.setItem('pokelocal_packs', JSON.stringify(state.packs));
+            updateProfileUI();
+        }
+
+        function switchScreen(id) {
+            DOM.screens.forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(id === 'screen-network' && db && state.profile.name) updatePresence();
+        }
+
+        function setupEventListeners() {
+            DOM.navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const target = e.currentTarget;
+                    if(!state.profile.name && target.dataset.target !== 'screen-setup') { showToast("Setup profile first."); return; }
+                    DOM.navItems.forEach(n => n.classList.remove('active'));
+                    target.classList.add('active');
+                    switchScreen(target.dataset.target);
+                });
+            });
+
+            let selectedTeam = '';
+            document.querySelectorAll('.team-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.team-btn').forEach(b => { b.classList.remove('bg-[#2a2a2a]'); b.style.backgroundColor = 'transparent'; b.style.color = ''; });
+                    e.target.classList.add('bg-[#2a2a2a]');
+                    const t = e.target.dataset.team;
+                    selectedTeam = t;
+                    e.target.style.backgroundColor = t === 'Valor' ? 'rgba(239,68,68,0.2)' : t === 'Mystic' ? 'rgba(59,130,246,0.2)' : 'rgba(234,179,8,0.2)';
+                });
+            });
+
+            document.getElementById('btn-save-profile').addEventListener('click', () => {
+                const name = document.getElementById('setup-name').value.trim();
+                const info = document.getElementById('setup-info').value.trim();
+                if (!name || !selectedTeam) { showToast("Name and Team required.", "error"); return; }
+                state.profile.name = name; state.profile.team = selectedTeam; state.profile.info = info || 'Ready to trade';
+                if(!state.profile.id) state.profile.id = state.userId;
+                saveLocalData();
+                if(db) { setupFirebaseListeners(); updatePresence(); }
+                switchScreen('screen-packs');
+                document.querySelector('[data-target="screen-packs"]').classList.add('active');
+            });
+
+            document.getElementById('btn-edit-profile').addEventListener('click', () => {
+                document.getElementById('setup-name').value = state.profile.name;
+                document.getElementById('setup-info').value = state.profile.info;
+                switchScreen('screen-setup');
+            });
+
+            DOM.packUI.addEventListener('click', () => openPack(false));
+            DOM.holoPackUI.addEventListener('click', () => openPack(true));
+            
+            document.getElementById('btn-next-card').addEventListener('click', () => { if (state.pullIndex < state.currentPulls.length - 1) { state.pullIndex++; renderCurrentPull(); } });
+            document.getElementById('btn-prev-card').addEventListener('click', () => { if (state.pullIndex > 0) { state.pullIndex--; renderCurrentPull(); } });
+            
+            document.getElementById('btn-collect-all').addEventListener('click', () => {
+                state.collection = [...state.currentPulls, ...state.collection];
+                state.currentPulls = []; saveLocalData(); renderCollection();
+                DOM.pullsView.classList.add('hidden'); DOM.pullsView.classList.remove('flex');
+                updatePackUI();
+                DOM.navItems.forEach(n => n.classList.remove('active'));
+                document.querySelector('[data-target="screen-collection"]').classList.add('active');
+                switchScreen('screen-collection');
+            });
+            
+            document.getElementById('filter-collection').addEventListener('change', renderCollection);
+            document.getElementById('btn-refresh-network').addEventListener('click', () => { if(db) { updatePresence(); renderNetworkList(); showToast("Radar refreshed", "success"); }});
+            
+            document.querySelectorAll('.close-modal, .close-select').forEach(btn => { btn.addEventListener('click', (e) => { e.target.closest('.modal-overlay').classList.remove('active'); }); });
+            
+            document.getElementById('my-offer-slot').addEventListener('click', openSelectCardModal);
+            document.getElementById('btn-remove-offer').addEventListener('click', removeOffer);
+            document.getElementById('btn-trade-lock').addEventListener('click', toggleTradeLock);
+            document.getElementById('btn-trade-accept').addEventListener('click', acceptTrade);
+            document.querySelector('.close-trade').addEventListener('click', cancelTrade);
+            
+            document.getElementById('btn-send-chat').addEventListener('click', sendChat);
+            document.getElementById('trade-chat-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') sendChat(); });
+
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.flip-card')) {
+                    e.target.closest('.flip-card').classList.toggle('is-flipped');
+                }
+            });
+        }
+
+        function updateProfileUI() {
+            DOM.headerName.textContent = state.profile.name || 'Setup Profile';
+            document.getElementById('info-name').textContent = state.profile.name;
+            document.getElementById('info-status').textContent = state.profile.info;
+            document.getElementById('info-card-count').textContent = state.collection.length;
+            document.getElementById('info-trade-count').textContent = state.profile.trades;
+            
+            const teamEl = document.getElementById('info-team');
+            teamEl.textContent = state.profile.team;
+            const c = state.profile.team === 'Valor' ? '#ef4444' : state.profile.team === 'Mystic' ? '#3b82f6' : '#eab308';
+            teamEl.style.color = c; teamEl.style.borderColor = c; teamEl.style.backgroundColor = `${c}22`;
+        }
+
+        function getRarity(id, bst) {
+            if (state.pogoRarities[id]) {
+                const r = state.pogoRarities[id].toLowerCase();
+                if (r.includes('legendary') || r.includes('mythic')) return { name: r, class: 'rarity-legendary' };
+                if (r.includes('rare') || r.includes('ultra')) return { name: r, class: 'rarity-rare border-[#a855f7]' };
+                return { name: r, class: 'rarity-common border-[#64748b]' };
+            }
+            if (bst > 580) return { name: 'Legendary', class: 'rarity-legendary' };
+            if (bst > 450) return { name: 'Rare', class: 'rarity-rare border-[#a855f7]' };
+            if (bst > 300) return { name: 'Uncommon', class: 'rarity-uncommon border-[#22c55e]' };
+            return { name: 'Common', class: 'rarity-common border-[#64748b]' };
+        }
+
+        function generateCardHTML(cardData, showInstance = false) {
+            const badges = cardData.types.map(t => `<span class="type-badge" style="background-color: ${typeColors[t] || '#777'}">${t}</span>`).join(' ');
+            return `
+                <div class="flip-card w-full h-full ${showInstance && cardData.showcase ? 'holo-effect' : ''}">
+                    <div class="flip-card-inner ${cardData.rarityClass}">
+                        <div class="flip-card-front flex flex-col bg-[#e0e0e0]">
+                            <div class="card-header bg-[#f8f9fa] border-b-2 border-gray-300">
+                                <div class="card-name text-gray-800">${cardData.name}</div>
+                                <div class="card-hp">HP ${cardData.hp}</div>
+                            </div>
+                            <div class="card-img-container bg-gradient-to-br from-white to-gray-200">
+                                <img src="${cardData.image}" class="card-img" loading="lazy">
+                            </div>
+                            <div class="p-2 bg-white flex justify-between items-center border-t-2 border-gray-200">
+                                <div class="flex gap-1">${badges}</div>
+                            </div>
+                            <div class="card-stats bg-white text-gray-600 font-bold border-t border-gray-100 pb-3">
+                                <div class="flex justify-between"><span>ATK</span> <span>${cardData.atk}</span></div>
+                                <div class="flex justify-between"><span>DEF</span> <span>${cardData.def}</span></div>
+                                <div class="flex justify-between col-span-2 text-center text-[9px] text-gray-400 mt-1 pt-1 border-t">TAP TO FLIP</div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back p-4 text-center">
+                            <div class="w-20 h-20 bg-black bg-opacity-30 rounded-full flex items-center justify-center mb-4">
+                                <img src="${cardData.gif || cardData.image}" class="w-16 h-16 object-contain filter drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" loading="lazy">
+                            </div>
+                            <div class="text-xl font-pokemon text-white mb-2 tracking-widest">${cardData.name}</div>
+                            <div class="text-xs font-bold text-gray-300 uppercase tracking-widest bg-black bg-opacity-40 px-3 py-1 rounded-full border border-gray-600 mb-2">${cardData.rarity}</div>
+                            <div class="text-[10px] text-gray-500 mt-auto">BST: ${cardData.bst} • ID: #${cardData.apiId}</div>
+                            ${showInstance && cardData.showcase ? '<div class="absolute top-2 right-2 text-yellow-400 text-xl drop-shadow-[0_0_5px_rgba(251,191,36,1)]"><i class="fa-solid fa-star"></i></div>' : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkPackReset() {
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+            if (state.packs.lastReset < today) {
+                state.packs.openedToday = 0; state.packs.lastReset = today; state.packs.holoClaimedToday = false; saveLocalData();
+            }
+            updatePackUI();
+        }
+
+        function updatePackUI() {
+            DOM.packUI.classList.remove('hidden');
+            const remaining = Math.max(0, 2 - state.packs.openedToday);
+            document.getElementById('packs-count').textContent = remaining;
+            
+            if (remaining > 0) {
+                DOM.packUI.style.opacity = '1'; DOM.packUI.style.pointerEvents = 'auto'; DOM.packUI.style.filter = 'grayscale(0)';
+                document.getElementById('pack-timer').textContent = "Tap to open";
+            } else {
+                DOM.packUI.style.opacity = '0.5'; DOM.packUI.style.pointerEvents = 'none'; DOM.packUI.style.filter = 'grayscale(100%)';
+                document.getElementById('pack-timer').textContent = "Resets tomorrow";
+            }
+
+            if (state.packs.holoUnlocked && !state.packs.holoClaimedToday) {
+                DOM.holoPackUI.classList.remove('hidden');
+            } else {
+                DOM.holoPackUI.classList.add('hidden');
+            }
+        }
+
+        async function openPack(isHolo) {
+            if (!isHolo && state.packs.openedToday >= 2) return;
+            if (isHolo && (!state.packs.holoUnlocked || state.packs.holoClaimedToday)) return;
+            
+            DOM.packUI.classList.add('hidden'); DOM.holoPackUI.classList.add('hidden');
+            DOM.packLoading.classList.remove('hidden');
+            
+            try {
+                const count = isHolo ? 1 : 10;
+                const ids = Array.from({length: count}, () => {
+                    if (isHolo) {
+                        const holoIds = [144, 145, 146, 150, 151, 249, 250, 251, 384, 385]; 
+                        return holoIds[Math.floor(Math.random() * holoIds.length)];
+                    }
+                    const r = Math.random();
+                    if(r < 0.5) return Math.floor(Math.random() * 151) + 1;
+                    if(r < 0.8) return Math.floor(Math.random() * (493 - 151)) + 152;
+                    return Math.floor(Math.random() * (TOTAL_POKEMON - 493)) + 494;
+                });
+                
+                const promises = ids.map(id => fetch(`${POKEAPI_BASE}/pokemon/${id}`).then(r => r.json()));
+                const results = await Promise.all(promises);
+                
+                state.currentPulls = results.map(data => {
+                    let hp = 0, atk = 0, def = 0, spd = 0, bst = 0;
+                    data.stats.forEach(s => { bst += s.base_stat; if(s.stat.name === 'hp') hp = s.base_stat; if(s.stat.name === 'attack') atk = s.base_stat; if(s.stat.name === 'defense') def = s.base_stat; if(s.stat.name === 'speed') spd = s.base_stat; });
+                    const rarityInfo = getRarity(data.id, bst);
+                    const img = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default;
+                    const gif = data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || img;
+                    
+                    return {
+                        id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: data.name, types: data.types.map(t => t.type.name),
+                        hp, atk, def, spd, bst, image: img, gif: gif, rarity: isHolo ? 'Holo Rare' : rarityInfo.name, rarityClass: isHolo ? 'rarity-legendary' : rarityInfo.class,
+                        showcase: isHolo, acquiredAt: Date.now()
+                    };
+                });
+                
+                if(!isHolo) { state.currentPulls.sort((a, b) => a.bst - b.bst); state.packs.openedToday++; }
+                else { state.packs.holoClaimedToday = true; }
+                
+                saveLocalData(); updatePackUI();
+                DOM.packLoading.classList.add('hidden'); DOM.pullsView.classList.remove('hidden'); DOM.pullsView.classList.add('flex');
+                
+                document.getElementById('pull-total').textContent = count;
+                state.pullIndex = 0; renderCurrentPull();
+                
+            } catch(e) {
+                console.error(e); showToast("Fetch failed. Try again.", "error");
+                DOM.packLoading.classList.add('hidden'); updatePackUI();
+            }
+        }
+
+        function renderCurrentPull() {
+            const card = state.currentPulls[state.pullIndex];
+            const container = document.getElementById('single-pull-container');
+            container.innerHTML = generateCardHTML(card);
+            container.firstElementChild.style.animation = 'fadeIn 0.3s ease-out';
+            document.getElementById('pull-current').textContent = state.pullIndex + 1;
+            document.getElementById('btn-prev-card').disabled = state.pullIndex === 0;
+            document.getElementById('btn-next-card').disabled = state.pullIndex === state.currentPulls.length - 1;
+        }
+
+        function renderCollection() {
+            const grid = document.getElementById('collection-grid');
+            const empty = document.getElementById('empty-collection');
+            const filter = document.getElementById('filter-collection').value;
+            
+            document.getElementById('collection-total').textContent = state.collection.length;
+            document.getElementById('info-card-count').textContent = state.collection.length;
+            grid.innerHTML = '';
+            
+            let displayCards = state.collection;
+            if (filter === 'showcase') displayCards = displayCards.filter(c => c.showcase);
+            if (filter === 'legendary') displayCards = displayCards.filter(c => c.rarityClass === 'rarity-legendary');
+            
+            if (displayCards.length === 0) { grid.classList.add('hidden'); empty.classList.remove('hidden'); } 
+            else {
+                grid.classList.remove('hidden'); empty.classList.add('hidden');
+                displayCards.forEach(card => {
+                    const el = document.createElement('div');
+                    el.className = `aspect-[63/88] rounded-xl overflow-hidden cursor-pointer relative border-2 ${card.rarityClass.split(' ')[0]} ${card.showcase ? 'holo-effect' : ''} bg-[#e0e0e0]`;
+                    el.innerHTML = `
+                        <div class="absolute inset-0 p-1 flex justify-center items-center bg-gradient-to-br from-white to-gray-200">
+                            <img src="${card.image}" class="w-full h-full object-contain filter drop-shadow-md z-10" loading="lazy">
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white text-[9px] font-bold p-1 truncate text-center z-20 backdrop-blur-sm">${card.name}</div>
+                        ${card.showcase ? '<div class="absolute top-1 right-1 text-yellow-400 z-30 drop-shadow"><i class="fa-solid fa-star text-[10px]"></i></div>' : ''}
+                    `;
+                    el.addEventListener('click', () => openCardDetail(card));
+                    grid.appendChild(el);
+                });
+            }
+        }
+
+        let activeDetailCard = null;
+        function openCardDetail(card) {
+            activeDetailCard = card;
+            document.getElementById('detail-card-container').innerHTML = generateCardHTML(card, true);
+            updateShowcaseBtn();
+            document.getElementById('modal-card-detail').classList.add('active');
+        }
+
+        function updateShowcaseBtn() {
+            const icon = document.getElementById('showcase-icon');
+            if (activeDetailCard.showcase) { icon.classList.replace('fa-regular', 'fa-solid'); icon.classList.add('text-yellow-400'); } 
+            else { icon.classList.replace('fa-solid', 'fa-regular'); icon.classList.remove('text-yellow-400'); }
+        }
+
+        document.getElementById('btn-toggle-showcase').addEventListener('click', () => {
+            if(!activeDetailCard) return;
+            const index = state.collection.findIndex(c => c.id === activeDetailCard.id);
+            if(index !== -1) {
+                state.collection[index].showcase = !state.collection[index].showcase;
+                activeDetailCard.showcase = state.collection[index].showcase;
+                saveLocalData(); updateShowcaseBtn(); renderCollection();
+                document.getElementById('detail-card-container').innerHTML = generateCardHTML(activeDetailCard, true);
+            }
+        });
+
+        function setupFirebaseListeners() {
+            if (!db || !state.userId || firebaseListeners.presence) return;
+            const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'presence');
+            firebaseListeners.presence = onSnapshot(usersRef, (snapshot) => {
+                state.onlineUsers = {}; const now = Date.now();
+                snapshot.forEach(doc => { const data = doc.data(); if (data.id !== state.userId && (now - data.lastSeen) < 120000) state.onlineUsers[doc.id] = data; });
+                renderNetworkList();
+            });
+
+            const tradesRef = collection(db, 'artifacts', appId, 'public', 'data', 'trades');
+            firebaseListeners.incomingTrade = onSnapshot(tradesRef, (snapshot) => {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === "added" || change.type === "modified") {
+                        const data = change.doc.data();
+                        if (data.receiver === state.userId && data.status === 'requested') {
+                            showToast(`${data[data.initiator].name} wants to trade!`, 'trade', 10000, {
+                                onAccept: async () => { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'active' }); },
+                                onDecline: async () => { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'rejected' }); }
+                            });
+                        }
+                        if (data.status === 'active' && (data.initiator === state.userId || data.receiver === state.userId) && !state.activeTrade) {
+                             openTradeUI(data.id, data.initiator === state.userId ? data.receiver : data.initiator);
+                        }
+                    }
+                });
+            });
+            setInterval(updatePresence, 45000); 
+            window.addEventListener('beforeunload', () => { if(db && state.userId) deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'presence', state.userId)); });
+        }
+
+        async function updatePresence() {
+            if (!db || !state.userId || !state.profile.name) return;
+            try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'presence', state.userId), { id: state.userId, name: state.profile.name, team: state.profile.team, info: state.profile.info, trades: state.profile.trades, lastSeen: Date.now() }); } catch(e) {}
+        }
+
+        function renderNetworkList() {
+            const list = document.getElementById('network-nodes');
+            const textList = document.getElementById('network-list');
+            list.innerHTML = ''; textList.innerHTML = '';
+            
+            const uids = Object.keys(state.onlineUsers);
+            if (uids.length > 0) { textList.classList.remove('hidden'); }
+            
+            uids.forEach((uid, idx) => {
+                const u = state.onlineUsers[uid];
+                const angle = (idx / uids.length) * Math.PI * 2;
+                const radius = 90 + Math.random() * 30;
+                const x = 50 + Math.cos(angle) * radius; const y = 50 + Math.sin(angle) * radius;
+                const c = u.team === 'Valor' ? '#ef4444' : u.team === 'Mystic' ? '#3b82f6' : '#eab308';
+                
+                const node = document.createElement('div');
+                node.className = 'user-node absolute';
+                node.style.left = `calc(${x}% - 25px)`; node.style.top = `calc(${y}% - 25px)`;
+                node.style.borderColor = c;
+                node.innerHTML = `<span class="font-bold text-lg" style="color:${c}">${u.name.charAt(0)}</span><span class="user-node-name">${u.name}</span>`;
+                node.addEventListener('click', () => initiateTrade(uid));
+                list.appendChild(node);
+                
+                const el = document.createElement('div');
+                el.className = 'bg-[#1a1a1a] border border-[#333] rounded-xl p-3 flex justify-between items-center';
+                el.innerHTML = `<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center font-bold border bg-opacity-20" style="color:${c}; border-color:${c}; background-color:${c}22">${u.name.charAt(0)}</div><div class="flex flex-col"><span class="font-bold text-sm text-white">${u.name}</span><span class="text-xs text-gray-400">${u.info}</span></div></div><button class="btn-request-trade text-sm font-bold bg-blue-600 text-white px-4 py-2 rounded-lg">Trade</button>`;
+                el.querySelector('.btn-request-trade').addEventListener('click', () => initiateTrade(uid));
+                textList.appendChild(el);
+            });
+        }
+
+        async function initiateTrade(targetUid) {
+            if (!db || !state.userId) return;
+            const tradeId = [state.userId, targetUid].sort().join('_');
+            try {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', tradeId), {
+                    id: tradeId, status: 'requested', initiator: state.userId, receiver: targetUid, timestamp: Date.now(),
+                    [state.userId]: { locked: false, offer: null, name: state.profile.name }, [targetUid]: { locked: false, offer: null, name: state.onlineUsers[targetUid].name }, chat: []
+                });
+                showToast("Trade request sent.", "info");
+            } catch (e) { showToast("Failed to send request.", "error"); }
+        }
+
+        function openTradeUI(tradeId, partnerId) {
+            state.activeTrade = { id: tradeId, partnerId: partnerId, localOffer: null };
+            document.getElementById('trade-partner-name').textContent = state.onlineUsers[partnerId]?.name || 'Trainer';
+            
+            document.getElementById('my-offer-img').classList.add('hidden'); document.getElementById('my-offer-img').src = '';
+            document.getElementById('my-offer-plus').classList.remove('hidden'); document.getElementById('btn-remove-offer').classList.add('hidden');
+            document.getElementById('their-offer-img').classList.add('hidden'); document.getElementById('their-offer-img').src = '';
+            document.getElementById('their-offer-q').classList.remove('hidden');
+            document.getElementById('trade-chat-messages').innerHTML = '<div class="text-center text-[10px] text-gray-500 my-2 font-bold uppercase tracking-wider">Connection Secure</div>';
+            
+            document.getElementById('modal-trade').classList.add('active');
+            
+            firebaseListeners.activeTrade = onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'trades', tradeId), (docSnap) => {
+                if (docSnap.exists()) handleTradeSync(docSnap.data(), partnerId); else forceCloseTrade("Session ended.", "error");
+            });
+        }
+
+        function handleTradeSync(data, partnerId) {
+            if (data.status === 'cancelled' || data.status === 'rejected') { forceCloseTrade("Trade cancelled.", "error"); return; }
+            if (data.status === 'completed') { finalizeTradeLocally(data); return; }
+
+            const me = data[state.userId], them = data[partnerId];
+            const theirImg = document.getElementById('their-offer-img'), theirQ = document.getElementById('their-offer-q'), theirStatus = document.getElementById('their-trade-status');
+            
+            if (them.offer) { theirImg.src = them.offer.image; theirImg.classList.remove('hidden'); theirQ.classList.add('hidden'); } 
+            else { theirImg.classList.add('hidden'); theirQ.classList.remove('hidden'); }
+            
+            if (them.locked) { theirStatus.textContent = 'Locked'; theirStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-green-500 bg-opacity-20 text-green-400'; } 
+            else { theirStatus.textContent = them.offer ? 'Selected' : 'Selecting...'; theirStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-[#2a2a2a] text-gray-400'; }
+            
+            const myStatus = document.getElementById('my-trade-status'), btnLock = document.getElementById('btn-trade-lock'), btnAccept = document.getElementById('btn-trade-accept');
+            
+            if (me.locked) {
+                myStatus.textContent = 'Locked'; myStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-green-500 bg-opacity-20 text-green-400';
+                btnLock.textContent = 'Unlock'; btnLock.classList.replace('btn-secondary', 'btn-primary'); btnLock.style.backgroundColor = '#ef4444'; document.getElementById('btn-remove-offer').classList.add('hidden');
+            } else {
+                myStatus.textContent = me.offer ? 'Selected' : 'Selecting...'; myStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-[#2a2a2a] text-gray-400';
+                btnLock.textContent = 'Lock Offer'; btnLock.classList.replace('btn-primary', 'btn-secondary'); btnLock.style.backgroundColor = 'transparent'; if(me.offer) document.getElementById('btn-remove-offer').classList.remove('hidden');
+            }
+            
+            if (me.locked && them.locked) {
+                btnAccept.classList.remove('hidden'); btnLock.classList.add('hidden');
+                if (me.accepted) { btnAccept.textContent = 'Waiting...'; btnAccept.disabled = true; } else { btnAccept.textContent = 'Accept Trade'; btnAccept.disabled = false; }
+                if (me.accepted && them.accepted) finishTradeFirebase(data);
+            } else {
+                btnAccept.classList.add('hidden'); btnLock.classList.remove('hidden'); if(me.accepted) updateTradeState({ accepted: false });
+            }
+            renderChat(data.chat);
+        }
+
+        function openSelectCardModal() {
+            if (!state.activeTrade || document.getElementById('my-trade-status').textContent === 'Locked') return;
+            const grid = document.getElementById('trade-collection-grid'); grid.innerHTML = '';
+            
+            if (state.collection.length === 0) { grid.innerHTML = '<div class="col-span-3 text-center text-sm text-gray-500 py-10">Binder empty.</div>'; } 
+            else {
+                state.collection.forEach(card => {
+                    const el = document.createElement('div');
+                    el.className = 'aspect-[63/88] border-2 border-[#333] rounded-lg bg-[#e0e0e0] cursor-pointer overflow-hidden p-1 flex justify-center items-center bg-gradient-to-br from-white to-gray-200';
+                    el.innerHTML = `<img src="${card.image}" class="w-full h-full object-contain filter drop-shadow">`;
+                    el.addEventListener('click', () => { selectOffer(card); document.getElementById('modal-select-card').classList.remove('active'); });
+                    grid.appendChild(el);
+                });
+            }
+            document.getElementById('modal-select-card').classList.add('active');
+        }
+
+        function selectOffer(card) {
+            state.activeTrade.localOffer = card;
+            document.getElementById('my-offer-img').src = card.image; document.getElementById('my-offer-img').classList.remove('hidden');
+            document.getElementById('my-offer-plus').classList.add('hidden'); document.getElementById('btn-remove-offer').classList.remove('hidden');
+            updateTradeState({ offer: { id: card.id, name: card.name, image: card.image, gif: card.gif, rarityClass: card.rarityClass, apiId: card.apiId, types: card.types, hp: card.hp, atk: card.atk, def: card.def, spd: card.spd, bst: card.bst, rarity: card.rarity }});
+        }
+
+        function removeOffer(e) {
+            e.stopPropagation(); state.activeTrade.localOffer = null; document.getElementById('my-offer-img').classList.add('hidden');
+            document.getElementById('my-offer-plus').classList.remove('hidden'); e.currentTarget.classList.add('hidden'); updateTradeState({ offer: null });
+        }
+
+        function toggleTradeLock() {
+            const isLocked = document.getElementById('my-trade-status').textContent === 'Locked';
+            if (isLocked) updateTradeState({ locked: false }); else if (state.activeTrade.localOffer) updateTradeState({ locked: true });
+        }
+
+        function acceptTrade() { updateTradeState({ accepted: true }); }
+        
+        async function updateTradeState(updates) {
+            if (!state.activeTrade || !db) return;
+            const ref = doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id);
+            const fbUpdates = {}; for (const key in updates) fbUpdates[`${state.userId}.${key}`] = updates[key];
+            try { await updateDoc(ref, fbUpdates); } catch(e) {}
+        }
+
+        async function finishTradeFirebase(data) {
+            if (!db || !state.activeTrade) return;
+            if (data.initiator === state.userId && data.status !== 'completed') await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), { status: 'completed' });
+        }
+
+        function finalizeTradeLocally(data) {
+            const me = data[state.userId], them = data[state.activeTrade.partnerId];
+            if (me.offer && them.offer) {
+                state.collection = state.collection.filter(c => c.id !== me.offer.id);
+                const newCard = { ...them.offer, id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), showcase: false, acquiredAt: Date.now() };
+                state.collection.unshift(newCard); state.profile.trades++;
+                
+                // Unlock daily holo
+                state.packs.holoUnlocked = true;
+                
+                saveLocalData(); renderCollection(); updatePackUI();
+                showToast(`Trade complete! Received ${newCard.name}. Daily Holo Unlocked!`, "success", 5000);
+            }
+            forceCloseTrade();
+        }
+
+        async function cancelTrade() {
+            if (!state.activeTrade || !db) return forceCloseTrade();
+            try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), { status: 'cancelled' }); } catch(e) {}
+            forceCloseTrade();
+        }
+
+        function forceCloseTrade(msg = null, type = 'info') {
+            if (firebaseListeners.activeTrade) { firebaseListeners.activeTrade(); firebaseListeners.activeTrade = null; }
+            state.activeTrade = null; document.getElementById('modal-trade').classList.remove('active');
+            if (msg) showToast(msg, type);
+        }
+
+        async function sendChat() {
+            const input = document.getElementById('trade-chat-input'); const txt = input.value.trim();
+            if (!txt || !state.activeTrade || !db) return; input.value = '';
+            try {
+                const ref = doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id);
+                const snap = await getDoc(ref);
+                if (snap.exists()) {
+                    const chat = snap.data().chat || [];
+                    chat.push({ senderId: state.userId, name: state.profile.name, text: txt });
+                    if(chat.length > 25) chat.shift(); await updateDoc(ref, { chat });
+                }
+            } catch(e) {}
+        }
+
+        function renderChat(chatArr) {
+            const container = document.getElementById('trade-chat-messages'); if(!chatArr) return;
+            container.innerHTML = '<div class="text-center text-[10px] text-gray-500 my-2 font-bold uppercase tracking-wider">Connection Secure</div>';
+            chatArr.forEach(msg => {
+                const isMe = msg.senderId === state.userId;
+                const div = document.createElement('div'); div.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'}`;
+                div.innerHTML = `<span class="text-[9px] text-gray-500 mb-1 mx-1 font-bold">${msg.name}</span><div class="px-3 py-2 rounded-2xl max-w-[85%] text-sm ${isMe ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-[#2a2a2a] text-white rounded-tl-none border border-[#333]'}">${msg.text}</div>`;
+                container.appendChild(div);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
