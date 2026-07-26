@@ -7,98 +7,146 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         @import url('https://fonts.cdnfonts.com/css/pokemon-solid');
 
         :root {
-            --bg: #121212;
-            --surface: #1e1e1e;
-            --surface-hover: #2a2a2a;
-            --text: #ffffff;
-            --text-muted: #a0a0a0;
+            --bg: #0f1014;
+            --surface: #1a1c23;
+            --surface-hover: #252830;
+            --text: #f3f4f6;
+            --text-muted: #9ca3af;
             --primary: #3b82f6;
-            --border: #333333;
-            --danger: #ef4444;
-            --success: #22c55e;
-            --warning: #eab308;
+            --border: #2d313d;
+            --valor: #ef4444;
+            --mystic: #3b82f6;
+            --instinct: #eab308;
             --holo: linear-gradient(135deg, #ff00cc, #3333ff, #00ffff);
         }
 
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            overscroll-behavior-y: none; 
+            -webkit-tap-highlight-color: transparent; 
+            margin: 0; padding: 0; 
+            display: flex; flex-direction: column; 
+            height: 100vh; 
+        }
+
         .font-pokemon { font-family: 'Pokemon Solid', sans-serif; letter-spacing: 2px; -webkit-text-stroke: 1px #3b82f6; color: #ffcb05; }
-        .card-surface { background-color: var(--surface); border-radius: 16px; border: 1px solid var(--border); }
-        .input-field { background-color: #2a2a2a; border: 1px solid var(--border); color: var(--text); border-radius: 12px; padding: 12px; width: 100%; outline: none; transition: border-color 0.2s; }
-        .input-field:focus { border-color: var(--primary); }
-        .btn-primary { background-color: var(--primary); color: white; border-radius: 12px; font-weight: 600; padding: 12px; border: none; cursor: pointer; text-align: center; transition: transform 0.1s, opacity 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px;}
-        .btn-primary:active { transform: scale(0.96); }
-        .btn-primary:disabled { opacity: 0.5; pointer-events: none; }
-        .btn-secondary { background-color: transparent; color: var(--text); border: 1px solid var(--border); border-radius: 12px; font-weight: 600; padding: 12px; cursor: pointer; transition: background-color 0.2s; }
-        .btn-secondary:active { background-color: var(--surface-hover); }
-        header { background-color: rgba(30, 30, 30, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 40; }
-        .main-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 90px; }
-        .bottom-nav { background-color: rgba(30, 30, 30, 0.9); backdrop-filter: blur(10px); border-top: 1px solid var(--border); position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; padding: 12px 0; padding-bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 40; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 11px; cursor: pointer; width: 64px; transition: color 0.2s; }
-        .nav-item.active { color: var(--text); font-weight: 600; }
-        .nav-item i { font-size: 22px; margin-bottom: 4px; transition: transform 0.2s; }
-        .nav-item.active i { transform: translateY(-2px); color: var(--primary); }
-        .screen { display: none; animation: fadeIn 0.2s ease-out; max-width: 800px; margin: 0 auto; }
-        .screen.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .card-surface { background-color: var(--surface); border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
+        .input-field { 
+            background-color: #121319; 
+            border: 2px solid var(--border); 
+            color: var(--text); 
+            border-radius: 12px; 
+            padding: 14px; 
+            width: 100%; 
+            outline: none; 
+            transition: all 0.2s; 
+            font-weight: 500;
+        }
+        .input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
+        
+        .btn-primary { background: linear-gradient(135deg, #2563eb, #3b82f6); color: white; border-radius: 14px; font-weight: 700; padding: 14px; border: none; cursor: pointer; text-align: center; transition: all 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);}
+        .btn-primary:active { transform: scale(0.97); }
+        .btn-primary:disabled { opacity: 0.6; pointer-events: none; filter: grayscale(100%); }
+        
+        .btn-secondary { background-color: transparent; color: var(--text); border: 2px solid var(--border); border-radius: 14px; font-weight: 600; padding: 12px; cursor: pointer; transition: all 0.2s; }
+        .btn-secondary:active { background-color: var(--surface-hover); transform: scale(0.97); }
+
+        .btn-google { background-color: #ffffff; color: #1f2937; border-radius: 14px; font-weight: 700; padding: 14px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 12px; transition: all 0.2s; box-shadow: 0 4px 12px rgba(255,255,255,0.1); width: 100%; }
+        .btn-google:active { transform: scale(0.97); background-color: #f3f4f6; }
+        .btn-google img { width: 20px; height: 20px; }
+
+        header { background-color: rgba(26, 28, 35, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 40; }
+        .main-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 100px; }
+        .bottom-nav { background-color: rgba(26, 28, 35, 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border); position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; padding: 16px 0; padding-bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 40; box-shadow: 0 -4px 20px rgba(0,0,0,0.3); }
+        
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 11px; cursor: pointer; width: 64px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .nav-item.active { color: var(--primary); font-weight: 700; }
+        .nav-item i { font-size: 22px; margin-bottom: 6px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .nav-item.active i { transform: translateY(-4px) scale(1.1); text-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); }
+        
+        .screen { display: none; animation: fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1); max-width: 800px; margin: 0 auto; }
+        .screen.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .team-btn { 
+            flex: 1; padding: 14px 8px; border-radius: 12px; border: 2px solid var(--border); 
+            font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 11px;
+            transition: all 0.2s; cursor: pointer; background: transparent; display: flex; flex-direction: column; align-items: center; gap: 6px;
+            color: var(--text-muted);
+        }
+        .team-btn i { font-size: 20px; }
+        .team-btn[data-team="Valor"].selected { background: rgba(239, 68, 68, 0.15); border-color: var(--valor); color: var(--valor); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2); }
+        .team-btn[data-team="Mystic"].selected { background: rgba(59, 130, 246, 0.15); border-color: var(--mystic); color: var(--mystic); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2); }
+        .team-btn[data-team="Instinct"].selected { background: rgba(234, 179, 8, 0.15); border-color: var(--instinct); color: var(--instinct); box-shadow: 0 4px 15px rgba(234, 179, 8, 0.2); }
+
         .flip-card { background-color: transparent; aspect-ratio: 63/88; perspective: 1000px; cursor: pointer; }
-        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); transform-style: preserve-3d; }
         .flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 12px; border: 2px solid var(--border); overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.3); background-color: #2a2a2a; }
-        .flip-card-back { transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle at center, #3a3a3a 0%, #1e1e1e 100%); }
-        .card-header { padding: 8px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.2); }
-        .card-name { font-weight: 700; font-size: 13px; text-transform: capitalize; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .card-hp { font-size: 12px; font-weight: 700; color: #ff6b6b; }
-        .card-img-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 10px; position: relative; background: #e0e0e0; }
-        .card-img { width: 100%; height: 100%; object-fit: contain; z-index: 2; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
-        .card-stats { padding: 8px; background: rgba(0,0,0,0.4); font-size: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; color: #ddd; }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 12px; border: 2px solid var(--border); overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.4); background-color: #2a2a2a; }
+        .flip-card-back { transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle at center, #2d313d 0%, #1a1c23 100%); }
+        
+        .card-header { padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); }
+        .card-name { font-weight: 800; font-size: 14px; text-transform: capitalize; color: #1f2937; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-hp { font-size: 13px; font-weight: 800; color: #ef4444; }
+        .card-img-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 10px; position: relative; background: radial-gradient(circle, #ffffff 0%, #e5e7eb 100%); }
+        .card-img { width: 100%; height: 100%; object-fit: contain; z-index: 2; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3)); }
+        
         .rarity-legendary { border-color: #fbbf24 !important; }
         .rarity-rare { border-color: #a855f7 !important; }
         .rarity-uncommon { border-color: #22c55e !important; }
         .rarity-common { border-color: #64748b !important; }
-        .rarity-legendary, .holo-effect { position: relative; }
-        .rarity-legendary::after, .holo-effect::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(125deg, transparent 20%, rgba(255,255,255,0.4) 40%, transparent 60%); background-size: 200% 200%; animation: shimmer 2.5s infinite linear; pointer-events: none; z-index: 10; mix-blend-mode: overlay; }
+        
+        .rarity-legendary::after, .holo-effect::after { content: ''; position: absolute; inset: 0; background: linear-gradient(125deg, transparent 20%, rgba(255,255,255,0.5) 40%, transparent 60%); background-size: 200% 200%; animation: shimmer 2s infinite linear; pointer-events: none; z-index: 10; mix-blend-mode: overlay; border-radius: 10px; }
         .mythic-holo { border-color: #ff00cc !important; position: relative; }
-        .mythic-holo::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(125deg, rgba(255,0,0,0.2) 0%, rgba(255,165,0,0.2) 15%, rgba(255,255,0,0.2) 30%, rgba(0,128,0,0.2) 45%, rgba(0,0,255,0.2) 60%, rgba(75,0,130,0.2) 75%, rgba(238,130,238,0.2) 90%, rgba(255,0,0,0.2) 100%); background-size: 200% 200%; animation: shimmer 3s infinite linear; pointer-events: none; z-index: 10; mix-blend-mode: color-dodge; }
+        .mythic-holo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(125deg, rgba(255,0,0,0.3) 0%, rgba(255,165,0,0.3) 15%, rgba(255,255,0,0.3) 30%, rgba(0,128,0,0.3) 45%, rgba(0,0,255,0.3) 60%, rgba(75,0,130,0.3) 75%, rgba(238,130,238,0.3) 90%, rgba(255,0,0,0.3) 100%); background-size: 200% 200%; animation: shimmer 3s infinite linear; pointer-events: none; z-index: 10; mix-blend-mode: color-dodge; border-radius: 10px; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        .type-badge { padding: 2px 6px; border-radius: 4px; font-size: 9px; color: white; text-transform: uppercase; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
-        .radar-container { position: relative; height: 300px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-        .radar-pulse { position: absolute; width: 60px; height: 60px; border-radius: 50%; background: rgba(59, 130, 246, 0.4); animation: pulse 3s infinite ease-out; }
+
+        .radar-container { position: relative; height: 320px; display: flex; justify-content: center; align-items: center; overflow: hidden; background: radial-gradient(circle, #1a1c23 0%, #0f1014 100%); border-radius: 24px;}
+        .radar-pulse { position: absolute; width: 60px; height: 60px; border-radius: 50%; background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); animation: pulse 3s infinite ease-out; }
         .radar-pulse:nth-child(2) { animation-delay: 1s; }
         .radar-pulse:nth-child(3) { animation-delay: 2s; }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(6); opacity: 0; } }
-        .user-node { position: absolute; width: 50px; height: 50px; border-radius: 50%; background: var(--surface); border: 2px solid var(--primary); display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.2s; z-index: 10; }
-        .user-node:hover, .user-node:active { transform: scale(1.1); z-index: 20; }
-        .user-node-name { position: absolute; bottom: -24px; font-size: 10px; white-space: nowrap; font-weight: 600; background: rgba(0,0,0,0.6); padding: 2px 6px; border-radius: 8px; }
-        .pack-item { background: linear-gradient(145deg, #2a2a2a, #1a1a1a); border: 1px solid var(--border); border-radius: 16px; padding: 30px 20px; text-align: center; cursor: pointer; box-shadow: 0 8px 16px rgba(0,0,0,0.2); transition: transform 0.1s; position: relative; overflow: hidden; }
-        .pack-item:active { transform: scale(0.96); }
-        .pack-item.holo { background: var(--holo); color: white; border: none; }
-        .pack-item.holo::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.2); pointer-events: none; }
-        .modal-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; padding: 20px; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(7); opacity: 0; } }
+        
+        .pack-item { background: linear-gradient(145deg, #252830, #1a1c23); border: 1px solid var(--border); border-radius: 20px; padding: 40px 20px; text-align: center; cursor: pointer; box-shadow: 0 12px 24px rgba(0,0,0,0.4); transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .pack-item:active { transform: scale(0.95); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        
+        .modal-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 100; padding: 20px; animation: fadeIn 0.2s ease-out; }
         .modal-overlay.active { display: flex; }
-        .toast-container { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 110; display: flex; flex-direction: column; gap: 8px; pointer-events: none; width: 90%; max-width: 400px; }
-        .toast { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 12px 16px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto; }
+        
+        .toast-container { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 110; display: flex; flex-direction: column; gap: 10px; pointer-events: none; width: 90%; max-width: 400px; }
+        .toast { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 14px 18px; border-radius: 16px; box-shadow: 0 12px 24px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; animation: slideDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: auto; font-weight: 500; }
         .toast.hiding { animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-20px); opacity: 0; } }
-        .trade-slot { aspect-ratio: 63/88; border: 2px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; background-color: #1a1a1a; position: relative; overflow: hidden; }
-        .trade-slot img { width: 100%; height: 100%; object-fit: contain; padding: 8px; position: absolute; }
+        @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-30px); opacity: 0; } }
+        
+        .trade-slot { aspect-ratio: 63/88; border: 2px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; background-color: #121319; position: relative; overflow: hidden; }
+        .trade-slot img { width: 100%; height: 100%; object-fit: contain; padding: 6px; position: absolute; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .hidden { display: none !important; }
+
+        /* Custom Bounce Animation for loading */
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-bounce-slow { animation: bounce-slow 2s infinite ease-in-out; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="font-pokemon text-xl">PokeLocal</div>
-        <div class="flex items-center text-xs bg-[#2a2a2a] px-3 py-1.5 rounded-full border border-[#333]">
-            <div id="status-dot" class="w-2 h-2 rounded-full bg-red-500 mr-2 shadow-[0_0_8px_rgba(239,68,68,0.6)]"></div>
-            <span id="header-name" class="font-medium text-gray-300">Offline</span>
+        <div class="font-pokemon text-2xl drop-shadow-md">PokeLocal</div>
+        <div class="flex items-center text-xs bg-[#252830] px-4 py-2 rounded-full border border-[#333] shadow-inner">
+            <div id="status-dot" class="w-2.5 h-2.5 rounded-full bg-red-500 mr-2 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
+            <span id="header-name" class="font-bold text-gray-200">Offline</span>
         </div>
     </header>
     
@@ -107,164 +155,214 @@
     <main class="main-content">
         
         <div id="screen-loading" class="screen active">
-            <div class="flex flex-col items-center justify-center h-[60vh]">
-                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-blue-500 mb-4"></i>
-                <p class="text-gray-400 font-medium">Authenticating & Loading Data...</p>
+            <div class="flex flex-col items-center justify-center h-[70vh]">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-20 h-20 animate-bounce-slow drop-shadow-xl mb-6">
+                <h2 class="text-xl font-bold text-white mb-2 tracking-wide">Connecting to Network</h2>
+                <p class="text-sm text-gray-400 font-medium animate-pulse">Authenticating Trainer Data...</p>
             </div>
         </div>
 
         <div id="screen-setup" class="screen">
-            <div class="card-surface p-6 max-w-sm mx-auto mt-6">
-                <div class="text-center mb-6">
+            <div class="card-surface p-8 max-w-sm mx-auto mt-4 relative overflow-hidden">
+                <!-- Decorative top bar -->
+                <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-500 via-blue-500 to-yellow-500"></div>
+                
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 mx-auto bg-[#252830] rounded-full flex items-center justify-center mb-4 border border-[#333] shadow-lg">
+                        <i class="fa-solid fa-id-card text-2xl text-blue-400"></i>
+                    </div>
                     <h2 class="text-2xl font-bold text-white">Trainer Profile</h2>
-                    <p class="text-sm text-gray-400 mt-1">Create your unique trainer card.</p>
+                    <p class="text-sm text-gray-400 mt-2">Claim your identity to start trading globally.</p>
+                </div>
+
+                <div id="google-auth-section" class="mb-6 hidden">
+                    <button id="btn-google-signin" class="btn-google">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+                        Sign in with Google
+                    </button>
+                    <div class="flex items-center my-6">
+                        <div class="flex-1 border-t border-[#333]"></div>
+                        <span class="px-4 text-[10px] text-gray-500 font-bold tracking-widest uppercase">Or Play as Guest</span>
+                        <div class="flex-1 border-t border-[#333]"></div>
+                    </div>
                 </div>
                 
-                <div id="profile-form" class="space-y-4">
+                <div id="profile-form" class="space-y-5">
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1">UNIQUE USERNAME</label>
-                        <input type="text" id="setup-username" class="input-field" placeholder="Choose Username" maxlength="15">
+                        <label class="block text-[11px] font-bold text-gray-400 mb-2 tracking-wider">UNIQUE TRAINER NAME</label>
+                        <input type="text" id="setup-username" class="input-field" placeholder="e.g. AshKetchum" maxlength="15">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1">TEAM</label>
-                        <div class="flex space-x-2">
-                            <button class="flex-1 py-3 rounded-xl border border-[#333] text-red-500 font-bold team-btn transition-colors" data-team="Valor">Valor</button>
-                            <button class="flex-1 py-3 rounded-xl border border-[#333] text-blue-500 font-bold team-btn transition-colors" data-team="Mystic">Mystic</button>
-                            <button class="flex-1 py-3 rounded-xl border border-[#333] text-yellow-500 font-bold team-btn transition-colors" data-team="Instinct">Instinct</button>
+                        <label class="block text-[11px] font-bold text-gray-400 mb-2 tracking-wider">CHOOSE TEAM</label>
+                        <div class="flex space-x-3">
+                            <button class="team-btn" data-team="Valor"><i class="fa-solid fa-fire pointer-events-none"></i>Valor</button>
+                            <button class="team-btn" data-team="Mystic"><i class="fa-solid fa-snowflake pointer-events-none"></i>Mystic</button>
+                            <button class="team-btn" data-team="Instinct"><i class="fa-solid fa-bolt pointer-events-none"></i>Instinct</button>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1">STATUS</label>
-                        <input type="text" id="setup-info" class="input-field" placeholder="Status (e.g., Looking for Charizard)" maxlength="30">
+                        <label class="block text-[11px] font-bold text-gray-400 mb-2 tracking-wider">STATUS MESSAGE</label>
+                        <input type="text" id="setup-info" class="input-field" placeholder="e.g. Looking for Charizard" maxlength="30">
                     </div>
-                    <button id="btn-save-profile" class="btn-primary w-full mt-4 py-3 text-base">Save Profile & Enter</button>
+                    <button id="btn-save-profile" class="btn-primary w-full mt-4 py-4 text-base tracking-wide shadow-lg">Save Profile & Enter</button>
                 </div>
             </div>
         </div>
 
         <div id="screen-packs" class="screen">
-            <div class="text-center mb-8 mt-4">
-                <h2 class="text-2xl font-bold">Daily Packs</h2>
-                <p class="text-sm text-gray-400 mt-1">Available: <span id="packs-count" class="font-bold text-white">2</span></p>
-                <p class="text-xs text-blue-400 mt-2 font-medium" id="pack-timer"></p>
+            <div class="text-center mb-10 mt-6">
+                <h2 class="text-3xl font-bold text-white mb-2">Daily Packs</h2>
+                <div class="inline-block bg-[#252830] px-4 py-2 rounded-full border border-[#333]">
+                    <p class="text-sm text-gray-300 font-medium">Available: <span id="packs-count" class="font-bold text-blue-400 text-lg ml-1">2</span></p>
+                </div>
+                <p class="text-xs text-gray-500 mt-3 font-medium tracking-wide uppercase" id="pack-timer"></p>
             </div>
 
-            <div id="pack-container" class="max-w-xs mx-auto flex flex-col gap-5">
+            <div id="pack-container" class="max-w-xs mx-auto flex flex-col gap-6">
                 <div id="the-pack" class="pack-item">
-                    <i class="fa-solid fa-box-open text-5xl mb-4 text-gray-300"></i>
-                    <h3 class="font-bold text-xl text-white">Digital Booster</h3>
-                    <p class="text-xs text-gray-400 mt-2">10 Cards</p>
+                    <div class="w-20 h-20 mx-auto bg-[#1a1c23] rounded-full flex items-center justify-center mb-6 border-4 border-[#333] shadow-inner">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/premier-ball.png" class="w-12 h-12">
+                    </div>
+                    <h3 class="font-bold text-2xl text-white tracking-wide">Digital Booster</h3>
+                    <p class="text-sm text-gray-400 mt-2 font-medium">10 Cards • Base Set</p>
                 </div>
                 
                 <div id="holo-pack" class="pack-item holo hidden">
-                    <i class="fa-solid fa-star text-5xl mb-4 text-white drop-shadow-md"></i>
-                    <h3 class="font-bold text-xl text-white relative z-10">Daily Holo Pull</h3>
-                    <p class="text-xs text-white opacity-90 mt-2 relative z-10">Unlocked via Trade!</p>
+                    <div class="absolute inset-0 bg-black bg-opacity-20 z-0"></div>
+                    <i class="fa-solid fa-star text-5xl mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] relative z-10 animate-pulse"></i>
+                    <h3 class="font-bold text-2xl text-white relative z-10 tracking-wide drop-shadow-md">Daily Holo</h3>
+                    <p class="text-sm text-white opacity-90 mt-2 relative z-10 font-medium">Unlocked via Trade!</p>
                 </div>
             </div>
             
-            <div id="pack-loading" class="hidden text-center py-16">
-                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-blue-500 mb-4"></i>
-                <p class="text-gray-400 font-medium">Connecting to PokeAPI...</p>
+            <div id="pack-loading" class="hidden text-center py-20">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-16 h-16 mx-auto animate-spin mb-4" style="animation-duration: 1s;">
+                <p class="text-gray-300 font-bold text-lg tracking-wide">Opening Pack...</p>
+                <p class="text-xs text-gray-500 mt-2">Connecting to PokeAPI</p>
             </div>
 
-            <div id="pulls-view" class="hidden flex-col items-center pb-10">
-                <div class="w-full flex justify-between items-center mb-6">
-                    <span class="text-sm font-semibold text-gray-400">Card <span id="pull-current" class="text-white">1</span> / <span id="pull-total">10</span></span>
-                    <button id="btn-collect-all" class="text-sm font-bold text-blue-400 px-4 py-2 bg-[#2a2a2a] rounded-full border border-[#333]">Save to Binder</button>
+            <div id="pulls-view" class="hidden flex-col items-center pb-10 mt-4">
+                <div class="w-full max-w-sm flex justify-between items-center mb-8 px-4">
+                    <span class="text-xs font-bold text-gray-400 tracking-widest uppercase bg-[#252830] px-3 py-1.5 rounded-lg border border-[#333]">Card <span id="pull-current" class="text-white">1</span> / <span id="pull-total">10</span></span>
+                    <button id="btn-collect-all" class="text-xs font-bold text-blue-400 px-4 py-2 bg-[#252830] rounded-lg border border-[#333] hover:bg-[#2d313d] transition-colors">Save to Binder</button>
                 </div>
                 
-                <div id="single-pull-container" class="w-full max-w-[260px] mx-auto relative mb-8" style="perspective: 1000px;"></div>
+                <div id="single-pull-container" class="w-full max-w-[280px] mx-auto relative mb-10" style="perspective: 1000px;"></div>
                 
-                <div class="flex gap-4 w-full justify-center">
-                    <button id="btn-prev-card" class="btn-secondary px-8 rounded-full"><i class="fa-solid fa-arrow-left"></i></button>
-                    <button id="btn-next-card" class="btn-primary px-8 rounded-full"><i class="fa-solid fa-arrow-right"></i></button>
+                <div class="flex gap-6 w-full max-w-sm justify-center px-4">
+                    <button id="btn-prev-card" class="btn-secondary flex-1 py-4 rounded-xl text-lg"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button id="btn-next-card" class="btn-primary flex-1 py-4 rounded-xl text-lg"><i class="fa-solid fa-arrow-right"></i></button>
                 </div>
-                <p class="text-xs text-gray-500 mt-6 text-center">Tap card to flip</p>
+                <p class="text-[11px] font-bold tracking-widest uppercase text-gray-500 mt-8 text-center"><i class="fa-solid fa-hand-pointer mr-2"></i>Tap card to flip</p>
             </div>
         </div>
 
         <div id="screen-collection" class="screen">
-            <div class="flex justify-between items-end mb-6">
+            <div class="flex justify-between items-end mb-8 bg-[#1a1c23] p-4 rounded-2xl border border-[#333]">
                 <div>
-                    <h2 class="text-2xl font-bold">Binder</h2>
-                    <p class="text-sm text-gray-400"><span id="collection-total">0</span> Cards</p>
+                    <h2 class="text-2xl font-bold text-white mb-1">Binder</h2>
+                    <p class="text-xs text-gray-400 font-bold tracking-wide uppercase"><span id="collection-total" class="text-blue-400">0</span> Cards Total</p>
                 </div>
-                <select id="filter-collection" class="text-sm border border-[#333] rounded-lg px-3 py-2 bg-[#2a2a2a] text-white outline-none">
+                <select id="filter-collection" class="text-xs font-bold border border-[#333] rounded-xl px-4 py-2.5 bg-[#252830] text-white outline-none cursor-pointer">
                     <option value="all">All Cards</option>
-                    <option value="showcase">Showcase</option>
+                    <option value="showcase">Showcase ★</option>
                     <option value="legendary">Legendary</option>
                 </select>
             </div>
 
-            <div id="collection-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-3"></div>
+            <div id="collection-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4"></div>
             
-            <div id="empty-collection" class="hidden text-center py-24 text-gray-500">
-                <i class="fa-solid fa-folder-open text-5xl mb-4 opacity-50"></i>
-                <p class="font-medium">No cards found.</p>
+            <div id="empty-collection" class="hidden text-center py-32 text-gray-500">
+                <i class="fa-solid fa-folder-open text-6xl mb-6 opacity-30"></i>
+                <p class="font-bold text-lg text-gray-400">Binder is empty</p>
+                <p class="text-sm mt-2">Open packs to start your collection!</p>
             </div>
         </div>
 
         <div id="screen-network" class="screen">
-            <div class="flex justify-between items-center mb-2">
-                <h2 class="text-2xl font-bold">Radar</h2>
-                <button id="btn-refresh-network" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-rotate-right"></i></button>
+            <div class="flex justify-between items-center mb-4 mt-2">
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-1">Local Radar</h2>
+                    <p class="text-xs text-gray-400 font-medium">Discover trainers to unlock Global Friends.</p>
+                </div>
+                <button id="btn-refresh-network" class="text-gray-400 hover:text-white bg-[#252830] w-10 h-10 rounded-full border border-[#333] transition-colors flex items-center justify-center"><i class="fa-solid fa-rotate-right"></i></button>
             </div>
-            <p class="text-sm text-gray-400 mb-6">Discover local trainers to unlock Global Friends.</p>
             
-            <div class="radar-container bg-[#1a1a1a] rounded-2xl border border-[#333] overflow-hidden mb-8">
+            <div class="radar-container border border-[#333] mb-8 shadow-xl mt-6">
                 <div class="radar-pulse"></div>
                 <div class="radar-pulse"></div>
                 <div class="radar-pulse"></div>
                 
-                <div class="user-node shadow-[0_0_15px_rgba(59,130,246,0.5)]" style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 30;">
-                    <i class="fa-solid fa-user text-xl text-blue-500"></i>
-                    <span class="user-node-name text-white">You</span>
+                <div class="user-node absolute w-14 h-14 rounded-full bg-[#252830] border-2 border-blue-500 flex flex-col justify-center items-center z-30 shadow-[0_0_20px_rgba(59,130,246,0.6)]" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <i class="fa-solid fa-user text-xl text-blue-400 mb-0.5"></i>
+                    <span class="absolute -bottom-7 font-bold text-[10px] text-white bg-black bg-opacity-70 px-2.5 py-1 rounded-md tracking-wide">YOU</span>
                 </div>
                 
                 <div id="network-nodes"></div>
             </div>
             
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="font-bold text-white"><i class="fa-solid fa-user-group text-blue-400 mr-2"></i> Friends Online</h3>
+            <div class="flex items-center gap-2 mb-4 px-2">
+                <i class="fa-solid fa-user-group text-blue-400"></i>
+                <h3 class="font-bold text-white text-sm tracking-wide uppercase">Friends Online</h3>
             </div>
-            <div id="friends-list" class="space-y-3 mb-6 hidden"></div>
+            <div id="friends-list" class="space-y-3 mb-8 hidden"></div>
 
-            <h3 class="font-bold text-white mb-4 mt-8"><i class="fa-solid fa-location-dot text-red-400 mr-2"></i> Nearby Trainers</h3>
+            <div class="flex items-center gap-2 mb-4 px-2 mt-8">
+                <i class="fa-solid fa-location-dot text-red-400"></i>
+                <h3 class="font-bold text-white text-sm tracking-wide uppercase">Nearby Trainers</h3>
+            </div>
             <div id="network-list" class="space-y-3 hidden"></div>
+            <div id="network-empty" class="text-center py-10 bg-[#1a1c23] rounded-2xl border border-[#333]">
+                <i class="fa-solid fa-radar text-4xl text-gray-600 mb-3"></i>
+                <p class="text-sm font-bold text-gray-400">No trainers nearby</p>
+                <p class="text-xs text-gray-500 mt-1">Scanning frequencies...</p>
+            </div>
         </div>
 
         <div id="screen-info" class="screen">
-            <div class="card-surface p-5 mb-6 bg-gradient-to-br from-[#2a2a2a] to-[#1e1e1e]">
-                <div class="flex justify-between items-start mb-3">
-                    <h3 class="font-bold text-xl text-white" id="info-name">Trainer</h3>
-                    <button id="btn-edit-profile" class="text-blue-400 text-sm font-semibold bg-[#1a1a1a] px-3 py-1 rounded-lg">Edit</button>
+            <div class="card-surface p-6 mb-8 bg-gradient-to-br from-[#252830] to-[#1a1c23] shadow-xl relative overflow-hidden mt-4">
+                <div class="absolute -right-10 -top-10 opacity-5">
+                    <i class="fa-solid fa-dragon text-9xl"></i>
                 </div>
-                <div class="flex gap-2 mb-4">
-                    <span id="info-team" class="text-xs px-2 py-1 rounded font-bold uppercase tracking-wider border"></span>
-                    <span id="info-status" class="text-xs px-2 py-1 bg-[#1a1a1a] border border-[#333] rounded text-gray-300"></span>
+                
+                <div class="flex justify-between items-start mb-4 relative z-10">
+                    <div>
+                        <h3 class="font-bold text-2xl text-white mb-2" id="info-name">Trainer</h3>
+                        <div class="flex gap-2">
+                            <span id="info-team" class="text-[10px] px-2.5 py-1 rounded font-bold uppercase tracking-widest border"></span>
+                            <span id="info-status" class="text-[10px] px-2.5 py-1 bg-[#121319] border border-[#333] rounded text-gray-300 font-bold"></span>
+                        </div>
+                    </div>
+                    <button id="btn-edit-profile" class="text-blue-400 text-xs font-bold bg-[#121319] px-4 py-2 rounded-xl border border-[#333] shadow hover:bg-[#2d313d] transition-colors"><i class="fa-solid fa-pen mr-1"></i> Edit</button>
                 </div>
-                <div class="flex gap-4 text-sm border-t border-[#333] pt-4 mt-2">
-                    <div class="flex-1 text-center bg-[#1a1a1a] rounded-lg p-2"><div class="text-gray-400 text-xs">Cards</div><div class="font-bold text-white text-lg" id="info-card-count">0</div></div>
-                    <div class="flex-1 text-center bg-[#1a1a1a] rounded-lg p-2"><div class="text-gray-400 text-xs">Trades</div><div class="font-bold text-white text-lg" id="info-trade-count">0</div></div>
+                
+                <div class="flex gap-4 text-sm border-t border-[#333] pt-5 mt-5 relative z-10">
+                    <div class="flex-1 text-center bg-[#121319] rounded-xl p-3 border border-[#333]">
+                        <div class="text-gray-500 text-[10px] font-bold tracking-widest uppercase mb-1">Cards</div>
+                        <div class="font-bold text-white text-xl" id="info-card-count">0</div>
+                    </div>
+                    <div class="flex-1 text-center bg-[#121319] rounded-xl p-3 border border-[#333]">
+                        <div class="text-gray-500 text-[10px] font-bold tracking-widest uppercase mb-1">Trades</div>
+                        <div class="font-bold text-white text-xl" id="info-trade-count">0</div>
+                    </div>
                 </div>
             </div>
 
-            <h3 class="font-bold text-white mb-3 px-1">Information & FAQs</h3>
-            <div class="card-surface divide-y divide-[#333] mb-6">
-                <div class="p-4">
-                    <h4 class="font-semibold text-sm mb-2 text-blue-400 flex items-center gap-2"><i class="fa-solid fa-cloud"></i> Cloud Sync & Unique Profiles</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed">Your collection and unique username are synced to <strong>Firestore</strong> securely via silent platform authentication. Discover trainers locally via the Radar, and once you complete a trade, they become your <strong>Global Friend</strong> to trade with anywhere!</p>
+            <h3 class="font-bold text-white text-sm tracking-wide uppercase mb-4 px-2">Information & FAQs</h3>
+            <div class="card-surface divide-y divide-[#333] mb-6 shadow-md">
+                <div class="p-5">
+                    <h4 class="font-bold text-sm mb-2 text-blue-400 flex items-center gap-2"><i class="fa-solid fa-cloud"></i> Secure Sync & Identities</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed font-medium">Your collection and unique username are synced to <strong>Firestore</strong>. The new global registry prevents duplicate usernames. Authenticate via Google to safely preserve your collection across sessions and devices!</p>
                 </div>
-                <div class="p-4">
-                    <h4 class="font-semibold text-sm mb-2 text-white">Rarities & Data</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed">Cards generated via <span class="text-blue-400">PokeAPI.co</span>. Real rarity data fetched via <span class="text-blue-400">PogoAPI.net</span> when available, falling back to Base Stat Total (BST) calculations for untracked entries.</p>
+                <div class="p-5">
+                    <h4 class="font-bold text-sm mb-2 text-white flex items-center gap-2"><i class="fa-solid fa-chart-bar"></i> Rarities & Data</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed font-medium">Cards generated via <span class="text-blue-400">PokeAPI.co</span>. Real rarity data fetched via <span class="text-blue-400">PogoAPI.net</span> when available, falling back to Base Stat Total (BST) logic for untracked entries.</p>
                 </div>
             </div>
             
             <div class="text-center py-6">
-                <a href="https://instagram.com/skyeprobably" target="_blank" class="text-sm font-medium text-pink-500 hover:text-pink-400 bg-[#2a2a2a] px-4 py-2 rounded-full border border-[#333]">
-                    <i class="fa-brands fa-instagram mr-2"></i>@skyeprobably
+                <a href="https://instagram.com/skyeprobably" target="_blank" class="inline-flex items-center text-xs font-bold text-pink-400 hover:text-pink-300 bg-[#252830] px-5 py-2.5 rounded-full border border-[#333] shadow-md transition-transform hover:scale-105">
+                    <i class="fa-brands fa-instagram mr-2 text-lg"></i>@skyeprobably
                 </a>
             </div>
         </div>
@@ -274,7 +372,7 @@
         <div class="nav-item active" data-target="screen-packs"><i class="fa-solid fa-box-open"></i><span>Packs</span></div>
         <div class="nav-item" data-target="screen-collection"><i class="fa-solid fa-book"></i><span>Binder</span></div>
         <div class="nav-item relative" data-target="screen-network">
-            <div id="trade-badge" class="absolute top-0 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-[#1e1e1e] hidden animate-bounce"></div>
+            <div id="trade-badge" class="absolute top-0 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-[#1a1c23] hidden animate-bounce shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
             <i class="fa-solid fa-radar"></i><span>Radar</span>
         </div>
         <div class="nav-item" data-target="screen-info"><i class="fa-solid fa-user"></i><span>Profile</span></div>
@@ -282,78 +380,84 @@
 
     <div id="modal-card-detail" class="modal-overlay">
         <div class="w-full max-w-sm flex flex-col items-center">
-            <div id="detail-card-container" class="w-full max-w-[260px] mb-6" style="perspective: 1000px;"></div>
-            <div class="flex w-full gap-3 bg-[#1e1e1e] p-4 rounded-2xl border border-[#333]">
-                <button id="btn-toggle-showcase" class="btn-secondary flex-1 flex items-center justify-center gap-2">
-                    <i class="fa-regular fa-star" id="showcase-icon"></i> Showcase
+            <div id="detail-card-container" class="w-full max-w-[280px] mb-8" style="perspective: 1000px;"></div>
+            <div class="flex w-full gap-4 bg-[#1a1c23] p-4 rounded-2xl border border-[#333] shadow-2xl">
+                <button id="btn-toggle-showcase" class="btn-secondary flex-1 flex items-center justify-center gap-2 py-3 bg-[#252830]">
+                    <i class="fa-regular fa-star text-lg" id="showcase-icon"></i> <span class="font-bold">Showcase</span>
                 </button>
-                <button class="btn-primary flex-1 close-modal">Close</button>
+                <button class="btn-primary flex-1 close-modal py-3">Close</button>
             </div>
         </div>
     </div>
 
     <div id="modal-trade" class="modal-overlay">
-        <div class="card-surface w-full max-w-md h-[85vh] flex flex-col overflow-hidden">
-            <div class="p-4 border-b border-[#333] flex justify-between items-center bg-[#2a2a2a]">
-                <div class="font-bold text-white">Trade w/ <span id="trade-partner-name" class="text-blue-400">Trainer</span></div>
-                <button class="close-trade text-gray-400 hover:text-white bg-[#1a1a1a] w-8 h-8 rounded-full flex items-center justify-center"><i class="fa-solid fa-times"></i></button>
+        <div class="card-surface w-full max-w-md h-[85vh] flex flex-col overflow-hidden shadow-2xl">
+            <div class="p-5 border-b border-[#333] flex justify-between items-center bg-[#252830]">
+                <div class="font-bold text-white text-lg">Trade <span class="text-gray-500 text-sm mx-2">w/</span> <span id="trade-partner-name" class="text-blue-400">Trainer</span></div>
+                <button class="close-trade text-gray-400 hover:text-white bg-[#121319] w-8 h-8 rounded-full flex items-center justify-center border border-[#333] transition-colors"><i class="fa-solid fa-times"></i></button>
             </div>
             
-            <div class="flex-1 flex flex-col p-4 overflow-y-auto bg-[#121212]">
-                <div class="flex justify-between items-center mb-6">
-                    <div class="w-[45%] flex flex-col items-center">
-                        <span class="text-[10px] font-bold text-gray-500 mb-2 tracking-wider">YOU OFFER</span>
-                        <div id="my-offer-slot" class="trade-slot w-full cursor-pointer hover:border-blue-400 transition-colors bg-[#1e1e1e]">
-                            <i class="fa-solid fa-plus text-gray-600 text-2xl" id="my-offer-plus"></i>
-                            <img src="" id="my-offer-img" class="hidden rounded-lg">
-                            <button id="btn-remove-offer" class="absolute -top-3 -right-3 bg-red-500 text-white rounded-full w-8 h-8 text-sm hidden shadow-lg z-10"><i class="fa-solid fa-times"></i></button>
+            <div class="flex-1 flex flex-col p-5 overflow-y-auto bg-[#0f1014]">
+                <div class="flex justify-between items-center mb-8 bg-[#1a1c23] p-4 rounded-2xl border border-[#333]">
+                    <div class="w-[42%] flex flex-col items-center">
+                        <span class="text-[9px] font-bold text-blue-400 mb-3 tracking-widest uppercase">You Offer</span>
+                        <div id="my-offer-slot" class="trade-slot w-full cursor-pointer hover:border-blue-400 transition-colors bg-[#121319] shadow-inner">
+                            <i class="fa-solid fa-plus text-gray-600 text-3xl" id="my-offer-plus"></i>
+                            <img src="" id="my-offer-img" class="hidden rounded-lg shadow-md">
+                            <button id="btn-remove-offer" class="absolute -top-3 -right-3 bg-red-500 text-white rounded-full w-8 h-8 text-sm hidden shadow-lg z-10 border-2 border-[#121319]"><i class="fa-solid fa-times"></i></button>
                         </div>
-                        <span id="my-trade-status" class="text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-[#2a2a2a] text-gray-400">Selecting...</span>
+                        <span id="my-trade-status" class="text-[10px] font-bold mt-4 px-3 py-1.5 rounded-md bg-[#252830] text-gray-400 border border-[#333] w-full text-center">Selecting...</span>
                     </div>
                     
-                    <i class="fa-solid fa-right-left text-gray-600 text-xl"></i>
+                    <div class="w-10 h-10 rounded-full bg-[#252830] flex items-center justify-center border border-[#333] shadow-lg relative z-10">
+                        <i class="fa-solid fa-right-left text-gray-400 text-sm"></i>
+                    </div>
                     
-                    <div class="w-[45%] flex flex-col items-center">
-                        <span class="text-[10px] font-bold text-gray-500 mb-2 tracking-wider">THEY OFFER</span>
-                        <div id="their-offer-slot" class="trade-slot w-full bg-[#1e1e1e]">
-                            <i class="fa-solid fa-question text-gray-700 text-2xl" id="their-offer-q"></i>
-                            <img src="" id="their-offer-img" class="hidden rounded-lg">
+                    <div class="w-[42%] flex flex-col items-center">
+                        <span class="text-[9px] font-bold text-red-400 mb-3 tracking-widest uppercase">They Offer</span>
+                        <div id="their-offer-slot" class="trade-slot w-full bg-[#121319] shadow-inner">
+                            <i class="fa-solid fa-question text-gray-700 text-3xl opacity-50" id="their-offer-q"></i>
+                            <img src="" id="their-offer-img" class="hidden rounded-lg shadow-md">
                         </div>
-                        <span id="their-trade-status" class="text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-[#2a2a2a] text-gray-400">Selecting...</span>
+                        <span id="their-trade-status" class="text-[10px] font-bold mt-4 px-3 py-1.5 rounded-md bg-[#252830] text-gray-400 border border-[#333] w-full text-center">Selecting...</span>
                     </div>
                 </div>
                 
-                <div class="flex-1 border border-[#333] rounded-xl flex flex-col overflow-hidden bg-[#1e1e1e]">
-                    <div id="trade-chat-messages" class="flex-1 p-3 overflow-y-auto flex flex-col gap-3"></div>
-                    <div class="flex border-t border-[#333] bg-[#2a2a2a] p-2">
-                        <input type="text" id="trade-chat-input" class="flex-1 px-3 py-2 text-sm outline-none bg-transparent text-white" placeholder="Message...">
-                        <button id="btn-send-chat" class="px-3 text-blue-400 font-bold hover:text-blue-300"><i class="fa-solid fa-paper-plane"></i></button>
+                <div class="flex-1 border border-[#333] rounded-2xl flex flex-col overflow-hidden bg-[#1a1c23] shadow-inner">
+                    <div class="bg-[#252830] px-4 py-2 border-b border-[#333] flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-green-500 text-xs"></i>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Secure Channel</span>
+                    </div>
+                    <div id="trade-chat-messages" class="flex-1 p-4 overflow-y-auto flex flex-col gap-4"></div>
+                    <div class="flex border-t border-[#333] bg-[#252830] p-3">
+                        <input type="text" id="trade-chat-input" class="flex-1 px-4 py-2 text-sm outline-none bg-[#121319] border border-[#333] rounded-xl text-white font-medium focus:border-blue-500 transition-colors" placeholder="Type a message...">
+                        <button id="btn-send-chat" class="w-10 h-10 ml-2 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold hover:bg-blue-500 transition-colors shadow-lg"><i class="fa-solid fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
             
-            <div class="p-4 border-t border-[#333] bg-[#2a2a2a] flex gap-3">
-                <button id="btn-trade-lock" class="btn-secondary flex-1 py-3 text-white border-gray-500">Lock Offer</button>
-                <button id="btn-trade-accept" class="btn-primary flex-1 hidden bg-green-500 py-3">Accept Trade</button>
+            <div class="p-5 border-t border-[#333] bg-[#1a1c23] flex gap-4">
+                <button id="btn-trade-lock" class="btn-secondary flex-1 py-4 text-white border-gray-500 bg-[#252830]">Lock Offer</button>
+                <button id="btn-trade-accept" class="btn-primary flex-1 hidden bg-green-500 py-4 shadow-[0_4px_15px_rgba(34,197,94,0.3)]">Accept Trade</button>
             </div>
         </div>
     </div>
 
     <div id="modal-select-card" class="modal-overlay" style="z-index: 110;">
-        <div class="card-surface w-full max-w-md h-[75vh] flex flex-col overflow-hidden bg-[#1e1e1e]">
-            <div class="p-4 border-b border-[#333] flex justify-between items-center bg-[#2a2a2a]">
-                <h3 class="font-bold text-white">Select Card</h3>
-                <button class="close-select text-gray-400 hover:text-white bg-[#1a1a1a] w-8 h-8 rounded-full"><i class="fa-solid fa-times"></i></button>
+        <div class="card-surface w-full max-w-md h-[75vh] flex flex-col overflow-hidden bg-[#1a1c23]">
+            <div class="p-4 border-b border-[#333] flex justify-between items-center bg-[#252830]">
+                <h3 class="font-bold text-white text-lg">Select Card for Trade</h3>
+                <button class="close-select text-gray-400 hover:text-white bg-[#121319] w-8 h-8 rounded-full border border-[#333]"><i class="fa-solid fa-times"></i></button>
             </div>
-            <div class="flex-1 overflow-y-auto p-4 no-scrollbar">
-                <div id="trade-collection-grid" class="grid grid-cols-3 gap-3"></div>
+            <div class="flex-1 overflow-y-auto p-4 no-scrollbar bg-[#0f1014]">
+                <div id="trade-collection-grid" class="grid grid-cols-3 gap-4"></div>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
@@ -380,6 +484,7 @@
             packs: { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false },
             onlineUsers: {},
             userId: null,
+            isAnonymous: true,
             currentPulls: [], pullIndex: 0, activeTrade: null,
             pogoRarities: {} 
         };
@@ -393,7 +498,8 @@
             holoPackUI: document.getElementById('holo-pack'),
             packLoading: document.getElementById('pack-loading'),
             pullsView: document.getElementById('pulls-view'),
-            toastContainer: document.getElementById('toast-container')
+            toastContainer: document.getElementById('toast-container'),
+            googleSection: document.getElementById('google-auth-section')
         };
 
         let db, auth;
@@ -408,20 +514,23 @@
                 db = getFirestore(app);
                 auth = getAuth(app);
 
-                if (typeof __initial_auth_token !== 'undefined') {
+                // Authenticate: Custom token (Canvas env) or Anonymous (fallback)
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
                     await signInAnonymously(auth);
                 }
 
                 state.userId = auth.currentUser.uid;
+                state.isAnonymous = auth.currentUser.isAnonymous;
+
                 DOM.statusDot.classList.replace('bg-red-500', 'bg-green-500');
                 DOM.statusDot.style.boxShadow = '0 0 8px rgba(34,197,94,0.6)';
                 
                 await loadCloudData();
 
             } catch (error) { 
-                showToast("Network error during initialization.", "error"); 
+                showToast("Network error. Working offline.", "error"); 
                 switchScreen('screen-setup');
             }
             
@@ -441,23 +550,23 @@
             } catch (e) { }
         }
 
-        function showToast(msg, type = 'info', duration = 3000, actions = null) {
+        function showToast(msg, type = 'info', duration = 3500, actions = null) {
             const toast = document.createElement('div');
             toast.className = 'toast';
-            let icon = '<i class="fa-solid fa-circle-info text-blue-500"></i>';
-            if (type === 'success') icon = '<i class="fa-solid fa-circle-check text-green-500"></i>';
-            if (type === 'error') icon = '<i class="fa-solid fa-circle-xmark text-red-500"></i>';
-            if (type === 'trade') icon = '<i class="fa-solid fa-right-left text-purple-500"></i>';
+            let icon = '<i class="fa-solid fa-circle-info text-blue-500 text-xl"></i>';
+            if (type === 'success') icon = '<i class="fa-solid fa-circle-check text-green-500 text-xl"></i>';
+            if (type === 'error') icon = '<i class="fa-solid fa-circle-xmark text-red-500 text-xl"></i>';
+            if (type === 'trade') icon = '<div class="w-8 h-8 rounded-full bg-blue-500 bg-opacity-20 flex items-center justify-center"><i class="fa-solid fa-right-left text-blue-400"></i></div>';
 
             let actionHtml = '';
             if (actions) {
                 actionHtml = `<div class="flex gap-2 ml-auto">
-                    <button class="bg-[#2a2a2a] border border-[#333] px-3 py-1.5 rounded-lg text-xs font-bold btn-decline">Decline</button>
-                    <button class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold btn-accept">Accept</button>
+                    <button class="bg-[#121319] border border-[#333] px-4 py-2 rounded-xl text-xs font-bold btn-decline hover:bg-[#1a1c23] transition">Decline</button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold btn-accept hover:bg-blue-500 transition shadow">Accept</button>
                 </div>`;
             }
 
-            toast.innerHTML = `${icon}<div class="text-sm font-medium flex-1">${msg}</div>${actionHtml}`;
+            toast.innerHTML = `${icon}<div class="text-sm font-bold flex-1">${msg}</div>${actionHtml}`;
             DOM.toastContainer.appendChild(toast);
 
             if (actions) {
@@ -476,51 +585,57 @@
 
         async function loadCloudData() {
             if (!db || !state.userId) return;
-            const docRef = doc(db, 'artifacts', appId, 'users', state.userId);
-            const docSnap = await getDoc(docRef);
-            
-            if (docSnap.exists()) {
-                const data = docSnap.data();
-                state.profile = data.profile || { id: state.userId, name: '', nameLower: '', team: '', info: '', trades: 0, friends: [] };
-                if(!state.profile.friends) state.profile.friends = [];
-                state.collection = data.collection || [];
-                state.packs = data.packs || { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false };
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'users', state.userId);
+                const docSnap = await getDoc(docRef);
                 
-                selectedTeam = state.profile.team;
-                
-                if (state.profile.name) {
-                    updateProfileUI();
-                    renderCollection();
-                    switchScreen('screen-packs');
-                    DOM.navItems.forEach(n => n.classList.remove('active'));
-                    document.querySelector('[data-target="screen-packs"]').classList.add('active');
-                    setupFirebaseListeners();
-                    updatePresence();
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    state.profile = data.profile || { id: state.userId, name: '', nameLower: '', team: '', info: '', trades: 0, friends: [] };
+                    if(!state.profile.friends) state.profile.friends = [];
+                    state.collection = data.collection || [];
+                    state.packs = data.packs || { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false };
+                    
+                    if (state.profile.name) {
+                        selectedTeam = state.profile.team;
+                        updateProfileUI();
+                        renderCollection();
+                        switchScreen('screen-packs');
+                        DOM.navItems.forEach(n => n.classList.remove('active'));
+                        document.querySelector('[data-target="screen-packs"]').classList.add('active');
+                        setupFirebaseListeners();
+                        updatePresence();
+                    } else {
+                        showSetupScreen();
+                    }
                 } else {
-                    switchScreen('screen-setup');
+                    state.profile.id = state.userId;
+                    state.profile.friends = [];
+                    showSetupScreen();
                 }
-            } else {
-                state.profile.id = state.userId;
-                state.profile.friends = [];
-                switchScreen('screen-setup');
+            } catch(e) {
+                showSetupScreen();
             }
         }
 
+        function showSetupScreen() {
+            if (state.isAnonymous) {
+                DOM.googleSection.classList.remove('hidden');
+            } else {
+                DOM.googleSection.classList.add('hidden');
+            }
+            switchScreen('screen-setup');
+        }
+
+        // Fix: Use public username registry for unique checks without complex queries
         async function checkUsernameUnique(username) {
-            const cleanName = username.trim();
-            const lowerName = cleanName.toLowerCase();
-            const querySnapshot = await getDocs(collection(db, 'artifacts', appId, 'users'));
-            
-            let isTaken = false;
-            querySnapshot.forEach(docSnap => {
-                if (docSnap.id !== state.userId) {
-                    const data = docSnap.data();
-                    if (data.profile && data.profile.nameLower === lowerName) {
-                        isTaken = true;
-                    }
-                }
-            });
-            return !isTaken;
+            const lowerName = username.toLowerCase();
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'usernames', lowerName);
+            const snap = await getDoc(docRef);
+            if (snap.exists() && snap.data().uid !== state.userId) {
+                return false; // Taken by someone else
+            }
+            return true; // Available or owned by the current user
         }
 
         async function saveCloudData() {
@@ -533,17 +648,40 @@
                     packs: state.packs
                 });
             } catch (e) {
-                showToast("Failed to save profile.", "error");
+                showToast("Network error saving profile.", "error");
             }
         }
 
         function switchScreen(id) {
             DOM.screens.forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if(id === 'screen-network' && db && state.profile.name) updatePresence();
+            if(id === 'screen-network' && db && state.profile.name) {
+                updatePresence(); 
+                renderNetworkList();
+            }
         }
 
         function setupEventListeners() {
+            // Google Sign In (Requires export or non-iframe environment due to popup blocks usually)
+            document.getElementById('btn-google-signin').addEventListener('click', async () => {
+                const provider = new GoogleAuthProvider();
+                try {
+                    const result = await signInWithPopup(auth, provider);
+                    state.userId = result.user.uid;
+                    state.isAnonymous = false;
+                    showToast("Google Sign-In successful!", "success");
+                    
+                    DOM.googleSection.classList.add('hidden');
+                    
+                    // Show loading briefly then load their profile
+                    switchScreen('screen-loading');
+                    await loadCloudData();
+                } catch(error) {
+                    if(error.code === 'auth/popup-closed-by-user') return;
+                    showToast("Popup blocked by environment. Try playing as guest.", "error");
+                }
+            });
+
             DOM.navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
                     const target = e.currentTarget;
@@ -556,56 +694,84 @@
 
             document.querySelectorAll('.team-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.team-btn').forEach(b => { b.classList.remove('bg-[#2a2a2a]'); b.style.backgroundColor = 'transparent'; b.style.color = ''; });
-                    e.target.classList.add('bg-[#2a2a2a]');
-                    const t = e.target.dataset.team;
-                    selectedTeam = t;
-                    e.target.style.backgroundColor = t === 'Valor' ? 'rgba(239,68,68,0.2)' : t === 'Mystic' ? 'rgba(59,130,246,0.2)' : 'rgba(234,179,8,0.2)';
+                    document.querySelectorAll('.team-btn').forEach(b => b.classList.remove('selected'));
+                    const target = e.currentTarget;
+                    target.classList.add('selected');
+                    selectedTeam = target.dataset.team;
                 });
             });
 
+            // Save profile logic with new registry architecture
             document.getElementById('btn-save-profile').addEventListener('click', async () => {
                 const username = document.getElementById('setup-username').value.trim();
                 const info = document.getElementById('setup-info').value.trim();
+                const btn = document.getElementById('btn-save-profile');
 
                 if (!username) { showToast("Username is required.", "error"); return; }
+                if (username.length < 3) { showToast("Username must be at least 3 characters.", "error"); return; }
                 if (!selectedTeam) { showToast("Please select a team.", "error"); return; }
 
-                if (username.toLowerCase() !== state.profile.nameLower) {
-                    const isUnique = await checkUsernameUnique(username);
-                    if (!isUnique) {
-                        showToast(`"${username}" is already taken! Choose another.`, "error");
-                        return;
+                const lowerName = username.toLowerCase();
+                const originalBtnContent = btn.innerHTML;
+                
+                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Saving...';
+                btn.disabled = true;
+
+                try {
+                    // Check uniqueness if name changed
+                    if (lowerName !== state.profile.nameLower) {
+                        const isUnique = await checkUsernameUnique(username);
+                        if (!isUnique) {
+                            showToast(`"${username}" is already taken!`, "error");
+                            btn.innerHTML = originalBtnContent;
+                            btn.disabled = false;
+                            return;
+                        }
+                        
+                        // Remove old name from registry if they had one
+                        if (state.profile.nameLower) {
+                            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'usernames', state.profile.nameLower)); } catch(e){}
+                        }
+                        // Add new name to registry
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'usernames', lowerName), { uid: state.userId });
                     }
+
+                    state.profile.name = username;
+                    state.profile.nameLower = lowerName;
+                    state.profile.team = selectedTeam;
+                    state.profile.info = info || 'Ready to trade';
+                    state.profile.id = state.userId;
+
+                    await saveCloudData();
+                    setupFirebaseListeners(); 
+                    updatePresence();
+
+                    showToast("Profile secured!", "success");
+                    DOM.navItems.forEach(n => n.classList.remove('active'));
+                    switchScreen('screen-packs');
+                    document.querySelector('[data-target="screen-packs"]').classList.add('active');
+                } catch(e) {
+                    showToast("Failed to save profile. Try again.", "error");
+                } finally {
+                    btn.innerHTML = originalBtnContent;
+                    btn.disabled = false;
                 }
-
-                state.profile.name = username;
-                state.profile.nameLower = username.toLowerCase();
-                state.profile.team = selectedTeam;
-                state.profile.info = info || 'Ready to trade';
-                state.profile.id = state.userId;
-
-                await saveCloudData();
-                setupFirebaseListeners(); 
-                updatePresence();
-
-                showToast("Profile updated!", "success");
-                DOM.navItems.forEach(n => n.classList.remove('active'));
-                switchScreen('screen-packs');
-                document.querySelector('[data-target="screen-packs"]').classList.add('active');
             });
 
             document.getElementById('btn-edit-profile').addEventListener('click', () => {
                 document.getElementById('setup-username').value = state.profile.name;
                 document.getElementById('setup-info').value = state.profile.info;
                 document.querySelectorAll('.team-btn').forEach(b => {
-                    b.classList.remove('bg-[#2a2a2a]'); b.style.backgroundColor = 'transparent'; b.style.color = '';
+                    b.classList.remove('selected');
                     if (b.dataset.team === state.profile.team) {
-                        b.classList.add('bg-[#2a2a2a]');
-                        b.style.backgroundColor = state.profile.team === 'Valor' ? 'rgba(239,68,68,0.2)' : state.profile.team === 'Mystic' ? 'rgba(59,130,246,0.2)' : 'rgba(234,179,8,0.2)';
+                        b.classList.add('selected');
                         selectedTeam = state.profile.team;
                     }
                 });
+                
+                // Hide Google sign in on edit
+                DOM.googleSection.classList.add('hidden');
+                
                 switchScreen('screen-setup');
             });
 
@@ -655,8 +821,8 @@
             
             const teamEl = document.getElementById('info-team');
             teamEl.textContent = state.profile.team;
-            const c = state.profile.team === 'Valor' ? '#ef4444' : state.profile.team === 'Mystic' ? '#3b82f6' : '#eab308';
-            teamEl.style.color = c; teamEl.style.borderColor = c; teamEl.style.backgroundColor = `${c}22`;
+            const c = state.profile.team === 'Valor' ? 'var(--valor)' : state.profile.team === 'Mystic' ? 'var(--mystic)' : 'var(--instinct)';
+            teamEl.style.color = c; teamEl.style.borderColor = c; teamEl.style.backgroundColor = `rgba(${c === 'var(--valor)' ? '239,68,68' : c === 'var(--mystic)' ? '59,130,246' : '234,179,8'}, 0.15)`;
         }
 
         function getRarity(id, bst) {
@@ -664,53 +830,53 @@
                 const r = state.pogoRarities[id].toLowerCase();
                 if (r.includes('mythic')) return { name: 'Mythic Holo', class: 'rarity-legendary mythic-holo' };
                 if (r.includes('legendary')) return { name: r, class: 'rarity-legendary' };
-                if (r.includes('rare') || r.includes('ultra')) return { name: r, class: 'rarity-rare border-[#a855f7]' };
-                return { name: r, class: 'rarity-common border-[#64748b]' };
+                if (r.includes('rare') || r.includes('ultra')) return { name: r, class: 'rarity-rare' };
+                return { name: r, class: 'rarity-common' };
             }
             if (bst > 580) return { name: 'Legendary', class: 'rarity-legendary' };
-            if (bst > 450) return { name: 'Rare', class: 'rarity-rare border-[#a855f7]' };
-            if (bst > 300) return { name: 'Uncommon', class: 'rarity-uncommon border-[#22c55e]' };
-            return { name: 'Common', class: 'rarity-common border-[#64748b]' };
+            if (bst > 450) return { name: 'Rare', class: 'rarity-rare' };
+            if (bst > 300) return { name: 'Uncommon', class: 'rarity-uncommon' };
+            return { name: 'Common', class: 'rarity-common' };
         }
 
         function generateCardHTML(cardData, showInstance = false) {
-            const badges = cardData.types.map(t => `<span class="type-badge" style="background-color: ${typeColors[t] || '#777'}">${t}</span>`).join(' ');
-            let tagColor = 'text-gray-600 bg-gray-400';
-            if (cardData.rarityClass.includes('legendary')) tagColor = 'text-yellow-600 bg-yellow-400';
-            else if (cardData.rarityClass.includes('rare')) tagColor = 'text-purple-600 bg-purple-400';
-            else if (cardData.rarityClass.includes('uncommon')) tagColor = 'text-green-600 bg-green-400';
+            const badges = cardData.types.map(t => `<span class="px-2 py-0.5 rounded-md text-[9px] font-bold text-white uppercase shadow-sm" style="background-color: ${typeColors[t] || '#777'}">${t}</span>`).join(' ');
+            let tagColor = 'text-gray-700 bg-gray-300';
+            if (cardData.rarityClass.includes('legendary')) tagColor = 'text-yellow-800 bg-yellow-400';
+            else if (cardData.rarityClass.includes('rare')) tagColor = 'text-purple-800 bg-purple-400';
+            else if (cardData.rarityClass.includes('uncommon')) tagColor = 'text-green-800 bg-green-400';
 
             return `
                 <div class="flip-card w-full h-full ${showInstance && cardData.showcase ? 'holo-effect' : ''}">
                     <div class="flip-card-inner ${cardData.rarityClass}">
-                        <div class="flip-card-front flex flex-col bg-[#e0e0e0]">
-                            <div class="card-header bg-[#f8f9fa] border-b-2 border-gray-300">
-                                <div class="card-name text-gray-800">${cardData.name}</div>
+                        <div class="flip-card-front flex flex-col bg-[#e5e7eb]">
+                            <div class="card-header">
+                                <div class="card-name">${cardData.name}</div>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[8px] font-bold px-1 rounded uppercase bg-opacity-20 ${tagColor}">${cardData.rarity.split(' ')[0]}</span>
+                                    <span class="text-[8px] font-extrabold px-1.5 py-0.5 rounded uppercase ${tagColor}">${cardData.rarity.split(' ')[0]}</span>
                                     <div class="card-hp">HP ${cardData.hp}</div>
                                 </div>
                             </div>
-                            <div class="card-img-container bg-gradient-to-br from-white to-gray-200">
+                            <div class="card-img-container">
                                 <img src="${cardData.image}" class="card-img" loading="lazy">
                             </div>
-                            <div class="p-2 bg-white flex justify-between items-center border-t-2 border-gray-200">
+                            <div class="p-2.5 bg-white flex justify-between items-center border-t-2 border-gray-200">
                                 <div class="flex gap-1">${badges}</div>
                             </div>
-                            <div class="card-stats bg-white text-gray-600 font-bold border-t border-gray-100 pb-3">
-                                <div class="flex justify-between"><span>ATK</span> <span>${cardData.atk}</span></div>
-                                <div class="flex justify-between"><span>DEF</span> <span>${cardData.def}</span></div>
-                                <div class="flex justify-between col-span-2 text-center text-[9px] text-gray-400 mt-1 pt-1 border-t">TAP TO FLIP</div>
+                            <div class="p-2.5 bg-white text-gray-700 font-bold border-t border-gray-100 pb-3 text-[11px]">
+                                <div class="flex justify-between mb-1"><span>Attack</span> <span>${cardData.atk}</span></div>
+                                <div class="flex justify-between"><span>Defense</span> <span>${cardData.def}</span></div>
+                                <div class="text-center text-[9px] text-gray-400 mt-2 pt-2 border-t font-extrabold tracking-widest uppercase">Tap to flip</div>
                             </div>
                         </div>
-                        <div class="flip-card-back p-4 text-center">
-                            <div class="w-20 h-20 bg-black bg-opacity-30 rounded-full flex items-center justify-center mb-4 mx-auto">
-                                <img src="${cardData.gif || cardData.image}" class="w-16 h-16 object-contain filter drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" loading="lazy">
+                        <div class="flip-card-back p-5 text-center">
+                            <div class="w-24 h-24 bg-black bg-opacity-40 rounded-full flex items-center justify-center mb-6 mx-auto border-4 border-gray-700 shadow-inner">
+                                <img src="${cardData.gif || cardData.image}" class="w-20 h-20 object-contain filter drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]" loading="lazy">
                             </div>
-                            <div class="text-xl font-pokemon text-white mb-2 tracking-widest">${cardData.name}</div>
-                            <div class="text-[10px] font-bold text-gray-300 uppercase tracking-widest bg-black bg-opacity-40 px-3 py-1 rounded-full border border-gray-600 mb-2 inline-block">${cardData.rarity}</div>
-                            <div class="text-[10px] text-gray-500 mt-auto block">BST: ${cardData.bst} • ID: #${cardData.apiId}</div>
-                            ${showInstance && cardData.showcase ? '<div class="absolute top-2 right-2 text-yellow-400 text-xl drop-shadow-[0_0_5px_rgba(251,191,36,1)]"><i class="fa-solid fa-star"></i></div>' : ''}
+                            <div class="text-2xl font-pokemon text-white mb-3 tracking-widest drop-shadow-md">${cardData.name}</div>
+                            <div class="text-[10px] font-bold text-white uppercase tracking-widest bg-black bg-opacity-50 px-4 py-1.5 rounded-lg border border-gray-600 inline-block shadow">${cardData.rarity}</div>
+                            <div class="text-[10px] text-gray-400 mt-auto block font-medium">BST: ${cardData.bst} • ID: #${cardData.apiId}</div>
+                            ${showInstance && cardData.showcase ? '<div class="absolute top-3 right-3 text-yellow-400 text-2xl drop-shadow-[0_0_10px_rgba(251,191,36,1)]"><i class="fa-solid fa-star"></i></div>' : ''}
                         </div>
                     </div>
                 </div>
@@ -826,20 +992,20 @@
                 grid.classList.remove('hidden'); empty.classList.add('hidden');
                 displayCards.forEach(card => {
                     const el = document.createElement('div');
-                    el.className = `aspect-[63/88] rounded-xl overflow-hidden cursor-pointer relative border-2 ${card.rarityClass} ${card.showcase ? 'holo-effect' : ''} bg-[#e0e0e0]`;
+                    el.className = `aspect-[63/88] rounded-xl overflow-hidden cursor-pointer relative border-2 ${card.rarityClass} ${card.showcase ? 'holo-effect' : ''} bg-[#e5e7eb] shadow-md hover:scale-105 transition-transform`;
                     
-                    let tagColor = 'text-gray-600 bg-gray-400';
-                    if (card.rarityClass.includes('legendary')) tagColor = 'text-yellow-600 bg-yellow-400';
-                    else if (card.rarityClass.includes('rare')) tagColor = 'text-purple-600 bg-purple-400';
-                    else if (card.rarityClass.includes('uncommon')) tagColor = 'text-green-600 bg-green-400';
+                    let tagColor = 'text-gray-700 bg-gray-300';
+                    if (card.rarityClass.includes('legendary')) tagColor = 'text-yellow-800 bg-yellow-400';
+                    else if (card.rarityClass.includes('rare')) tagColor = 'text-purple-800 bg-purple-400';
+                    else if (card.rarityClass.includes('uncommon')) tagColor = 'text-green-800 bg-green-400';
 
                     el.innerHTML = `
-                        <div class="absolute inset-0 p-1 flex justify-center items-center bg-gradient-to-br from-white to-gray-200">
-                            <img src="${card.image}" class="w-full h-full object-contain filter drop-shadow-md z-10" loading="lazy">
+                        <div class="absolute inset-0 p-1 flex justify-center items-center bg-radial-gradient">
+                            <img src="${card.image}" class="w-full h-full object-contain filter drop-shadow z-10" loading="lazy">
                         </div>
-                        <div class="absolute top-1 left-1 px-1 rounded bg-opacity-30 ${tagColor} text-white text-[8px] font-bold uppercase backdrop-blur-sm z-30">${card.rarity.split(' ')[0]}</div>
-                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white text-[9px] font-bold p-1 truncate text-center z-20 backdrop-blur-sm">${card.name}</div>
-                        ${card.showcase ? '<div class="absolute top-1 right-1 text-yellow-400 z-30 drop-shadow"><i class="fa-solid fa-star text-[10px]"></i></div>' : ''}
+                        <div class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded shadow ${tagColor} text-[8px] font-extrabold uppercase backdrop-blur-md z-30">${card.rarity.split(' ')[0]}</div>
+                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-80 text-white text-[9px] font-bold py-1.5 px-1 truncate text-center z-20 backdrop-blur-md border-t border-gray-700">${card.name}</div>
+                        ${card.showcase ? '<div class="absolute top-1.5 right-1.5 text-yellow-400 z-30 drop-shadow-md"><i class="fa-solid fa-star text-[10px]"></i></div>' : ''}
                     `;
                     el.addEventListener('click', () => openCardDetail(card));
                     grid.appendChild(el);
@@ -878,7 +1044,7 @@
             const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'presence');
             firebaseListeners.presence = onSnapshot(usersRef, (snapshot) => {
                 state.onlineUsers = {}; const now = Date.now();
-                snapshot.forEach(doc => { const data = doc.data(); if (data.id !== state.userId && (now - data.lastSeen) < 120000) state.onlineUsers[doc.id] = data; });
+                snapshot.forEach(doc => { const data = doc.data(); if (data.id !== state.userId && (now - data.lastSeen) < 180000) state.onlineUsers[doc.id] = data; });
                 renderNetworkList();
             });
 
@@ -912,43 +1078,51 @@
             const list = document.getElementById('network-nodes');
             const textList = document.getElementById('network-list');
             const friendsList = document.getElementById('friends-list');
+            const emptyState = document.getElementById('network-empty');
             
             list.innerHTML = ''; textList.innerHTML = ''; friendsList.innerHTML = '';
             
             const uids = Object.keys(state.onlineUsers);
-            if (uids.length > 0) { textList.classList.remove('hidden'); }
+            if (uids.length > 0) { 
+                textList.classList.remove('hidden'); 
+                emptyState.classList.add('hidden');
+            } else {
+                textList.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+            }
             
             let hasFriendsOnline = false;
 
             uids.forEach((uid, idx) => {
                 const u = state.onlineUsers[uid];
-                const c = u.team === 'Valor' ? '#ef4444' : u.team === 'Mystic' ? '#3b82f6' : '#eab308';
+                const c = u.team === 'Valor' ? 'var(--valor)' : u.team === 'Mystic' ? 'var(--mystic)' : 'var(--instinct)';
+                const bgC = u.team === 'Valor' ? 'rgba(239,68,68,0.2)' : u.team === 'Mystic' ? 'rgba(59,130,246,0.2)' : 'rgba(234,179,8,0.2)';
                 
                 const isFriend = state.profile.friends && state.profile.friends.includes(uid);
                 
                 if (isFriend) {
                     hasFriendsOnline = true;
                     const el = document.createElement('div');
-                    el.className = 'bg-[#1a1a1a] border border-[#333] rounded-xl p-3 flex justify-between items-center';
-                    el.innerHTML = `<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center font-bold border bg-opacity-20" style="color:${c}; border-color:${c}; background-color:${c}22">${u.name.charAt(0)}</div><div class="flex flex-col"><span class="font-bold text-sm text-white">${u.name} <i class="fa-solid fa-star text-yellow-500 text-[10px] ml-1"></i></span><span class="text-xs text-gray-400">${u.info}</span></div></div><button class="btn-request-trade text-sm font-bold bg-blue-600 text-white px-4 py-2 rounded-lg">Trade</button>`;
+                    el.className = 'bg-[#252830] border border-[#333] rounded-2xl p-4 flex justify-between items-center shadow-md';
+                    el.innerHTML = `<div class="flex items-center gap-4"><div class="w-12 h-12 rounded-full flex items-center justify-center font-bold border-2" style="color:${c}; border-color:${c}; background-color:${bgC}">${u.name.charAt(0).toUpperCase()}</div><div class="flex flex-col"><span class="font-bold text-sm text-white">${u.name} <i class="fa-solid fa-star text-yellow-500 text-[10px] ml-1 drop-shadow"></i></span><span class="text-[11px] font-medium text-gray-400 mt-0.5">${u.info}</span></div></div><button class="btn-request-trade text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl shadow transition-colors">Trade</button>`;
                     el.querySelector('.btn-request-trade').addEventListener('click', () => initiateTrade(uid));
                     friendsList.appendChild(el);
                 } else {
                     const angle = (idx / uids.length) * Math.PI * 2;
-                    const radius = 20 + Math.random() * 25;
+                    const radius = 25 + Math.random() * 20;
                     const x = 50 + Math.cos(angle) * radius; const y = 50 + Math.sin(angle) * radius;
                     
                     const node = document.createElement('div');
-                    node.className = 'user-node absolute';
-                    node.style.left = `calc(${x}% - 25px)`; node.style.top = `calc(${y}% - 25px)`;
+                    node.className = 'user-node absolute cursor-pointer hover:scale-110 transition-transform hover:z-40';
+                    node.style.left = `calc(${x}% - 28px)`; node.style.top = `calc(${y}% - 28px)`;
                     node.style.borderColor = c;
-                    node.innerHTML = `<span class="font-bold text-lg" style="color:${c}">${u.name.charAt(0)}</span><span class="user-node-name">${u.name}</span>`;
+                    node.innerHTML = `<span class="font-bold text-lg" style="color:${c}">${u.name.charAt(0).toUpperCase()}</span><span class="absolute -bottom-7 font-bold text-[9px] text-white bg-black bg-opacity-70 px-2.5 py-1 rounded-md tracking-wide whitespace-nowrap">${u.name}</span>`;
                     node.addEventListener('click', () => initiateTrade(uid));
                     list.appendChild(node);
 
                     const el = document.createElement('div');
-                    el.className = 'bg-[#1a1a1a] border border-[#333] rounded-xl p-3 flex justify-between items-center';
-                    el.innerHTML = `<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center font-bold border bg-opacity-20" style="color:${c}; border-color:${c}; background-color:${c}22">${u.name.charAt(0)}</div><div class="flex flex-col"><span class="font-bold text-sm text-white">${u.name}</span><span class="text-xs text-gray-400">${u.info}</span></div></div><button class="btn-request-trade text-sm font-bold bg-blue-600 text-white px-4 py-2 rounded-lg">Trade</button>`;
+                    el.className = 'bg-[#1a1c23] border border-[#333] rounded-2xl p-4 flex justify-between items-center shadow';
+                    el.innerHTML = `<div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full flex items-center justify-center font-bold border" style="color:${c}; border-color:${c}; background-color:${bgC}">${u.name.charAt(0).toUpperCase()}</div><div class="flex flex-col"><span class="font-bold text-sm text-white">${u.name}</span><span class="text-[11px] font-medium text-gray-500 mt-0.5">${u.info}</span></div></div><button class="btn-request-trade text-xs font-bold bg-[#252830] border border-[#333] hover:bg-[#2d313d] text-white px-4 py-2 rounded-xl transition-colors">Trade</button>`;
                     el.querySelector('.btn-request-trade').addEventListener('click', () => initiateTrade(uid));
                     textList.appendChild(el);
                 }
@@ -969,7 +1143,7 @@
                     id: tradeId, status: 'requested', initiator: state.userId, receiver: targetUid, timestamp: Date.now(),
                     [state.userId]: { locked: false, offer: null, name: state.profile.name }, [targetUid]: { locked: false, offer: null, name: state.onlineUsers[targetUid].name }, chat: []
                 });
-                showToast("Trade request sent.", "info");
+                showToast("Trade request sent via Radar.", "info");
             } catch (e) { showToast("Failed to send request.", "error"); }
         }
 
@@ -981,7 +1155,7 @@
             document.getElementById('my-offer-plus').classList.remove('hidden'); document.getElementById('btn-remove-offer').classList.add('hidden');
             document.getElementById('their-offer-img').classList.add('hidden'); document.getElementById('their-offer-img').src = '';
             document.getElementById('their-offer-q').classList.remove('hidden');
-            document.getElementById('trade-chat-messages').innerHTML = '<div class="text-center text-[10px] text-gray-500 my-2 font-bold uppercase tracking-wider">Connection Secure</div>';
+            document.getElementById('trade-chat-messages').innerHTML = '<div class="text-center text-[10px] text-gray-500 my-2 font-bold uppercase tracking-wider"><i class="fa-solid fa-lock text-green-500 mr-1"></i> Connection Secure</div>';
             
             document.getElementById('modal-trade').classList.add('active');
             
@@ -1000,22 +1174,22 @@
             if (them.offer) { theirImg.src = them.offer.image; theirImg.classList.remove('hidden'); theirQ.classList.add('hidden'); } 
             else { theirImg.classList.add('hidden'); theirQ.classList.remove('hidden'); }
             
-            if (them.locked) { theirStatus.textContent = 'Locked'; theirStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-green-500 bg-opacity-20 text-green-400'; } 
-            else { theirStatus.textContent = them.offer ? 'Selected' : 'Selecting...'; theirStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-[#2a2a2a] text-gray-400'; }
+            if (them.locked) { theirStatus.textContent = 'Locked'; theirStatus.className = 'text-[10px] font-bold mt-4 px-3 py-1.5 rounded-md bg-green-500 bg-opacity-20 text-green-400 border border-green-500 border-opacity-30 w-full text-center'; } 
+            else { theirStatus.textContent = them.offer ? 'Selected' : 'Selecting...'; theirStatus.className = 'text-[10px] font-bold mt-4 px-3 py-1.5 rounded-md bg-[#252830] text-gray-400 border border-[#333] w-full text-center'; }
             
             const myStatus = document.getElementById('my-trade-status'), btnLock = document.getElementById('btn-trade-lock'), btnAccept = document.getElementById('btn-trade-accept');
             
             if (me.locked) {
-                myStatus.textContent = 'Locked'; myStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-green-500 bg-opacity-20 text-green-400';
-                btnLock.textContent = 'Unlock'; btnLock.classList.replace('btn-secondary', 'btn-primary'); btnLock.style.backgroundColor = '#ef4444'; document.getElementById('btn-remove-offer').classList.add('hidden');
+                myStatus.textContent = 'Locked'; myStatus.className = 'text-[10px] font-bold mt-4 px-3 py-1.5 rounded-md bg-green-500 bg-opacity-20 text-green-400 border border-green-500 border-opacity-30 w-full text-center';
+                btnLock.textContent = 'Unlock Offer'; btnLock.classList.replace('btn-secondary', 'btn-primary'); btnLock.style.background = '#ef4444'; btnLock.style.boxShadow = '0 4px 12px rgba(239,68,68,0.3)'; document.getElementById('btn-remove-offer').classList.add('hidden');
             } else {
-                myStatus.textContent = me.offer ? 'Selected' : 'Selecting...'; myStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-[#2a2a2a] text-gray-400';
-                btnLock.textContent = 'Lock Offer'; btnLock.classList.replace('btn-primary', 'btn-secondary'); btnLock.style.backgroundColor = 'transparent'; if(me.offer) document.getElementById('btn-remove-offer').classList.remove('hidden');
+                myStatus.textContent = me.offer ? 'Selected' : 'Selecting...'; myStatus.className = 'text-[10px] font-bold mt-4 px-3 py-1.5 rounded-md bg-[#252830] text-gray-400 border border-[#333] w-full text-center';
+                btnLock.textContent = 'Lock Offer'; btnLock.classList.replace('btn-primary', 'btn-secondary'); btnLock.style.background = '#252830'; btnLock.style.boxShadow = 'none'; if(me.offer) document.getElementById('btn-remove-offer').classList.remove('hidden');
             }
             
             if (me.locked && them.locked) {
                 btnAccept.classList.remove('hidden'); btnLock.classList.add('hidden');
-                if (me.accepted) { btnAccept.textContent = 'Waiting...'; btnAccept.disabled = true; } else { btnAccept.textContent = 'Accept Trade'; btnAccept.disabled = false; }
+                if (me.accepted) { btnAccept.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Waiting...'; btnAccept.disabled = true; } else { btnAccept.innerHTML = 'Accept Trade'; btnAccept.disabled = false; }
                 if (me.accepted && them.accepted) finishTradeFirebase(data);
             } else {
                 btnAccept.classList.add('hidden'); btnLock.classList.remove('hidden'); if(me.accepted) updateTradeState({ accepted: false });
@@ -1027,12 +1201,12 @@
             if (!state.activeTrade || document.getElementById('my-trade-status').textContent === 'Locked') return;
             const grid = document.getElementById('trade-collection-grid'); grid.innerHTML = '';
             
-            if (state.collection.length === 0) { grid.innerHTML = '<div class="col-span-3 text-center text-sm text-gray-500 py-10">Binder empty.</div>'; } 
+            if (state.collection.length === 0) { grid.innerHTML = '<div class="col-span-3 text-center text-sm font-medium text-gray-500 py-16">Binder is empty.</div>'; } 
             else {
                 state.collection.forEach(card => {
                     const el = document.createElement('div');
-                    el.className = `aspect-[63/88] border-2 ${card.rarityClass} rounded-lg bg-[#e0e0e0] cursor-pointer overflow-hidden p-1 flex justify-center items-center bg-gradient-to-br from-white to-gray-200`;
-                    el.innerHTML = `<img src="${card.image}" class="w-full h-full object-contain filter drop-shadow">`;
+                    el.className = `aspect-[63/88] border-2 ${card.rarityClass} rounded-xl bg-[#e5e7eb] cursor-pointer overflow-hidden p-1 flex justify-center items-center hover:scale-105 transition-transform shadow-md`;
+                    el.innerHTML = `<div class="absolute inset-0 bg-radial-gradient"></div><img src="${card.image}" class="w-full h-full object-contain filter drop-shadow relative z-10">`;
                     el.addEventListener('click', () => { selectOffer(card); document.getElementById('modal-select-card').classList.remove('active'); });
                     grid.appendChild(el);
                 });
@@ -1085,7 +1259,7 @@
                 state.packs.holoUnlocked = true;
                 
                 saveCloudData(); renderCollection(); updatePackUI();
-                showToast(`Trade complete! Received ${newCard.name}. Added as Global Friend!`, "success", 5000);
+                showToast(`Trade success! Received ${newCard.name}. Friend added!`, "success", 5000);
             }
             forceCloseTrade();
         }
@@ -1118,11 +1292,11 @@
 
         function renderChat(chatArr) {
             const container = document.getElementById('trade-chat-messages'); if(!chatArr) return;
-            container.innerHTML = '<div class="text-center text-[10px] text-gray-500 my-2 font-bold uppercase tracking-wider">Connection Secure</div>';
+            container.innerHTML = '<div class="text-center text-[10px] text-gray-500 my-2 font-bold uppercase tracking-wider"><i class="fa-solid fa-lock text-green-500 mr-1"></i> Connection Secure</div>';
             chatArr.forEach(msg => {
                 const isMe = msg.senderId === state.userId;
                 const div = document.createElement('div'); div.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'}`;
-                div.innerHTML = `<span class="text-[9px] text-gray-500 mb-1 mx-1 font-bold">${msg.name}</span><div class="px-3 py-2 rounded-2xl max-w-[85%] text-sm ${isMe ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-[#2a2a2a] text-white rounded-tl-none border border-[#333]'}">${msg.text}</div>`;
+                div.innerHTML = `<span class="text-[9px] text-gray-500 mb-1 mx-2 font-bold tracking-wide">${msg.name}</span><div class="px-4 py-2 rounded-2xl max-w-[85%] text-sm font-medium ${isMe ? 'bg-blue-600 text-white rounded-tr-sm shadow-md' : 'bg-[#252830] text-gray-200 rounded-tl-sm border border-[#333] shadow-md'}">${msg.text}</div>`;
                 container.appendChild(div);
             });
             container.scrollTop = container.scrollHeight;
