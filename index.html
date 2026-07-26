@@ -45,7 +45,6 @@
         .screen.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Card & UI Styles */
         .flip-card { background-color: transparent; aspect-ratio: 63/88; perspective: 1000px; cursor: pointer; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
         .flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
@@ -108,14 +107,27 @@
     <main class="main-content">
         
         <div id="screen-setup" class="screen">
-            <div class="card-surface p-6 max-w-sm mx-auto mt-10">
-                <div class="text-center mb-8">
+            <div class="card-surface p-6 max-w-sm mx-auto mt-6">
+                <div class="text-center mb-6">
                     <h2 class="text-2xl font-bold text-white">Join Network</h2>
-                    <p class="text-sm text-gray-400 mt-2">Connect globally using Google Auth.</p>
+                    <p class="text-sm text-gray-400 mt-1">Create your unique profile to start.</p>
+                </div>
+
+                <!-- Google Auth Prompt -->
+                <div id="auth-box" class="mb-6">
+                    <button id="btn-google-login" class="btn-primary w-full py-3 bg-white text-gray-800 hover:bg-gray-100">
+                        <i class="fa-brands fa-google text-red-500"></i> Sign In with Google
+                    </button>
                 </div>
                 
-                <div class="space-y-5">
+                <!-- Profile Customization Form (Hidden until logged in) -->
+                <div id="profile-form" class="space-y-4 hidden">
                     <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">UNIQUE USERNAME</label>
+                        <input type="text" id="setup-username" class="input-field" placeholder="Choose Username" maxlength="15">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">TEAM</label>
                         <div class="flex space-x-2">
                             <button class="flex-1 py-3 rounded-xl border border-[#333] text-red-500 font-bold team-btn transition-colors" data-team="Valor">Valor</button>
                             <button class="flex-1 py-3 rounded-xl border border-[#333] text-blue-500 font-bold team-btn transition-colors" data-team="Mystic">Mystic</button>
@@ -123,11 +135,10 @@
                         </div>
                     </div>
                     <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">STATUS</label>
                         <input type="text" id="setup-info" class="input-field" placeholder="Status (e.g., Looking for Charizard)" maxlength="30">
                     </div>
-                    <button id="btn-save-profile" data-edit="false" class="btn-primary w-full mt-4 py-4 text-lg bg-white text-gray-800 hover:bg-gray-100">
-                        <i class="fa-brands fa-google text-red-500"></i> Connect with Google
-                    </button>
+                    <button id="btn-save-profile" class="btn-primary w-full mt-4 py-3 text-base">Save & Enter App</button>
                 </div>
             </div>
         </div>
@@ -229,6 +240,7 @@
             <div class="card-surface p-5 mb-6 bg-gradient-to-br from-[#2a2a2a] to-[#1e1e1e]">
                 <div class="flex justify-between items-start mb-3">
                     <h3 class="font-bold text-xl text-white" id="info-name">Trainer</h3>
+                    <button id="btn-edit-profile" class="text-blue-400 text-sm font-semibold bg-[#1a1a1a] px-3 py-1 rounded-lg">Edit</button>
                 </div>
                 <div class="flex gap-2 mb-4">
                     <span id="info-team" class="text-xs px-2 py-1 rounded font-bold uppercase tracking-wider border"></span>
@@ -244,8 +256,8 @@
             <h3 class="font-bold text-white mb-3 px-1">Information & FAQs</h3>
             <div class="card-surface divide-y divide-[#333] mb-6">
                 <div class="p-4">
-                    <h4 class="font-semibold text-sm mb-2 text-blue-400 flex items-center gap-2"><i class="fa-solid fa-cloud"></i> Cloud Sync & Global Trades</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed">Your collection and profile are securely saved to <strong>Firestore</strong> using your Google account. Discover trainers locally via the Radar, and once you complete a trade, they become your <strong>Global Friend</strong>, allowing you to trade with them anywhere, anytime!</p>
+                    <h4 class="font-semibold text-sm mb-2 text-blue-400 flex items-center gap-2"><i class="fa-solid fa-cloud"></i> Cloud Sync & Unique Profiles</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Your collection and unique username are synced to <strong>Firestore</strong>. Discover trainers locally via the Radar, and once you complete a trade, they become your <strong>Global Friend</strong> to trade with anywhere!</p>
                 </div>
                 <div class="p-4">
                     <h4 class="font-semibold text-sm mb-2 text-white">Rarities & Data</h4>
@@ -345,7 +357,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
         const TOTAL_POKEMON = 1025;
@@ -363,7 +375,7 @@
         };
 
         const state = {
-            profile: { id: '', name: '', team: '', info: '', trades: 0, friends: [] },
+            profile: { id: '', name: '', nameLower: '', team: '', info: '', trades: 0, friends: [] },
             collection: [],
             packs: { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false },
             onlineUsers: {},
@@ -401,14 +413,19 @@
                         state.userId = user.uid;
                         DOM.statusDot.classList.replace('bg-red-500', 'bg-green-500');
                         DOM.statusDot.style.boxShadow = '0 0 8px rgba(34,197,94,0.6)';
+                        document.getElementById('auth-box').classList.add('hidden');
+                        document.getElementById('profile-form').classList.remove('hidden');
                         await loadCloudData(user);
                     } else {
+                        DOM.statusDot.classList.replace('bg-green-500', 'bg-red-500');
+                        document.getElementById('auth-box').classList.remove('hidden');
+                        document.getElementById('profile-form').classList.add('hidden');
                         switchScreen('screen-setup');
                     }
                 });
 
             } catch (error) { 
-                showToast("Network error. Running offline.", "error"); 
+                showToast("Network error during initialization.", "error"); 
             }
             
             setupEventListeners();
@@ -467,23 +484,43 @@
             
             if (docSnap.exists()) {
                 const data = docSnap.data();
-                state.profile = data.profile || { id: state.userId, name: user.displayName, team: '', info: '', trades: 0, friends: [] };
+                state.profile = data.profile || { id: state.userId, name: '', nameLower: '', team: '', info: '', trades: 0, friends: [] };
                 if(!state.profile.friends) state.profile.friends = [];
                 state.collection = data.collection || [];
                 state.packs = data.packs || { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false };
                 
                 selectedTeam = state.profile.team;
-                updateProfileUI();
-                renderCollection();
-                switchScreen('screen-packs');
-                setupFirebaseListeners();
-                updatePresence();
+                
+                if (state.profile.name) {
+                    updateProfileUI();
+                    renderCollection();
+                    switchScreen('screen-packs');
+                    setupFirebaseListeners();
+                    updatePresence();
+                } else {
+                    switchScreen('screen-setup');
+                }
             } else {
-                state.profile.name = user.displayName || 'Trainer';
                 state.profile.id = state.userId;
                 state.profile.friends = [];
                 switchScreen('screen-setup');
             }
+        }
+
+        async function checkUsernameUnique(username) {
+            const cleanName = username.trim();
+            const lowerName = cleanName.toLowerCase();
+            
+            const q = query(collection(db, 'users'), where('profile.nameLower', '==', lowerName));
+            const querySnapshot = await getDocs(q);
+            
+            let isTaken = false;
+            querySnapshot.forEach(docSnap => {
+                if (docSnap.id !== state.userId) {
+                    isTaken = true;
+                }
+            });
+            return !isTaken;
         }
 
         async function saveCloudData() {
@@ -496,7 +533,7 @@
                     packs: state.packs
                 });
             } catch (e) {
-                showToast("Failed to save to cloud", "error");
+                showToast("Failed to save profile to Firestore.", "error");
             }
         }
 
@@ -510,7 +547,7 @@
             DOM.navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
                     const target = e.currentTarget;
-                    if(!state.profile.name && target.dataset.target !== 'screen-setup') { showToast("Setup profile first."); return; }
+                    if(!state.profile.name && target.dataset.target !== 'screen-setup') { showToast("Please setup a unique username first."); return; }
                     DOM.navItems.forEach(n => n.classList.remove('active'));
                     target.classList.add('active');
                     switchScreen(target.dataset.target);
@@ -527,32 +564,59 @@
                 });
             });
 
-            document.getElementById('btn-save-profile').addEventListener('click', async (e) => {
-                if (!selectedTeam) { showToast("Select a team to proceed.", "error"); return; }
-                const info = document.getElementById('setup-info').value.trim();
-                
+            document.getElementById('btn-google-login').addEventListener('click', async () => {
                 try {
                     const provider = new GoogleAuthProvider();
-                    const result = await signInWithPopup(auth, provider);
-                    state.userId = result.user.uid;
-                    state.profile.name = result.user.displayName || 'Trainer';
-                    state.profile.team = selectedTeam; 
-                    state.profile.info = info || 'Ready to trade';
-                    if(!state.profile.id) state.profile.id = state.userId;
-                    
-                    DOM.statusDot.classList.replace('bg-red-500', 'bg-green-500');
-                    DOM.statusDot.style.boxShadow = '0 0 8px rgba(34,197,94,0.6)';
-
-                    await saveCloudData();
-                    setupFirebaseListeners(); 
-                    updatePresence();
-
-                    DOM.navItems.forEach(n => n.classList.remove('active'));
-                    switchScreen('screen-packs');
-                    document.querySelector('[data-target="screen-packs"]').classList.add('active');
+                    await signInWithPopup(auth, provider);
                 } catch(err) {
-                    showToast("Auth failed.", "error");
+                    showToast("Google Auth failed.", "error");
                 }
+            });
+
+            document.getElementById('btn-save-profile').addEventListener('click', async () => {
+                const username = document.getElementById('setup-username').value.trim();
+                const info = document.getElementById('setup-info').value.trim();
+
+                if (!username) { showToast("Username is required.", "error"); return; }
+                if (!selectedTeam) { showToast("Please select a team.", "error"); return; }
+
+                // Check uniqueness if changing or setting username
+                if (username.toLowerCase() !== state.profile.nameLower) {
+                    const isUnique = await checkUsernameUnique(username);
+                    if (!isUnique) {
+                        showToast(`"${username}" is already taken! Choose another.`, "error");
+                        return;
+                    }
+                }
+
+                state.profile.name = username;
+                state.profile.nameLower = username.toLowerCase();
+                state.profile.team = selectedTeam;
+                state.profile.info = info || 'Ready to trade';
+                state.profile.id = state.userId;
+
+                await saveCloudData();
+                setupFirebaseListeners(); 
+                updatePresence();
+
+                showToast("Profile updated!", "success");
+                DOM.navItems.forEach(n => n.classList.remove('active'));
+                switchScreen('screen-packs');
+                document.querySelector('[data-target="screen-packs"]').classList.add('active');
+            });
+
+            document.getElementById('btn-edit-profile').addEventListener('click', () => {
+                document.getElementById('setup-username').value = state.profile.name;
+                document.getElementById('setup-info').value = state.profile.info;
+                document.querySelectorAll('.team-btn').forEach(b => {
+                    b.classList.remove('bg-[#2a2a2a]'); b.style.backgroundColor = 'transparent'; b.style.color = '';
+                    if (b.dataset.team === state.profile.team) {
+                        b.classList.add('bg-[#2a2a2a]');
+                        b.style.backgroundColor = state.profile.team === 'Valor' ? 'rgba(239,68,68,0.2)' : state.profile.team === 'Mystic' ? 'rgba(59,130,246,0.2)' : 'rgba(234,179,8,0.2)';
+                        selectedTeam = state.profile.team;
+                    }
+                });
+                switchScreen('screen-setup');
             });
 
             document.getElementById('btn-logout').addEventListener('click', async () => {
@@ -874,7 +938,6 @@
                 const u = state.onlineUsers[uid];
                 const c = u.team === 'Valor' ? '#ef4444' : u.team === 'Mystic' ? '#3b82f6' : '#eab308';
                 
-                // Determine if they are a friend
                 const isFriend = state.profile.friends && state.profile.friends.includes(uid);
                 
                 if (isFriend) {
@@ -885,7 +948,6 @@
                     el.querySelector('.btn-request-trade').addEventListener('click', () => initiateTrade(uid));
                     friendsList.appendChild(el);
                 } else {
-                    // Show on Radar
                     const angle = (idx / uids.length) * Math.PI * 2;
                     const radius = 20 + Math.random() * 25;
                     const x = 50 + Math.cos(angle) * radius; const y = 50 + Math.sin(angle) * radius;
@@ -898,7 +960,6 @@
                     node.addEventListener('click', () => initiateTrade(uid));
                     list.appendChild(node);
 
-                    // Show in nearby list
                     const el = document.createElement('div');
                     el.className = 'bg-[#1a1a1a] border border-[#333] rounded-xl p-3 flex justify-between items-center';
                     el.innerHTML = `<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center font-bold border bg-opacity-20" style="color:${c}; border-color:${c}; background-color:${c}22">${u.name.charAt(0)}</div><div class="flex flex-col"><span class="font-bold text-sm text-white">${u.name}</span><span class="text-xs text-gray-400">${u.info}</span></div></div><button class="btn-request-trade text-sm font-bold bg-blue-600 text-white px-4 py-2 rounded-lg">Trade</button>`;
@@ -1031,7 +1092,6 @@
                 const newCard = { ...them.offer, id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), showcase: false, acquiredAt: Date.now() };
                 state.collection.unshift(newCard); state.profile.trades++;
                 
-                // Add to Global Friends list
                 if(!state.profile.friends.includes(state.activeTrade.partnerId)) {
                     state.profile.friends.push(state.activeTrade.partnerId);
                 }
