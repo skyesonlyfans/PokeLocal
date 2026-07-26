@@ -195,6 +195,18 @@
             animation: shimmer 2.5s infinite linear;
             pointer-events: none; z-index: 10; mix-blend-mode: overlay;
         }
+        
+        .mythic-holo { 
+            border-color: #ff00cc !important;
+            position: relative;
+        }
+        .mythic-holo::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(125deg, rgba(255,0,0,0.2) 0%, rgba(255,165,0,0.2) 15%, rgba(255,255,0,0.2) 30%, rgba(0,128,0,0.2) 45%, rgba(0,0,255,0.2) 60%, rgba(75,0,130,0.2) 75%, rgba(238,130,238,0.2) 90%, rgba(255,0,0,0.2) 100%);
+            background-size: 200% 200%;
+            animation: shimmer 3s infinite linear;
+            pointer-events: none; z-index: 10; mix-blend-mode: color-dodge;
+        }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
         .type-badge { padding: 2px 6px; border-radius: 4px; font-size: 9px; color: white; text-transform: uppercase; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
@@ -725,7 +737,8 @@
         function getRarity(id, bst) {
             if (state.pogoRarities[id]) {
                 const r = state.pogoRarities[id].toLowerCase();
-                if (r.includes('legendary') || r.includes('mythic')) return { name: r, class: 'rarity-legendary' };
+                if (r.includes('mythic')) return { name: 'Mythic Holo', class: 'rarity-legendary mythic-holo' };
+                if (r.includes('legendary')) return { name: r, class: 'rarity-legendary' };
                 if (r.includes('rare') || r.includes('ultra')) return { name: r, class: 'rarity-rare border-[#a855f7]' };
                 return { name: r, class: 'rarity-common border-[#64748b]' };
             }
@@ -832,7 +845,7 @@
                     
                     return {
                         id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: data.name, types: data.types.map(t => t.type.name),
-                        hp, atk, def, spd, bst, image: img, gif: gif, rarity: isHolo ? 'Holo Rare' : rarityInfo.name, rarityClass: isHolo ? 'rarity-legendary' : rarityInfo.class,
+                        hp, atk, def, spd, bst, image: img, gif: gif, rarity: isHolo ? 'Mythic Holo' : rarityInfo.name, rarityClass: isHolo ? 'rarity-legendary mythic-holo' : rarityInfo.class,
                         showcase: isHolo, acquiredAt: Date.now()
                     };
                 });
@@ -880,7 +893,7 @@
                 grid.classList.remove('hidden'); empty.classList.add('hidden');
                 displayCards.forEach(card => {
                     const el = document.createElement('div');
-                    el.className = `aspect-[63/88] rounded-xl overflow-hidden cursor-pointer relative border-2 ${card.rarityClass.split(' ')[0]} ${card.showcase ? 'holo-effect' : ''} bg-[#e0e0e0]`;
+                    el.className = `aspect-[63/88] rounded-xl overflow-hidden cursor-pointer relative border-2 ${card.rarityClass} ${card.showcase ? 'holo-effect' : ''} bg-[#e0e0e0]`;
                     el.innerHTML = `
                         <div class="absolute inset-0 p-1 flex justify-center items-center bg-gradient-to-br from-white to-gray-200">
                             <img src="${card.image}" class="w-full h-full object-contain filter drop-shadow-md z-10" loading="lazy">
