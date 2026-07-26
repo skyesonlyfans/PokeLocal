@@ -184,8 +184,12 @@
         .card-img { width: 100%; height: 100%; object-fit: contain; z-index: 2; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
         .card-stats { padding: 8px; background: rgba(0,0,0,0.4); font-size: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; color: #ddd; }
         
+        .rarity-legendary { border-color: #fbbf24 !important; }
+        .rarity-rare { border-color: #a855f7 !important; }
+        .rarity-uncommon { border-color: #22c55e !important; }
+        .rarity-common { border-color: #64748b !important; }
+
         .rarity-legendary, .holo-effect { 
-            border-color: #fbbf24;
             position: relative;
         }
         .rarity-legendary::after, .holo-effect::after {
@@ -211,7 +215,7 @@
 
         .type-badge { padding: 2px 6px; border-radius: 4px; font-size: 9px; color: white; text-transform: uppercase; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
         
-        .radar-container { position: relative; height: 300px; display: flex; justify-content: center; align-items: center; }
+        .radar-container { position: relative; height: 300px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
         .radar-pulse {
             position: absolute; width: 60px; height: 60px; border-radius: 50%;
             background: rgba(59, 130, 246, 0.4);
@@ -251,7 +255,7 @@
         @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-20px); opacity: 0; } }
 
-        .trade-slot { aspect-ratio: 63/88; border: 2px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; background-color: #1a1a1a; position: relative; }
+        .trade-slot { aspect-ratio: 63/88; border: 2px dashed var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; background-color: #1a1a1a; position: relative; overflow: hidden; }
         .trade-slot img { width: 100%; height: 100%; object-fit: contain; padding: 8px; position: absolute; }
         
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -294,7 +298,7 @@
                     <div>
                         <input type="text" id="setup-info" class="input-field" placeholder="Status (e.g., Looking for Charizard)" maxlength="30">
                     </div>
-                    <button id="btn-save-profile" class="btn-primary w-full mt-4 py-4 text-lg">Connect</button>
+                    <button id="btn-save-profile" data-edit="false" class="btn-primary w-full mt-4 py-4 text-lg">Connect</button>
                 </div>
             </div>
         </div>
@@ -374,7 +378,7 @@
                 <div class="radar-pulse"></div>
                 <div class="radar-pulse"></div>
                 
-                <div class="user-node shadow-[0_0_15px_rgba(59,130,246,0.5)]" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <div class="user-node shadow-[0_0_15px_rgba(59,130,246,0.5)]" style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 30;">
                     <i class="fa-solid fa-user text-xl text-blue-500"></i>
                     <span class="user-node-name text-white">You</span>
                 </div>
@@ -537,6 +541,7 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'pokelocal-default';
         let db, auth;
         let firebaseListeners = { presence: null, incomingTrade: null, activeTrade: null };
+        let selectedTeam = '';
 
         async function initApp() {
             loadLocalData();
@@ -567,7 +572,7 @@
                 } else {
                     state.userId = 'local_' + Math.random().toString(36).substr(2, 9);
                 }
-            } catch (error) { console.error(error); showToast("Network error. Running offline.", "error"); }
+            } catch (error) { showToast("Network error. Running offline.", "error"); }
             
             setupEventListeners();
             checkPackReset();
@@ -582,7 +587,7 @@
                         state.pogoRarities[p.pokemon_id] = rarity.replace('1_','').replace('2_','').replace('3_','').replace('4_','').replace('_', ' ');
                     });
                 }
-            } catch (e) { console.log("Using fallback rarity calc."); }
+            } catch (e) { }
         }
 
         function showToast(msg, type = 'info', duration = 3000, actions = null) {
@@ -621,7 +626,7 @@
 
         function loadLocalData() {
             const p = localStorage.getItem('pokelocal_profile');
-            if (p) { state.profile = JSON.parse(p); updateProfileUI(); switchScreen('screen-packs'); }
+            if (p) { state.profile = JSON.parse(p); selectedTeam = state.profile.team; updateProfileUI(); switchScreen('screen-packs'); }
             else { switchScreen('screen-setup'); }
 
             const c = localStorage.getItem('pokelocal_collection');
@@ -655,7 +660,6 @@
                 });
             });
 
-            let selectedTeam = '';
             document.querySelectorAll('.team-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     document.querySelectorAll('.team-btn').forEach(b => { b.classList.remove('bg-[#2a2a2a]'); b.style.backgroundColor = 'transparent'; b.style.color = ''; });
@@ -666,7 +670,7 @@
                 });
             });
 
-            document.getElementById('btn-save-profile').addEventListener('click', () => {
+            document.getElementById('btn-save-profile').addEventListener('click', (e) => {
                 const name = document.getElementById('setup-name').value.trim();
                 const info = document.getElementById('setup-info').value.trim();
                 if (!name || !selectedTeam) { showToast("Name and Team required.", "error"); return; }
@@ -674,13 +678,31 @@
                 if(!state.profile.id) state.profile.id = state.userId;
                 saveLocalData();
                 if(db) { setupFirebaseListeners(); updatePresence(); }
-                switchScreen('screen-packs');
-                document.querySelector('[data-target="screen-packs"]').classList.add('active');
+
+                DOM.navItems.forEach(n => n.classList.remove('active'));
+                
+                if (e.target.dataset.edit === "true") {
+                    e.target.dataset.edit = "false";
+                    switchScreen('screen-info');
+                    document.querySelector('[data-target="screen-info"]').classList.add('active');
+                } else {
+                    switchScreen('screen-packs');
+                    document.querySelector('[data-target="screen-packs"]').classList.add('active');
+                }
             });
 
             document.getElementById('btn-edit-profile').addEventListener('click', () => {
                 document.getElementById('setup-name').value = state.profile.name;
                 document.getElementById('setup-info').value = state.profile.info;
+                document.getElementById('btn-save-profile').dataset.edit = "true";
+                document.querySelectorAll('.team-btn').forEach(b => {
+                    b.classList.remove('bg-[#2a2a2a]'); b.style.backgroundColor = 'transparent'; b.style.color = '';
+                    if (b.dataset.team === state.profile.team) {
+                        b.classList.add('bg-[#2a2a2a]');
+                        b.style.backgroundColor = state.profile.team === 'Valor' ? 'rgba(239,68,68,0.2)' : state.profile.team === 'Mystic' ? 'rgba(59,130,246,0.2)' : 'rgba(234,179,8,0.2)';
+                        selectedTeam = state.profile.team;
+                    }
+                });
                 switchScreen('screen-setup');
             });
 
@@ -750,13 +772,22 @@
 
         function generateCardHTML(cardData, showInstance = false) {
             const badges = cardData.types.map(t => `<span class="type-badge" style="background-color: ${typeColors[t] || '#777'}">${t}</span>`).join(' ');
+            
+            let tagColor = 'text-gray-600 bg-gray-400';
+            if (cardData.rarityClass.includes('legendary')) tagColor = 'text-yellow-600 bg-yellow-400';
+            else if (cardData.rarityClass.includes('rare')) tagColor = 'text-purple-600 bg-purple-400';
+            else if (cardData.rarityClass.includes('uncommon')) tagColor = 'text-green-600 bg-green-400';
+
             return `
                 <div class="flip-card w-full h-full ${showInstance && cardData.showcase ? 'holo-effect' : ''}">
                     <div class="flip-card-inner ${cardData.rarityClass}">
                         <div class="flip-card-front flex flex-col bg-[#e0e0e0]">
                             <div class="card-header bg-[#f8f9fa] border-b-2 border-gray-300">
                                 <div class="card-name text-gray-800">${cardData.name}</div>
-                                <div class="card-hp">HP ${cardData.hp}</div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[8px] font-bold px-1 rounded uppercase bg-opacity-20 ${tagColor}">${cardData.rarity.split(' ')[0]}</span>
+                                    <div class="card-hp">HP ${cardData.hp}</div>
+                                </div>
                             </div>
                             <div class="card-img-container bg-gradient-to-br from-white to-gray-200">
                                 <img src="${cardData.image}" class="card-img" loading="lazy">
@@ -771,12 +802,12 @@
                             </div>
                         </div>
                         <div class="flip-card-back p-4 text-center">
-                            <div class="w-20 h-20 bg-black bg-opacity-30 rounded-full flex items-center justify-center mb-4">
+                            <div class="w-20 h-20 bg-black bg-opacity-30 rounded-full flex items-center justify-center mb-4 mx-auto">
                                 <img src="${cardData.gif || cardData.image}" class="w-16 h-16 object-contain filter drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" loading="lazy">
                             </div>
                             <div class="text-xl font-pokemon text-white mb-2 tracking-widest">${cardData.name}</div>
-                            <div class="text-xs font-bold text-gray-300 uppercase tracking-widest bg-black bg-opacity-40 px-3 py-1 rounded-full border border-gray-600 mb-2">${cardData.rarity}</div>
-                            <div class="text-[10px] text-gray-500 mt-auto">BST: ${cardData.bst} • ID: #${cardData.apiId}</div>
+                            <div class="text-[10px] font-bold text-gray-300 uppercase tracking-widest bg-black bg-opacity-40 px-3 py-1 rounded-full border border-gray-600 mb-2 inline-block">${cardData.rarity}</div>
+                            <div class="text-[10px] text-gray-500 mt-auto block">BST: ${cardData.bst} • ID: #${cardData.apiId}</div>
                             ${showInstance && cardData.showcase ? '<div class="absolute top-2 right-2 text-yellow-400 text-xl drop-shadow-[0_0_5px_rgba(251,191,36,1)]"><i class="fa-solid fa-star"></i></div>' : ''}
                         </div>
                     </div>
@@ -860,7 +891,7 @@
                 state.pullIndex = 0; renderCurrentPull();
                 
             } catch(e) {
-                console.error(e); showToast("Fetch failed. Try again.", "error");
+                showToast("Fetch failed. Try again.", "error");
                 DOM.packLoading.classList.add('hidden'); updatePackUI();
             }
         }
@@ -886,7 +917,7 @@
             
             let displayCards = state.collection;
             if (filter === 'showcase') displayCards = displayCards.filter(c => c.showcase);
-            if (filter === 'legendary') displayCards = displayCards.filter(c => c.rarityClass === 'rarity-legendary');
+            if (filter === 'legendary') displayCards = displayCards.filter(c => c.rarityClass.includes('rarity-legendary'));
             
             if (displayCards.length === 0) { grid.classList.add('hidden'); empty.classList.remove('hidden'); } 
             else {
@@ -894,10 +925,17 @@
                 displayCards.forEach(card => {
                     const el = document.createElement('div');
                     el.className = `aspect-[63/88] rounded-xl overflow-hidden cursor-pointer relative border-2 ${card.rarityClass} ${card.showcase ? 'holo-effect' : ''} bg-[#e0e0e0]`;
+                    
+                    let tagColor = 'text-gray-600 bg-gray-400';
+                    if (card.rarityClass.includes('legendary')) tagColor = 'text-yellow-600 bg-yellow-400';
+                    else if (card.rarityClass.includes('rare')) tagColor = 'text-purple-600 bg-purple-400';
+                    else if (card.rarityClass.includes('uncommon')) tagColor = 'text-green-600 bg-green-400';
+
                     el.innerHTML = `
                         <div class="absolute inset-0 p-1 flex justify-center items-center bg-gradient-to-br from-white to-gray-200">
                             <img src="${card.image}" class="w-full h-full object-contain filter drop-shadow-md z-10" loading="lazy">
                         </div>
+                        <div class="absolute top-1 left-1 px-1 rounded bg-opacity-30 ${tagColor} text-white text-[8px] font-bold uppercase backdrop-blur-sm z-30">${card.rarity.split(' ')[0]}</div>
                         <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white text-[9px] font-bold p-1 truncate text-center z-20 backdrop-blur-sm">${card.name}</div>
                         ${card.showcase ? '<div class="absolute top-1 right-1 text-yellow-400 z-30 drop-shadow"><i class="fa-solid fa-star text-[10px]"></i></div>' : ''}
                     `;
@@ -978,7 +1016,7 @@
             uids.forEach((uid, idx) => {
                 const u = state.onlineUsers[uid];
                 const angle = (idx / uids.length) * Math.PI * 2;
-                const radius = 90 + Math.random() * 30;
+                const radius = 20 + Math.random() * 25;
                 const x = 50 + Math.cos(angle) * radius; const y = 50 + Math.sin(angle) * radius;
                 const c = u.team === 'Valor' ? '#ef4444' : u.team === 'Mystic' ? '#3b82f6' : '#eab308';
                 
@@ -1068,7 +1106,7 @@
             else {
                 state.collection.forEach(card => {
                     const el = document.createElement('div');
-                    el.className = 'aspect-[63/88] border-2 border-[#333] rounded-lg bg-[#e0e0e0] cursor-pointer overflow-hidden p-1 flex justify-center items-center bg-gradient-to-br from-white to-gray-200';
+                    el.className = `aspect-[63/88] border-2 ${card.rarityClass} rounded-lg bg-[#e0e0e0] cursor-pointer overflow-hidden p-1 flex justify-center items-center bg-gradient-to-br from-white to-gray-200`;
                     el.innerHTML = `<img src="${card.image}" class="w-full h-full object-contain filter drop-shadow">`;
                     el.addEventListener('click', () => { selectOffer(card); document.getElementById('modal-select-card').classList.remove('active'); });
                     grid.appendChild(el);
@@ -1115,7 +1153,6 @@
                 const newCard = { ...them.offer, id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), showcase: false, acquiredAt: Date.now() };
                 state.collection.unshift(newCard); state.profile.trades++;
                 
-                // Unlock daily holo
                 state.packs.holoUnlocked = true;
                 
                 saveLocalData(); renderCollection(); updatePackUI();
