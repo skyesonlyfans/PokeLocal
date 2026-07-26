@@ -370,8 +370,8 @@
             <h3 class="font-bold text-white text-sm tracking-wide uppercase mb-4 px-2 text-red-400">Important Information</h3>
             <div class="card-surface divide-y divide-[#333] mb-6 shadow-md border-red-500 border-opacity-30">
                 <div class="p-5">
-                    <h4 class="font-bold text-sm mb-2 text-white flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-red-500"></i> No Accounts - Data Loss</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed font-medium">We have completely stripped Google log-ins for speed. Your account is linked purely to an anonymous secure token in this browser. <b>If you clear your browser cache or change devices, your cards WILL be lost permanently.</b></p>
+                    <h4 class="font-bold text-sm mb-2 text-white flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-red-500"></i> Local Storage Warning</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed font-medium">To protect your privacy, we no longer require Google log-ins. Your account is tied to your current browser using local storage. <b>If you clear your browser cache or change devices, your cards WILL be lost permanently.</b></p>
                 </div>
                 <div class="p-5">
                     <h4 class="font-bold text-sm mb-2 text-white flex items-center gap-2"><i class="fa-solid fa-chart-bar text-blue-400"></i> Rarities & Data</h4>
@@ -392,7 +392,6 @@
         <div class="nav-item" data-target="screen-info"><i class="fa-solid fa-user"></i><span>Profile</span></div>
     </nav>
 
-    <!-- Modal for Gamified Pack Rip -->
     <div id="modal-pack-rip" class="modal-overlay z-[200]">
         <div class="relative w-56 h-80 anim-shake cursor-pointer group flex flex-col items-center justify-center" id="rip-pack-container">
             <div class="absolute inset-0 z-10 w-full h-full" id="rip-halves-wrapper">
@@ -410,7 +409,6 @@
         <p class="absolute bottom-20 text-white font-bold text-lg tracking-widest animate-pulse drop-shadow-md" id="rip-instructions">TAP TO RIP!</p>
     </div>
 
-    <!-- Modal for Card View -->
     <div id="modal-card-detail" class="modal-overlay">
         <div class="w-full max-w-sm flex flex-col items-center">
             <div id="detail-card-container" class="w-full max-w-[280px] mb-8" style="perspective: 1000px;"></div>
@@ -423,7 +421,6 @@
         </div>
     </div>
 
-    <!-- Modal for Trading -->
     <div id="modal-trade" class="modal-overlay">
         <div class="card-surface w-full max-w-md h-[85vh] flex flex-col overflow-hidden shadow-2xl">
             <div class="p-5 border-b border-[#333] flex justify-between items-center bg-[#252830]">
@@ -511,8 +508,6 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'pokelocal-default';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : fallbackConfig;
 
-        /* Note: System instructions strictly dictate using Firestore instead of localStorage for persistence. 
-           To honor the request for "anonymous only with data loss possibility", we use pure anonymous auth. */
         const state = {
             profile: { id: '', name: '', nameLower: '', team: '', info: '', trades: 0, settings: { skipAnimations: false } },
             collection: [],
@@ -549,26 +544,41 @@
                 db = getFirestore(app);
                 auth = getAuth(app);
 
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                if (auth.currentUser) {
-                    state.userId = auth.currentUser.uid;
-                } else {
-                    state.userId = 'guest_' + Math.random().toString(36).substring(2, 9);
-                }
-
-                DOM.statusDot.classList.replace('bg-red-500', 'bg-green-500');
-                DOM.statusDot.style.boxShadow = '0 0 8px rgba(34,197,94,0.6)';
+                const storedUserId = localStorage.getItem(`pokeLocal_userId_${appId}`);
                 
-                await loadCloudData();
-                generatePairingCode();
+                if (storedUserId) {
+                    state.userId = storedUserId;
+                    DOM.statusDot.classList.replace('bg-red-500', 'bg-green-500');
+                    DOM.statusDot.style.boxShadow = '0 0 8px rgba(34,197,94,0.6)';
+                    await loadCloudData();
+                    generatePairingCode();
+                } else {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+
+                    if (auth.currentUser) {
+                        state.userId = auth.currentUser.uid;
+                        localStorage.setItem(`pokeLocal_userId_${appId}`, state.userId);
+                    } else {
+                        state.userId = 'guest_' + Math.random().toString(36).substring(2, 9);
+                        localStorage.setItem(`pokeLocal_userId_${appId}`, state.userId);
+                    }
+                    
+                    DOM.statusDot.classList.replace('bg-red-500', 'bg-green-500');
+                    DOM.statusDot.style.boxShadow = '0 0 8px rgba(34,197,94,0.6)';
+                    
+                    await loadCloudData();
+                    generatePairingCode();
+                }
 
             } catch (error) { 
-                if (!state.userId) state.userId = 'guest_' + Math.random().toString(36).substring(2, 9);
+                if (!state.userId) {
+                    state.userId = 'guest_' + Math.random().toString(36).substring(2, 9);
+                    localStorage.setItem(`pokeLocal_userId_${appId}`, state.userId);
+                }
                 showToast("Started in offline session mode.", "info"); 
                 showSetupScreen();
             }
@@ -703,7 +713,6 @@
             state.pairingCode = Math.floor(100000 + Math.random() * 900000).toString();
             document.getElementById('my-pairing-code').textContent = state.pairingCode;
             
-            // Visual QR Gen
             document.getElementById('qr-code-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=pokelocal:${state.pairingCode}`;
 
             try {
@@ -831,7 +840,6 @@
                 switchScreen('screen-setup');
             });
 
-            // Settings Listeners
             document.getElementById('toggle-animations').addEventListener('change', (e) => {
                 state.profile.settings.skipAnimations = !e.target.checked;
                 saveCloudData();
@@ -842,7 +850,6 @@
             DOM.packUI.addEventListener('click', () => openPack(false));
             DOM.holoPackUI.addEventListener('click', () => openPack(true));
             
-            // Gamified Pack Rip logic
             document.getElementById('rip-pack-container').addEventListener('click', triggerPackRip);
 
             document.getElementById('btn-next-card').addEventListener('click', () => { if (state.pullIndex < state.currentPulls.length - 1) { state.pullIndex++; renderCurrentPull(); } });
@@ -1041,7 +1048,6 @@
             const topHalf = document.getElementById('rip-top-half');
             const botHalf = document.getElementById('rip-bottom-half');
             
-            // reset styles
             cont.classList.add('anim-shake');
             topHalf.classList.remove('anim-rip-top');
             botHalf.classList.remove('anim-rip-bottom');
@@ -1058,7 +1064,6 @@
             cont.classList.remove('anim-shake');
             document.getElementById('rip-instructions').style.display = 'none';
             
-            // CSS trigger
             topHalf.classList.add('anim-rip-top');
             botHalf.classList.add('anim-rip-bottom');
 
