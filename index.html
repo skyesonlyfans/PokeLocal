@@ -66,6 +66,7 @@
         .mythic-holo::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(125deg, rgba(255,0,0,0.2) 0%, rgba(255,165,0,0.2) 15%, rgba(255,255,0,0.2) 30%, rgba(0,128,0,0.2) 45%, rgba(0,0,255,0.2) 60%, rgba(75,0,130,0.2) 75%, rgba(238,130,238,0.2) 90%, rgba(255,0,0,0.2) 100%); background-size: 200% 200%; animation: shimmer 3s infinite linear; pointer-events: none; z-index: 10; mix-blend-mode: color-dodge; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         .type-badge { padding: 2px 6px; border-radius: 4px; font-size: 9px; color: white; text-transform: uppercase; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+        
         .radar-container { position: relative; height: 300px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
         .radar-pulse { position: absolute; width: 60px; height: 60px; border-radius: 50%; background: rgba(59, 130, 246, 0.4); animation: pulse 3s infinite ease-out; }
         .radar-pulse:nth-child(2) { animation-delay: 1s; }
@@ -110,18 +111,20 @@
             <div class="card-surface p-6 max-w-sm mx-auto mt-6">
                 <div class="text-center mb-6">
                     <h2 class="text-2xl font-bold text-white">Join Network</h2>
-                    <p class="text-sm text-gray-400 mt-1">Create your unique profile to start.</p>
+                    <p class="text-sm text-gray-400 mt-1">Authenticate to secure your cards.</p>
                 </div>
-
-                <!-- Google Auth Prompt -->
+                
                 <div id="auth-box" class="mb-6">
                     <button id="btn-google-login" class="btn-primary w-full py-3 bg-white text-gray-800 hover:bg-gray-100">
                         <i class="fa-brands fa-google text-red-500"></i> Sign In with Google
                     </button>
+                    <div id="auth-loading" class="hidden text-center text-sm text-blue-400 mt-4">
+                        <i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Connecting...
+                    </div>
                 </div>
                 
-                <!-- Profile Customization Form (Hidden until logged in) -->
                 <div id="profile-form" class="space-y-4 hidden">
+                    <div class="text-center mb-4"><span class="text-xs font-bold text-green-400 bg-green-900 bg-opacity-30 px-3 py-1 rounded-full"><i class="fa-solid fa-check"></i> Google Authenticated</span></div>
                     <div>
                         <label class="block text-xs font-bold text-gray-400 mb-1">UNIQUE USERNAME</label>
                         <input type="text" id="setup-username" class="input-field" placeholder="Choose Username" maxlength="15">
@@ -138,7 +141,7 @@
                         <label class="block text-xs font-bold text-gray-400 mb-1">STATUS</label>
                         <input type="text" id="setup-info" class="input-field" placeholder="Status (e.g., Looking for Charizard)" maxlength="30">
                     </div>
-                    <button id="btn-save-profile" class="btn-primary w-full mt-4 py-3 text-base">Save & Enter App</button>
+                    <button id="btn-save-profile" class="btn-primary w-full mt-4 py-3 text-base bg-blue-600">Save & Enter App</button>
                 </div>
             </div>
         </div>
@@ -226,7 +229,6 @@
                 <div id="network-nodes"></div>
             </div>
             
-            <!-- Global Friends Section -->
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-bold text-white"><i class="fa-solid fa-user-group text-blue-400 mr-2"></i> Friends Online</h3>
             </div>
@@ -357,11 +359,10 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc, query, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
         const TOTAL_POKEMON = 1025;
-        
         const typeColors = { normal: '#A8A77A', fire: '#EE8130', water: '#6390F0', electric: '#F7D02C', grass: '#7AC74C', ice: '#96D9D6', fighting: '#C22E28', poison: '#A33EA1', ground: '#E2BF65', flying: '#A98FF3', psychic: '#F95587', bug: '#A6B91A', rock: '#B6A136', ghost: '#735797', dragon: '#6F35FC', dark: '#705848', steel: '#B7B7CE', fairy: '#D685AD' };
 
         const firebaseConfig = {
@@ -373,6 +374,8 @@
           appId: "1:433790248881:web:52c5aeda3d6f73858f3f90",
           measurementId: "G-G5BE1NK9HN"
         };
+        
+        const FB_APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'default_pokelocal';
 
         const state = {
             profile: { id: '', name: '', nameLower: '', team: '', info: '', trades: 0, friends: [] },
@@ -402,12 +405,11 @@
 
         async function initApp() {
             fetchPogoRarities();
-            
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-
+                
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         state.userId = user.uid;
@@ -415,19 +417,19 @@
                         DOM.statusDot.style.boxShadow = '0 0 8px rgba(34,197,94,0.6)';
                         document.getElementById('auth-box').classList.add('hidden');
                         document.getElementById('profile-form').classList.remove('hidden');
-                        await loadCloudData(user);
+                        await loadCloudData();
                     } else {
                         DOM.statusDot.classList.replace('bg-green-500', 'bg-red-500');
                         document.getElementById('auth-box').classList.remove('hidden');
                         document.getElementById('profile-form').classList.add('hidden');
                         switchScreen('screen-setup');
                     }
+                    document.getElementById('auth-loading').classList.add('hidden');
+                    document.getElementById('btn-google-login').classList.remove('hidden');
                 });
-
             } catch (error) { 
-                showToast("Network error during initialization.", "error"); 
+                showToast("Network init error.", "error"); 
             }
-            
             setupEventListeners();
             checkPackReset();
         }
@@ -459,10 +461,8 @@
                     <button class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold btn-accept">Accept</button>
                 </div>`;
             }
-
             toast.innerHTML = `${icon}<div class="text-sm font-medium flex-1">${msg}</div>${actionHtml}`;
             DOM.toastContainer.appendChild(toast);
-
             if (actions) {
                 toast.querySelector('.btn-accept').addEventListener('click', () => { actions.onAccept(); removeToast(toast); });
                 toast.querySelector('.btn-decline').addEventListener('click', () => { actions.onDecline(); removeToast(toast); });
@@ -477,9 +477,9 @@
             toast.addEventListener('animationend', () => toast.remove());
         }
 
-        async function loadCloudData(user) {
+        async function loadCloudData() {
             if (!db || !state.userId) return;
-            const docRef = doc(db, 'users', state.userId);
+            const docRef = doc(db, 'artifacts', FB_APP_ID, 'users', state.userId);
             const docSnap = await getDoc(docRef);
             
             if (docSnap.exists()) {
@@ -488,13 +488,14 @@
                 if(!state.profile.friends) state.profile.friends = [];
                 state.collection = data.collection || [];
                 state.packs = data.packs || { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false };
-                
                 selectedTeam = state.profile.team;
                 
                 if (state.profile.name) {
                     updateProfileUI();
                     renderCollection();
                     switchScreen('screen-packs');
+                    DOM.navItems.forEach(n => n.classList.remove('active'));
+                    document.querySelector('[data-target="screen-packs"]').classList.add('active');
                     setupFirebaseListeners();
                     updatePresence();
                 } else {
@@ -508,32 +509,28 @@
         }
 
         async function checkUsernameUnique(username) {
-            const cleanName = username.trim();
-            const lowerName = cleanName.toLowerCase();
-            
-            const q = query(collection(db, 'users'), where('profile.nameLower', '==', lowerName));
-            const querySnapshot = await getDocs(q);
-            
-            let isTaken = false;
-            querySnapshot.forEach(docSnap => {
-                if (docSnap.id !== state.userId) {
-                    isTaken = true;
-                }
+            const lowerName = username.trim().toLowerCase();
+            const usersRef = collection(db, 'artifacts', FB_APP_ID, 'users');
+            const snap = await getDocs(usersRef);
+            let taken = false;
+            snap.forEach(d => {
+                const data = d.data();
+                if(d.id !== state.userId && data.profile && data.profile.nameLower === lowerName) taken = true;
             });
-            return !isTaken;
+            return !taken;
         }
 
         async function saveCloudData() {
             updateProfileUI();
             if (!db || !state.userId) return;
             try {
-                await setDoc(doc(db, 'users', state.userId), {
+                await setDoc(doc(db, 'artifacts', FB_APP_ID, 'users', state.userId), {
                     profile: state.profile,
                     collection: state.collection,
                     packs: state.packs
                 });
             } catch (e) {
-                showToast("Failed to save profile to Firestore.", "error");
+                showToast("Failed to save profile.", "error");
             }
         }
 
@@ -558,35 +555,34 @@
                 btn.addEventListener('click', (e) => {
                     document.querySelectorAll('.team-btn').forEach(b => { b.classList.remove('bg-[#2a2a2a]'); b.style.backgroundColor = 'transparent'; b.style.color = ''; });
                     e.target.classList.add('bg-[#2a2a2a]');
-                    const t = e.target.dataset.team;
-                    selectedTeam = t;
-                    e.target.style.backgroundColor = t === 'Valor' ? 'rgba(239,68,68,0.2)' : t === 'Mystic' ? 'rgba(59,130,246,0.2)' : 'rgba(234,179,8,0.2)';
+                    selectedTeam = e.target.dataset.team;
+                    e.target.style.backgroundColor = selectedTeam === 'Valor' ? 'rgba(239,68,68,0.2)' : selectedTeam === 'Mystic' ? 'rgba(59,130,246,0.2)' : 'rgba(234,179,8,0.2)';
                 });
             });
 
-            document.getElementById('btn-google-login').addEventListener('click', async () => {
+            document.getElementById('btn-google-login').addEventListener('click', async (e) => {
                 try {
+                    e.target.classList.add('hidden');
+                    document.getElementById('auth-loading').classList.remove('hidden');
                     const provider = new GoogleAuthProvider();
+                    provider.setCustomParameters({ prompt: 'select_account' });
                     await signInWithPopup(auth, provider);
                 } catch(err) {
-                    showToast("Google Auth failed.", "error");
+                    e.target.classList.remove('hidden');
+                    document.getElementById('auth-loading').classList.add('hidden');
+                    showToast("Auth Error: " + err.message.substring(0, 30) + "...", "error");
                 }
             });
 
             document.getElementById('btn-save-profile').addEventListener('click', async () => {
                 const username = document.getElementById('setup-username').value.trim();
                 const info = document.getElementById('setup-info').value.trim();
-
                 if (!username) { showToast("Username is required.", "error"); return; }
                 if (!selectedTeam) { showToast("Please select a team.", "error"); return; }
 
-                // Check uniqueness if changing or setting username
                 if (username.toLowerCase() !== state.profile.nameLower) {
                     const isUnique = await checkUsernameUnique(username);
-                    if (!isUnique) {
-                        showToast(`"${username}" is already taken! Choose another.`, "error");
-                        return;
-                    }
+                    if (!isUnique) { showToast(`"${username}" is taken!`, "error"); return; }
                 }
 
                 state.profile.name = username;
@@ -626,7 +622,6 @@
 
             DOM.packUI.addEventListener('click', () => openPack(false));
             DOM.holoPackUI.addEventListener('click', () => openPack(true));
-            
             document.getElementById('btn-next-card').addEventListener('click', () => { if (state.pullIndex < state.currentPulls.length - 1) { state.pullIndex++; renderCurrentPull(); } });
             document.getElementById('btn-prev-card').addEventListener('click', () => { if (state.pullIndex > 0) { state.pullIndex--; renderCurrentPull(); } });
             
@@ -642,23 +637,16 @@
             
             document.getElementById('filter-collection').addEventListener('change', renderCollection);
             document.getElementById('btn-refresh-network').addEventListener('click', () => { if(db) { updatePresence(); renderNetworkList(); showToast("Radar refreshed", "success"); }});
-            
             document.querySelectorAll('.close-modal, .close-select').forEach(btn => { btn.addEventListener('click', (e) => { e.target.closest('.modal-overlay').classList.remove('active'); }); });
-            
             document.getElementById('my-offer-slot').addEventListener('click', openSelectCardModal);
             document.getElementById('btn-remove-offer').addEventListener('click', removeOffer);
             document.getElementById('btn-trade-lock').addEventListener('click', toggleTradeLock);
             document.getElementById('btn-trade-accept').addEventListener('click', acceptTrade);
             document.querySelector('.close-trade').addEventListener('click', cancelTrade);
-            
             document.getElementById('btn-send-chat').addEventListener('click', sendChat);
             document.getElementById('trade-chat-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') sendChat(); });
 
-            document.addEventListener('click', (e) => {
-                if (e.target.closest('.flip-card')) {
-                    e.target.closest('.flip-card').classList.toggle('is-flipped');
-                }
-            });
+            document.addEventListener('click', (e) => { if (e.target.closest('.flip-card')) { e.target.closest('.flip-card').classList.toggle('is-flipped'); } });
         }
 
         function updateProfileUI() {
@@ -667,7 +655,6 @@
             document.getElementById('info-status').textContent = state.profile.info;
             document.getElementById('info-card-count').textContent = state.collection.length;
             document.getElementById('info-trade-count').textContent = state.profile.trades;
-            
             const teamEl = document.getElementById('info-team');
             teamEl.textContent = state.profile.team;
             const c = state.profile.team === 'Valor' ? '#ef4444' : state.profile.team === 'Mystic' ? '#3b82f6' : '#eab308';
@@ -745,7 +732,6 @@
             DOM.packUI.classList.remove('hidden');
             const remaining = Math.max(0, 2 - state.packs.openedToday);
             document.getElementById('packs-count').textContent = remaining;
-            
             if (remaining > 0) {
                 DOM.packUI.style.opacity = '1'; DOM.packUI.style.pointerEvents = 'auto'; DOM.packUI.style.filter = 'grayscale(0)';
                 document.getElementById('pack-timer').textContent = "Tap to open";
@@ -753,18 +739,12 @@
                 DOM.packUI.style.opacity = '0.5'; DOM.packUI.style.pointerEvents = 'none'; DOM.packUI.style.filter = 'grayscale(100%)';
                 document.getElementById('pack-timer').textContent = "Resets tomorrow";
             }
-
-            if (state.packs.holoUnlocked && !state.packs.holoClaimedToday) {
-                DOM.holoPackUI.classList.remove('hidden');
-            } else {
-                DOM.holoPackUI.classList.add('hidden');
-            }
+            if (state.packs.holoUnlocked && !state.packs.holoClaimedToday) { DOM.holoPackUI.classList.remove('hidden'); } else { DOM.holoPackUI.classList.add('hidden'); }
         }
 
         async function openPack(isHolo) {
             if (!isHolo && state.packs.openedToday >= 2) return;
             if (isHolo && (!state.packs.holoUnlocked || state.packs.holoClaimedToday)) return;
-            
             DOM.packUI.classList.add('hidden'); DOM.holoPackUI.classList.add('hidden');
             DOM.packLoading.classList.remove('hidden');
             
@@ -790,23 +770,18 @@
                     const rarityInfo = getRarity(data.id, bst);
                     const img = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default;
                     const gif = data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || img;
-                    
                     return {
                         id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: data.name, types: data.types.map(t => t.type.name),
                         hp, atk, def, spd, bst, image: img, gif: gif, rarity: isHolo ? 'Mythic Holo' : rarityInfo.name, rarityClass: isHolo ? 'rarity-legendary mythic-holo' : rarityInfo.class,
                         showcase: isHolo, acquiredAt: Date.now()
                     };
                 });
-                
-                if(!isHolo) { state.currentPulls.sort((a, b) => a.bst - b.bst); state.packs.openedToday++; }
-                else { state.packs.holoClaimedToday = true; }
+                if(!isHolo) { state.currentPulls.sort((a, b) => a.bst - b.bst); state.packs.openedToday++; } else { state.packs.holoClaimedToday = true; }
                 
                 saveCloudData(); updatePackUI();
                 DOM.packLoading.classList.add('hidden'); DOM.pullsView.classList.remove('hidden'); DOM.pullsView.classList.add('flex');
-                
                 document.getElementById('pull-total').textContent = count;
                 state.pullIndex = 0; renderCurrentPull();
-                
             } catch(e) {
                 showToast("Fetch failed. Try again.", "error");
                 DOM.packLoading.classList.add('hidden'); updatePackUI();
@@ -827,7 +802,6 @@
             const grid = document.getElementById('collection-grid');
             const empty = document.getElementById('empty-collection');
             const filter = document.getElementById('filter-collection').value;
-            
             document.getElementById('collection-total').textContent = state.collection.length;
             document.getElementById('info-card-count').textContent = state.collection.length;
             grid.innerHTML = '';
@@ -842,16 +816,13 @@
                 displayCards.forEach(card => {
                     const el = document.createElement('div');
                     el.className = `aspect-[63/88] rounded-xl overflow-hidden cursor-pointer relative border-2 ${card.rarityClass} ${card.showcase ? 'holo-effect' : ''} bg-[#e0e0e0]`;
-                    
                     let tagColor = 'text-gray-600 bg-gray-400';
                     if (card.rarityClass.includes('legendary')) tagColor = 'text-yellow-600 bg-yellow-400';
                     else if (card.rarityClass.includes('rare')) tagColor = 'text-purple-600 bg-purple-400';
                     else if (card.rarityClass.includes('uncommon')) tagColor = 'text-green-600 bg-green-400';
 
                     el.innerHTML = `
-                        <div class="absolute inset-0 p-1 flex justify-center items-center bg-gradient-to-br from-white to-gray-200">
-                            <img src="${card.image}" class="w-full h-full object-contain filter drop-shadow-md z-10" loading="lazy">
-                        </div>
+                        <div class="absolute inset-0 p-1 flex justify-center items-center bg-gradient-to-br from-white to-gray-200"><img src="${card.image}" class="w-full h-full object-contain filter drop-shadow-md z-10" loading="lazy"></div>
                         <div class="absolute top-1 left-1 px-1 rounded bg-opacity-30 ${tagColor} text-white text-[8px] font-bold uppercase backdrop-blur-sm z-30">${card.rarity.split(' ')[0]}</div>
                         <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white text-[9px] font-bold p-1 truncate text-center z-20 backdrop-blur-sm">${card.name}</div>
                         ${card.showcase ? '<div class="absolute top-1 right-1 text-yellow-400 z-30 drop-shadow"><i class="fa-solid fa-star text-[10px]"></i></div>' : ''}
@@ -889,22 +860,22 @@
 
         function setupFirebaseListeners() {
             if (!db || !state.userId || firebaseListeners.presence) return;
-            const usersRef = collection(db, 'presence');
+            const usersRef = collection(db, 'artifacts', FB_APP_ID, 'public', 'data', 'presence');
             firebaseListeners.presence = onSnapshot(usersRef, (snapshot) => {
                 state.onlineUsers = {}; const now = Date.now();
                 snapshot.forEach(doc => { const data = doc.data(); if (data.id !== state.userId && (now - data.lastSeen) < 120000) state.onlineUsers[doc.id] = data; });
                 renderNetworkList();
             });
 
-            const tradesRef = collection(db, 'trades');
+            const tradesRef = collection(db, 'artifacts', FB_APP_ID, 'public', 'data', 'trades');
             firebaseListeners.incomingTrade = onSnapshot(tradesRef, (snapshot) => {
                 snapshot.docChanges().forEach(change => {
                     if (change.type === "added" || change.type === "modified") {
                         const data = change.doc.data();
                         if (data.receiver === state.userId && data.status === 'requested') {
                             showToast(`${data[data.initiator].name} wants to trade!`, 'trade', 10000, {
-                                onAccept: async () => { await updateDoc(doc(db, 'trades', data.id), { status: 'active' }); },
-                                onDecline: async () => { await updateDoc(doc(db, 'trades', data.id), { status: 'rejected' }); }
+                                onAccept: async () => { await updateDoc(doc(db, 'artifacts', FB_APP_ID, 'public', 'data', 'trades', data.id), { status: 'active' }); },
+                                onDecline: async () => { await updateDoc(doc(db, 'artifacts', FB_APP_ID, 'public', 'data', 'trades', data.id), { status: 'rejected' }); }
                             });
                         }
                         if (data.status === 'active' && (data.initiator === state.userId || data.receiver === state.userId) && !state.activeTrade) {
@@ -914,30 +885,27 @@
                 });
             });
             setInterval(updatePresence, 45000); 
-            window.addEventListener('beforeunload', () => { if(db && state.userId) deleteDoc(doc(db, 'presence', state.userId)); });
+            window.addEventListener('beforeunload', () => { if(db && state.userId) deleteDoc(doc(db, 'artifacts', FB_APP_ID, 'public', 'data', 'presence', state.userId)); });
         }
 
         async function updatePresence() {
             if (!db || !state.userId || !state.profile.name) return;
-            try { await setDoc(doc(db, 'presence', state.userId), { id: state.userId, name: state.profile.name, team: state.profile.team, info: state.profile.info, trades: state.profile.trades, lastSeen: Date.now() }); } catch(e) {}
+            try { await setDoc(doc(db, 'artifacts', FB_APP_ID, 'public', 'data', 'presence', state.userId), { id: state.userId, name: state.profile.name, team: state.profile.team, info: state.profile.info, trades: state.profile.trades, lastSeen: Date.now() }); } catch(e) {}
         }
 
         function renderNetworkList() {
             const list = document.getElementById('network-nodes');
             const textList = document.getElementById('network-list');
             const friendsList = document.getElementById('friends-list');
-            
             list.innerHTML = ''; textList.innerHTML = ''; friendsList.innerHTML = '';
             
             const uids = Object.keys(state.onlineUsers);
             if (uids.length > 0) { textList.classList.remove('hidden'); }
-            
             let hasFriendsOnline = false;
 
             uids.forEach((uid, idx) => {
                 const u = state.onlineUsers[uid];
                 const c = u.team === 'Valor' ? '#ef4444' : u.team === 'Mystic' ? '#3b82f6' : '#eab308';
-                
                 const isFriend = state.profile.friends && state.profile.friends.includes(uid);
                 
                 if (isFriend) {
@@ -968,18 +936,14 @@
                 }
             });
 
-            if (hasFriendsOnline) {
-                friendsList.classList.remove('hidden');
-            } else {
-                friendsList.classList.add('hidden');
-            }
+            if (hasFriendsOnline) { friendsList.classList.remove('hidden'); } else { friendsList.classList.add('hidden'); }
         }
 
         async function initiateTrade(targetUid) {
             if (!db || !state.userId) return;
             const tradeId = [state.userId, targetUid].sort().join('_');
             try {
-                await setDoc(doc(db, 'trades', tradeId), {
+                await setDoc(doc(db, 'artifacts', FB_APP_ID, 'public', 'data', 'trades', tradeId), {
                     id: tradeId, status: 'requested', initiator: state.userId, receiver: targetUid, timestamp: Date.now(),
                     [state.userId]: { locked: false, offer: null, name: state.profile.name }, [targetUid]: { locked: false, offer: null, name: state.onlineUsers[targetUid].name }, chat: []
                 });
@@ -990,16 +954,14 @@
         function openTradeUI(tradeId, partnerId) {
             state.activeTrade = { id: tradeId, partnerId: partnerId, localOffer: null };
             document.getElementById('trade-partner-name').textContent = state.onlineUsers[partnerId]?.name || 'Trainer';
-            
             document.getElementById('my-offer-img').classList.add('hidden'); document.getElementById('my-offer-img').src = '';
             document.getElementById('my-offer-plus').classList.remove('hidden'); document.getElementById('btn-remove-offer').classList.add('hidden');
             document.getElementById('their-offer-img').classList.add('hidden'); document.getElementById('their-offer-img').src = '';
             document.getElementById('their-offer-q').classList.remove('hidden');
             document.getElementById('trade-chat-messages').innerHTML = '<div class="text-center text-[10px] text-gray-500 my-2 font-bold uppercase tracking-wider">Connection Secure</div>';
-            
             document.getElementById('modal-trade').classList.add('active');
             
-            firebaseListeners.activeTrade = onSnapshot(doc(db, 'trades', tradeId), (docSnap) => {
+            firebaseListeners.activeTrade = onSnapshot(doc(db, 'artifacts', FB_APP_ID, 'public', 'data', 'trades', tradeId), (docSnap) => {
                 if (docSnap.exists()) handleTradeSync(docSnap.data(), partnerId); else forceCloseTrade("Session ended.", "error");
             });
         }
@@ -1007,15 +969,11 @@
         function handleTradeSync(data, partnerId) {
             if (data.status === 'cancelled' || data.status === 'rejected') { forceCloseTrade("Trade cancelled.", "error"); return; }
             if (data.status === 'completed') { finalizeTradeLocally(data); return; }
-
             const me = data[state.userId], them = data[partnerId];
             const theirImg = document.getElementById('their-offer-img'), theirQ = document.getElementById('their-offer-q'), theirStatus = document.getElementById('their-trade-status');
             
-            if (them.offer) { theirImg.src = them.offer.image; theirImg.classList.remove('hidden'); theirQ.classList.add('hidden'); } 
-            else { theirImg.classList.add('hidden'); theirQ.classList.remove('hidden'); }
-            
-            if (them.locked) { theirStatus.textContent = 'Locked'; theirStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-green-500 bg-opacity-20 text-green-400'; } 
-            else { theirStatus.textContent = them.offer ? 'Selected' : 'Selecting...'; theirStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-[#2a2a2a] text-gray-400'; }
+            if (them.offer) { theirImg.src = them.offer.image; theirImg.classList.remove('hidden'); theirQ.classList.add('hidden'); } else { theirImg.classList.add('hidden'); theirQ.classList.remove('hidden'); }
+            if (them.locked) { theirStatus.textContent = 'Locked'; theirStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-green-500 bg-opacity-20 text-green-400'; } else { theirStatus.textContent = them.offer ? 'Selected' : 'Selecting...'; theirStatus.className = 'text-[10px] font-bold mt-3 px-3 py-1 rounded-full bg-[#2a2a2a] text-gray-400'; }
             
             const myStatus = document.getElementById('my-trade-status'), btnLock = document.getElementById('btn-trade-lock'), btnAccept = document.getElementById('btn-trade-accept');
             
@@ -1040,7 +998,6 @@
         function openSelectCardModal() {
             if (!state.activeTrade || document.getElementById('my-trade-status').textContent === 'Locked') return;
             const grid = document.getElementById('trade-collection-grid'); grid.innerHTML = '';
-            
             if (state.collection.length === 0) { grid.innerHTML = '<div class="col-span-3 text-center text-sm text-gray-500 py-10">Binder empty.</div>'; } 
             else {
                 state.collection.forEach(card => {
@@ -1066,23 +1023,19 @@
             document.getElementById('my-offer-plus').classList.remove('hidden'); e.currentTarget.classList.add('hidden'); updateTradeState({ offer: null });
         }
 
-        function toggleTradeLock() {
-            const isLocked = document.getElementById('my-trade-status').textContent === 'Locked';
-            if (isLocked) updateTradeState({ locked: false }); else if (state.activeTrade.localOffer) updateTradeState({ locked: true });
-        }
-
+        function toggleTradeLock() { const isLocked = document.getElementById('my-trade-status').textContent === 'Locked'; if (isLocked) updateTradeState({ locked: false }); else if (state.activeTrade.localOffer) updateTradeState({ locked: true }); }
         function acceptTrade() { updateTradeState({ accepted: true }); }
         
         async function updateTradeState(updates) {
             if (!state.activeTrade || !db) return;
-            const ref = doc(db, 'trades', state.activeTrade.id);
+            const ref = doc(db, 'artifacts', FB_APP_ID, 'public', 'data', 'trades', state.activeTrade.id);
             const fbUpdates = {}; for (const key in updates) fbUpdates[`${state.userId}.${key}`] = updates[key];
             try { await updateDoc(ref, fbUpdates); } catch(e) {}
         }
 
         async function finishTradeFirebase(data) {
             if (!db || !state.activeTrade) return;
-            if (data.initiator === state.userId && data.status !== 'completed') await updateDoc(doc(db, 'trades', state.activeTrade.id), { status: 'completed' });
+            if (data.initiator === state.userId && data.status !== 'completed') await updateDoc(doc(db, 'artifacts', FB_APP_ID, 'public', 'data', 'trades', state.activeTrade.id), { status: 'completed' });
         }
 
         function finalizeTradeLocally(data) {
@@ -1091,13 +1044,8 @@
                 state.collection = state.collection.filter(c => c.id !== me.offer.id);
                 const newCard = { ...them.offer, id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), showcase: false, acquiredAt: Date.now() };
                 state.collection.unshift(newCard); state.profile.trades++;
-                
-                if(!state.profile.friends.includes(state.activeTrade.partnerId)) {
-                    state.profile.friends.push(state.activeTrade.partnerId);
-                }
-
+                if(!state.profile.friends.includes(state.activeTrade.partnerId)) { state.profile.friends.push(state.activeTrade.partnerId); }
                 state.packs.holoUnlocked = true;
-                
                 saveCloudData(); renderCollection(); updatePackUI();
                 showToast(`Trade complete! Received ${newCard.name}. Added as Global Friend!`, "success", 5000);
             }
@@ -1106,7 +1054,7 @@
 
         async function cancelTrade() {
             if (!state.activeTrade || !db) return forceCloseTrade();
-            try { await updateDoc(doc(db, 'trades', state.activeTrade.id), { status: 'cancelled' }); } catch(e) {}
+            try { await updateDoc(doc(db, 'artifacts', FB_APP_ID, 'public', 'data', 'trades', state.activeTrade.id), { status: 'cancelled' }); } catch(e) {}
             forceCloseTrade();
         }
 
@@ -1120,7 +1068,7 @@
             const input = document.getElementById('trade-chat-input'); const txt = input.value.trim();
             if (!txt || !state.activeTrade || !db) return; input.value = '';
             try {
-                const ref = doc(db, 'trades', state.activeTrade.id);
+                const ref = doc(db, 'artifacts', FB_APP_ID, 'public', 'data', 'trades', state.activeTrade.id);
                 const snap = await getDoc(ref);
                 if (snap.exists()) {
                     const chat = snap.data().chat || [];
