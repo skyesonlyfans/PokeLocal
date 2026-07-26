@@ -132,7 +132,6 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .hidden { display: none !important; }
 
-        /* Custom Bounce Animation for loading */
         @keyframes bounce-slow {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
@@ -164,7 +163,6 @@
 
         <div id="screen-setup" class="screen">
             <div class="card-surface p-8 max-w-sm mx-auto mt-4 relative overflow-hidden">
-                <!-- Decorative top bar -->
                 <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-500 via-blue-500 to-yellow-500"></div>
                 
                 <div class="text-center mb-8">
@@ -352,7 +350,7 @@
             <div class="card-surface divide-y divide-[#333] mb-6 shadow-md">
                 <div class="p-5">
                     <h4 class="font-bold text-sm mb-2 text-blue-400 flex items-center gap-2"><i class="fa-solid fa-cloud"></i> Secure Sync & Identities</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed font-medium">Your collection and unique username are synced to <strong>Firestore</strong>. The new global registry prevents duplicate usernames. Authenticate via Google to safely preserve your collection across sessions and devices!</p>
+                    <p class="text-xs text-gray-400 leading-relaxed font-medium">Your collection and unique username are synced securely. The global registry prevents duplicate usernames. Guest Mode and Google Authentication allow seamless session preservation.</p>
                 </div>
                 <div class="p-5">
                     <h4 class="font-bold text-sm mb-2 text-white flex items-center gap-2"><i class="fa-solid fa-chart-bar"></i> Rarities & Data</h4>
@@ -457,8 +455,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
         const TOTAL_POKEMON = 1025;
@@ -514,15 +512,18 @@
                 db = getFirestore(app);
                 auth = getAuth(app);
 
-                // Authenticate: Custom token (Canvas env) or Anonymous (fallback)
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
                     await signInAnonymously(auth);
                 }
 
-                state.userId = auth.currentUser.uid;
-                state.isAnonymous = auth.currentUser.isAnonymous;
+                if (auth.currentUser) {
+                    state.userId = auth.currentUser.uid;
+                    state.isAnonymous = auth.currentUser.isAnonymous;
+                } else {
+                    state.userId = 'guest_' + Math.random().toString(36).substring(2, 9);
+                }
 
                 DOM.statusDot.classList.replace('bg-red-500', 'bg-green-500');
                 DOM.statusDot.style.boxShadow = '0 0 8px rgba(34,197,94,0.6)';
@@ -530,8 +531,9 @@
                 await loadCloudData();
 
             } catch (error) { 
-                showToast("Network error. Working offline.", "error"); 
-                switchScreen('screen-setup');
+                if (!state.userId) state.userId = 'guest_' + Math.random().toString(36).substring(2, 9);
+                showToast("Started in offline session mode.", "info"); 
+                showSetupScreen();
             }
             
             setupEventListeners();
@@ -584,9 +586,9 @@
         }
 
         async function loadCloudData() {
-            if (!db || !state.userId) return;
+            if (!db || !state.userId) return showSetupScreen();
             try {
-                const docRef = doc(db, 'artifacts', appId, 'users', state.userId);
+                const docRef = doc(db, 'artifacts', appId, 'users', state.userId, 'userData', 'profile');
                 const docSnap = await getDoc(docRef);
                 
                 if (docSnap.exists()) {
@@ -627,29 +629,31 @@
             switchScreen('screen-setup');
         }
 
-        // Fix: Use public username registry for unique checks without complex queries
         async function checkUsernameUnique(username) {
-            const lowerName = username.toLowerCase();
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'usernames', lowerName);
-            const snap = await getDoc(docRef);
-            if (snap.exists() && snap.data().uid !== state.userId) {
-                return false; // Taken by someone else
+            if (!db) return true;
+            try {
+                const lowerName = username.toLowerCase();
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'usernames', lowerName);
+                const snap = await getDoc(docRef);
+                if (snap.exists() && snap.data().uid !== state.userId) {
+                    return false;
+                }
+            } catch (e) {
+                return true;
             }
-            return true; // Available or owned by the current user
+            return true;
         }
 
         async function saveCloudData() {
             updateProfileUI();
             if (!db || !state.userId) return;
             try {
-                await setDoc(doc(db, 'artifacts', appId, 'users', state.userId), {
+                await setDoc(doc(db, 'artifacts', appId, 'users', state.userId, 'userData', 'profile'), {
                     profile: state.profile,
                     collection: state.collection,
                     packs: state.packs
                 });
-            } catch (e) {
-                showToast("Network error saving profile.", "error");
-            }
+            } catch (e) { }
         }
 
         function switchScreen(id) {
@@ -662,23 +666,25 @@
         }
 
         function setupEventListeners() {
-            // Google Sign In (Requires export or non-iframe environment due to popup blocks usually)
             document.getElementById('btn-google-signin').addEventListener('click', async () => {
+                if (!auth) {
+                    showToast("Cloud services unavailable. Play as Guest!", "info");
+                    return;
+                }
                 const provider = new GoogleAuthProvider();
                 try {
                     const result = await signInWithPopup(auth, provider);
-                    state.userId = result.user.uid;
-                    state.isAnonymous = false;
-                    showToast("Google Sign-In successful!", "success");
-                    
-                    DOM.googleSection.classList.add('hidden');
-                    
-                    // Show loading briefly then load their profile
-                    switchScreen('screen-loading');
-                    await loadCloudData();
+                    if (result && result.user) {
+                        state.userId = result.user.uid;
+                        state.isAnonymous = false;
+                        showToast("Google Sign-In successful!", "success");
+                        DOM.googleSection.classList.add('hidden');
+                        switchScreen('screen-loading');
+                        await loadCloudData();
+                    }
                 } catch(error) {
-                    if(error.code === 'auth/popup-closed-by-user') return;
-                    showToast("Popup blocked by environment. Try playing as guest.", "error");
+                    if (error.code === 'auth/popup-closed-by-user') return;
+                    showToast("Sign-in popup blocked. Please play as Guest below!", "info", 4500);
                 }
             });
 
@@ -701,7 +707,6 @@
                 });
             });
 
-            // Save profile logic with new registry architecture
             document.getElementById('btn-save-profile').addEventListener('click', async () => {
                 const username = document.getElementById('setup-username').value.trim();
                 const info = document.getElementById('setup-info').value.trim();
@@ -718,7 +723,6 @@
                 btn.disabled = true;
 
                 try {
-                    // Check uniqueness if name changed
                     if (lowerName !== state.profile.nameLower) {
                         const isUnique = await checkUsernameUnique(username);
                         if (!isUnique) {
@@ -728,12 +732,12 @@
                             return;
                         }
                         
-                        // Remove old name from registry if they had one
-                        if (state.profile.nameLower) {
+                        if (state.profile.nameLower && db) {
                             try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'usernames', state.profile.nameLower)); } catch(e){}
                         }
-                        // Add new name to registry
-                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'usernames', lowerName), { uid: state.userId });
+                        if (db) {
+                            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'usernames', lowerName), { uid: state.userId });
+                        }
                     }
 
                     state.profile.name = username;
@@ -746,12 +750,15 @@
                     setupFirebaseListeners(); 
                     updatePresence();
 
-                    showToast("Profile secured!", "success");
+                    showToast("Profile saved!", "success");
                     DOM.navItems.forEach(n => n.classList.remove('active'));
                     switchScreen('screen-packs');
                     document.querySelector('[data-target="screen-packs"]').classList.add('active');
                 } catch(e) {
-                    showToast("Failed to save profile. Try again.", "error");
+                    showToast("Profile set locally.", "info");
+                    DOM.navItems.forEach(n => n.classList.remove('active'));
+                    switchScreen('screen-packs');
+                    document.querySelector('[data-target="screen-packs"]').classList.add('active');
                 } finally {
                     btn.innerHTML = originalBtnContent;
                     btn.disabled = false;
@@ -769,9 +776,7 @@
                     }
                 });
                 
-                // Hide Google sign in on edit
                 DOM.googleSection.classList.add('hidden');
-                
                 switchScreen('screen-setup');
             });
 
@@ -1041,30 +1046,33 @@
         function setupFirebaseListeners() {
             if (!db || !state.userId || firebaseListeners.presence) return;
             
-            const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'presence');
-            firebaseListeners.presence = onSnapshot(usersRef, (snapshot) => {
-                state.onlineUsers = {}; const now = Date.now();
-                snapshot.forEach(doc => { const data = doc.data(); if (data.id !== state.userId && (now - data.lastSeen) < 180000) state.onlineUsers[doc.id] = data; });
-                renderNetworkList();
-            });
+            try {
+                const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'presence');
+                firebaseListeners.presence = onSnapshot(usersRef, (snapshot) => {
+                    state.onlineUsers = {}; const now = Date.now();
+                    snapshot.forEach(doc => { const data = doc.data(); if (data.id !== state.userId && (now - data.lastSeen) < 180000) state.onlineUsers[doc.id] = data; });
+                    renderNetworkList();
+                }, () => {});
 
-            const tradesRef = collection(db, 'artifacts', appId, 'public', 'data', 'trades');
-            firebaseListeners.incomingTrade = onSnapshot(tradesRef, (snapshot) => {
-                snapshot.docChanges().forEach(change => {
-                    if (change.type === "added" || change.type === "modified") {
-                        const data = change.doc.data();
-                        if (data.receiver === state.userId && data.status === 'requested') {
-                            showToast(`${data[data.initiator].name} wants to trade!`, 'trade', 10000, {
-                                onAccept: async () => { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'active' }); },
-                                onDecline: async () => { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'rejected' }); }
-                            });
+                const tradesRef = collection(db, 'artifacts', appId, 'public', 'data', 'trades');
+                firebaseListeners.incomingTrade = onSnapshot(tradesRef, (snapshot) => {
+                    snapshot.docChanges().forEach(change => {
+                        if (change.type === "added" || change.type === "modified") {
+                            const data = change.doc.data();
+                            if (data.receiver === state.userId && data.status === 'requested') {
+                                showToast(`${data[data.initiator].name} wants to trade!`, 'trade', 10000, {
+                                    onAccept: async () => { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'active' }); },
+                                    onDecline: async () => { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'rejected' }); }
+                                });
+                            }
+                            if (data.status === 'active' && (data.initiator === state.userId || data.receiver === state.userId) && !state.activeTrade) {
+                                 openTradeUI(data.id, data.initiator === state.userId ? data.receiver : data.initiator);
+                            }
                         }
-                        if (data.status === 'active' && (data.initiator === state.userId || data.receiver === state.userId) && !state.activeTrade) {
-                             openTradeUI(data.id, data.initiator === state.userId ? data.receiver : data.initiator);
-                        }
-                    }
-                });
-            });
+                    });
+                }, () => {});
+            } catch (e) {}
+
             setInterval(updatePresence, 45000); 
             window.addEventListener('beforeunload', () => { if(db && state.userId) deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'presence', state.userId)); });
         }
@@ -1141,7 +1149,7 @@
             try {
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', tradeId), {
                     id: tradeId, status: 'requested', initiator: state.userId, receiver: targetUid, timestamp: Date.now(),
-                    [state.userId]: { locked: false, offer: null, name: state.profile.name }, [targetUid]: { locked: false, offer: null, name: state.onlineUsers[targetUid].name }, chat: []
+                    [state.userId]: { locked: false, offer: null, name: state.profile.name }, [targetUid]: { locked: false, offer: null, name: state.onlineUsers[targetUid]?.name || 'Trainer' }, chat: []
                 });
                 showToast("Trade request sent via Radar.", "info");
             } catch (e) { showToast("Failed to send request.", "error"); }
@@ -1161,14 +1169,14 @@
             
             firebaseListeners.activeTrade = onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'trades', tradeId), (docSnap) => {
                 if (docSnap.exists()) handleTradeSync(docSnap.data(), partnerId); else forceCloseTrade("Session ended.", "error");
-            });
+            }, () => {});
         }
 
         function handleTradeSync(data, partnerId) {
             if (data.status === 'cancelled' || data.status === 'rejected') { forceCloseTrade("Trade cancelled.", "error"); return; }
             if (data.status === 'completed') { finalizeTradeLocally(data); return; }
 
-            const me = data[state.userId], them = data[partnerId];
+            const me = data[state.userId] || { locked: false, offer: null }, them = data[partnerId] || { locked: false, offer: null };
             const theirImg = document.getElementById('their-offer-img'), theirQ = document.getElementById('their-offer-q'), theirStatus = document.getElementById('their-trade-status');
             
             if (them.offer) { theirImg.src = them.offer.image; theirImg.classList.remove('hidden'); theirQ.classList.add('hidden'); } 
@@ -1247,7 +1255,7 @@
 
         function finalizeTradeLocally(data) {
             const me = data[state.userId], them = data[state.activeTrade.partnerId];
-            if (me.offer && them.offer) {
+            if (me && me.offer && them && them.offer) {
                 state.collection = state.collection.filter(c => c.id !== me.offer.id);
                 const newCard = { ...them.offer, id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), showcase: false, acquiredAt: Date.now() };
                 state.collection.unshift(newCard); state.profile.trades++;
