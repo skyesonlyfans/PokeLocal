@@ -23,83 +23,35 @@
             --instinct: #eab308;
             --holo: linear-gradient(135deg, rgba(255,0,204,0.4), rgba(51,51,255,0.4), rgba(0,255,255,0.4));
         }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text); 
-            overscroll-behavior-y: none; 
-            -webkit-tap-highlight-color: transparent; 
-            margin: 0; padding: 0; 
-            display: flex; flex-direction: column; 
-            height: 100vh;
-            background-image: radial-gradient(circle at 50% 0%, #151821 0%, #0b0c10 100%);
-            background-attachment: fixed;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; background-image: radial-gradient(circle at 50% 0%, #151821 0%, #0b0c10 100%); background-attachment: fixed; }
         .font-pokemon { font-family: 'Pokemon Solid', sans-serif; letter-spacing: 2.5px; -webkit-text-stroke: 1.5px #2563eb; color: #ffcb05; text-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
         .card-surface { background-color: var(--surface); border-radius: 24px; border: 1px solid var(--border); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-        
-        .input-field { 
-            background-color: #0b0c10; border: 2px solid var(--border); color: var(--text); 
-            border-radius: 16px; padding: 16px; width: 100%; outline: none; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 600; font-size: 16px;
-        }
+        .input-field { background-color: #0b0c10; border: 2px solid var(--border); color: var(--text); border-radius: 16px; padding: 16px; width: 100%; outline: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 600; font-size: 16px; }
         .input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); transform: translateY(-2px); }
-        .btn-primary { 
-            background: linear-gradient(135deg, #2563eb, #3b82f6); 
-            color: white; border-radius: 16px; font-weight: 800; padding: 16px; border: none; cursor: pointer; text-align: center; 
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            display: flex; justify-content: center; align-items: center; gap: 8px; 
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4); text-transform: uppercase; letter-spacing: 1px;
-        }
+        .btn-primary { background: linear-gradient(135deg, #2563eb, #3b82f6); color: white; border-radius: 16px; font-weight: 800; padding: 16px; border: none; cursor: pointer; text-align: center; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4); text-transform: uppercase; letter-spacing: 1px; }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5); }
         .btn-primary:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4); }
         .btn-primary:disabled { opacity: 0.5; pointer-events: none; filter: grayscale(100%); }
         .btn-secondary { background-color: rgba(255,255,255,0.05); color: var(--text); border: 2px solid var(--border); border-radius: 16px; font-weight: 700; padding: 14px; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(4px); }
         .btn-secondary:hover { background-color: var(--surface-hover); border-color: #4b5563; }
         .btn-secondary:active { transform: scale(0.96); }
-
-        header { 
-            background-color: rgba(11, 12, 16, 0.85); backdrop-filter: blur(16px); 
-            border-bottom: 1px solid var(--border); padding: 16px 24px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            position: sticky; top: 0; z-index: 40; 
-        }
+        header { background-color: rgba(11, 12, 16, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 40; }
         .main-content { flex: 1; overflow-y: auto; padding: 24px; padding-bottom: 110px; scroll-behavior: smooth; }
-        .bottom-nav { 
-            background-color: rgba(21, 24, 33, 0.95); backdrop-filter: blur(20px); 
-            border-top: 1px solid var(--border); position: fixed; bottom: 0; width: 100%; 
-            display: flex; justify-content: space-around; padding: 12px 0; 
-            padding-bottom: calc(12px + env(safe-area-inset-bottom)); 
-            z-index: 50; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); transition: all 0.3s ease;
-        }
-        .nav-item { 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--text-muted); font-size: 11px; cursor: pointer; width: 72px; 
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative;
-        }
-        .nav-item::after {
-            content: ''; position: absolute; bottom: -12px; width: 4px; height: 4px; border-radius: 50%;
-            background-color: var(--primary); opacity: 0; transition: all 0.3s ease; transform: translateY(10px);
-        }
+        .bottom-nav { background-color: rgba(21, 24, 33, 0.95); backdrop-filter: blur(20px); border-top: 1px solid var(--border); position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; padding: 12px 0; padding-bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 50; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); transition: all 0.3s ease; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); font-size: 11px; cursor: pointer; width: 72px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; }
+        .nav-item::after { content: ''; position: absolute; bottom: -12px; width: 4px; height: 4px; border-radius: 50%; background-color: var(--primary); opacity: 0; transition: all 0.3s ease; transform: translateY(10px); }
         .nav-item.active { color: #fff; font-weight: 800; }
         .nav-item.active::after { opacity: 1; transform: translateY(0); box-shadow: 0 0 10px var(--primary-glow); }
         .nav-icon-img { width: 28px; height: 28px; margin-bottom: 6px; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)) grayscale(100%) opacity(0.6); }
         .nav-item.active .nav-icon-img { transform: translateY(-6px) scale(1.2); filter: drop-shadow(0 6px 12px var(--primary-glow)) grayscale(0%) opacity(1); }
         .nav-icon-fa { font-size: 24px; margin-bottom: 6px; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); color: var(--text-muted); opacity: 0.8; display: block;}
         .nav-item.active .nav-icon-fa { transform: translateY(-6px) scale(1.2); color: var(--primary); text-shadow: 0 6px 12px var(--primary-glow); opacity: 1; }
-        
         .xp-bar-container { background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 8px; height: 10px; overflow: hidden; width: 100%; position: relative; margin-top: 4px; }
         .xp-bar-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #60a5fa); transition: width 0.5s ease-out; box-shadow: 0 0 10px rgba(59,130,246,0.5); }
         .screen { display: none; animation: screenFadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); max-width: 1200px; margin: 0 auto; width: 100%; }
         .screen.active { display: block; }
         @keyframes screenFadeIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        
-        .team-btn { 
-            flex: 1; padding: 16px 8px; border-radius: 16px; border: 2px solid var(--border); 
-            font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 11px;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer; background: rgba(255,255,255,0.02); 
-            display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-muted);
-        }
+        .team-btn { flex: 1; padding: 16px 8px; border-radius: 16px; border: 2px solid var(--border); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 11px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer; background: rgba(255,255,255,0.02); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-muted); }
         .team-btn i { font-size: 24px; transition: transform 0.3s; }
         .team-btn:hover { background: rgba(255,255,255,0.05); transform: translateY(-2px); }
         .team-btn[data-team="Valor"].selected { background: rgba(239, 68, 68, 0.15); border-color: var(--valor); color: var(--valor); box-shadow: 0 8px 25px rgba(239, 68, 68, 0.25); }
@@ -108,42 +60,21 @@
         .team-btn[data-team="Mystic"].selected i { transform: scale(1.2); text-shadow: 0 0 15px var(--mystic); }
         .team-btn[data-team="Instinct"].selected { background: rgba(234, 179, 8, 0.15); border-color: var(--instinct); color: var(--instinct); box-shadow: 0 8px 25px rgba(234, 179, 8, 0.25); }
         .team-btn[data-team="Instinct"].selected i { transform: scale(1.2); text-shadow: 0 0 15px var(--instinct); }
-
         .flip-card { background-color: transparent; aspect-ratio: 63/88; perspective: 1500px; cursor: pointer; width: 100%; height: 100%; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); transform-style: preserve-3d; }
         .flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back { 
-            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; 
-            border-radius: 16px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.5); 
-            background-color: #f3f4f6; border: 8px solid #ffcb05; 
-            -webkit-transform: translate3d(0,0,0); transform: translate3d(0,0,0);
-        }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 16px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.5); background-color: #f3f4f6; border: 8px solid #ffcb05; -webkit-transform: translate3d(0,0,0); transform: translate3d(0,0,0); }
         .flip-card-front { isolation: isolate; opacity: 1; transition: opacity 0s 0.25s; }
         .flip-card.is-flipped .flip-card-front { opacity: 0; transition: opacity 0s 0.25s; }
-        .flip-card-back { 
-            transform: rotateY(180deg) translate3d(0,0,0); -webkit-transform: rotateY(180deg) translate3d(0,0,0);
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%); border-color: #2563eb; 
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 15px 35px rgba(0,0,0,0.5);
-        }
-        .flip-card-back::before {
-            content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px);
-            background-size: 20px 20px; opacity: 0.3;
-        }
-        @keyframes float-gif {
-            0%, 100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 5px 15px rgba(255,255,255,0.2)); }
-            50% { transform: translateY(-15px) scale(1.1); filter: drop-shadow(0 25px 25px rgba(255,255,255,0.6)); }
-        }
+        .flip-card-back { transform: rotateY(180deg) translate3d(0,0,0); -webkit-transform: rotateY(180deg) translate3d(0,0,0); display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%); border-color: #2563eb; box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 0 15px 35px rgba(0,0,0,0.5); }
+        .flip-card-back::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px); background-size: 20px 20px; opacity: 0.3; }
+        @keyframes float-gif { 0%, 100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 5px 15px rgba(255,255,255,0.2)); } 50% { transform: translateY(-15px) scale(1.1); filter: drop-shadow(0 25px 25px rgba(255,255,255,0.6)); } }
         .gamified-gif { animation: float-gif 4s ease-in-out infinite; }
         .card-header { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, #ffffff, #f3f4f6); border-bottom: 2px solid rgba(0,0,0,0.05); }
         .card-name { font-weight: 900; font-size: 15px; text-transform: uppercase; color: #111827; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-hp { font-size: 14px; font-weight: 900; color: #dc2626; text-shadow: 1px 1px 0px rgba(255,255,255,0.8); }
         .card-img-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 12px; position: relative; background: radial-gradient(circle at center, #ffffff 0%, #e5e7eb 100%); overflow: hidden; isolation: isolate; }
-        .card-img-container::before {
-            content: ''; position: absolute; width: 150%; height: 150%; 
-            background: repeating-conic-gradient(from 0deg, rgba(0,0,0,0.03) 0deg 15deg, transparent 15deg 30deg);
-            animation: spin 30s linear infinite; z-index: 1; -webkit-backface-visibility: hidden; backface-visibility: hidden;
-        }
+        .card-img-container::before { content: ''; position: absolute; width: 150%; height: 150%; background: repeating-conic-gradient(from 0deg, rgba(0,0,0,0.03) 0deg 15deg, transparent 15deg 30deg); animation: spin 30s linear infinite; z-index: 1; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .card-img { width: 100%; height: 100%; object-fit: contain; z-index: 2; filter: drop-shadow(0 12px 16px rgba(0,0,0,0.4)); transition: transform 0.3s; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
         .flip-card:hover .card-img { transform: scale(1.05); }
@@ -151,69 +82,33 @@
         .rarity-rare { border-color: #a855f7 !important; }
         .rarity-uncommon { border-color: #22c55e !important; }
         .rarity-common { border-color: #94a3b8 !important; }
-        .rarity-legendary .card-img-container::after, .holo-effect .card-img-container::after { 
-            content: ''; position: absolute; inset: 0; 
-            background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.8) 40%, transparent 60%); 
-            background-size: 200% 200%; animation: shimmer 2.5s infinite linear; pointer-events: none; z-index: 10; mix-blend-mode: overlay; 
-            -webkit-backface-visibility: hidden; backface-visibility: hidden;
-        }
+        .rarity-legendary .card-img-container::after, .holo-effect .card-img-container::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.8) 40%, transparent 60%); background-size: 200% 200%; animation: shimmer 2.5s infinite linear; pointer-events: none; z-index: 10; mix-blend-mode: overlay; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
         .mythic-holo { border-color: #ec4899 !important; }
-        .mythic-holo .card-img-container::after { 
-            content: ''; position: absolute; inset: 0; 
-            background: linear-gradient(105deg, rgba(255,0,0,0.4) 0%, rgba(255,165,0,0.4) 15%, rgba(255,255,0,0.4) 30%, rgba(0,128,0,0.4) 45%, rgba(0,0,255,0.4) 60%, rgba(75,0,130,0.4) 75%, rgba(238,130,238,0.4) 90%, rgba(255,0,0,0.4) 100%); 
-            background-size: 200% 200%; animation: shimmer 3s infinite linear; pointer-events: none; z-index: 10; mix-blend-mode: color-dodge; 
-            -webkit-backface-visibility: hidden; backface-visibility: hidden;
-        }
+        .mythic-holo .card-img-container::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, rgba(255,0,0,0.4) 0%, rgba(255,165,0,0.4) 15%, rgba(255,255,0,0.4) 30%, rgba(0,128,0,0.4) 45%, rgba(0,0,255,0.4) 60%, rgba(75,0,130,0.4) 75%, rgba(238,130,238,0.4) 90%, rgba(255,0,0,0.4) 100%); background-size: 200% 200%; animation: shimmer 3s infinite linear; pointer-events: none; z-index: 10; mix-blend-mode: color-dodge; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        .radar-container { 
-            position: relative; height: 350px; display: flex; justify-content: center; align-items: center; overflow: hidden; 
-            background: radial-gradient(circle, #1a1c23 0%, #0b0c10 100%); border-radius: 32px; border: 2px solid var(--border); box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
-        }
+        .radar-container { position: relative; height: 350px; display: flex; justify-content: center; align-items: center; overflow: hidden; background: radial-gradient(circle, #1a1c23 0%, #0b0c10 100%); border-radius: 32px; border: 2px solid var(--border); box-shadow: inset 0 0 50px rgba(0,0,0,0.8); }
         .radar-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px); background-size: 30px 30px; opacity: 0.5; }
         .radar-pulse { position: absolute; width: 80px; height: 80px; border-radius: 50%; background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.5); animation: pulse 4s infinite cubic-bezier(0.1, 0.8, 0.3, 1); }
         .radar-pulse:nth-child(3) { animation-delay: 1.3s; }
         .radar-pulse:nth-child(4) { animation-delay: 2.6s; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(8); opacity: 0; } }
-        
-        .pack-item { 
-            background: linear-gradient(160deg, #2a3042, #151821); border: 2px solid #3b4256; border-radius: 24px; 
-            padding: 24px; text-align: center; cursor: pointer; box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 2px 10px rgba(255,255,255,0.1); 
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; 
-        }
+        .pack-item { background: linear-gradient(160deg, #2a3042, #151821); border: 2px solid #3b4256; border-radius: 24px; padding: 24px; text-align: center; cursor: pointer; box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 2px 10px rgba(255,255,255,0.1); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; }
         .pack-item:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 30px 50px rgba(0,0,0,0.6), inset 0 2px 15px rgba(255,255,255,0.15); border-color: #4b5563; }
         .pack-item:active { transform: scale(0.96); }
         .pack-price { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5); padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 12px; color: #fbbf24; border: 1px solid #fbbf24; display: flex; align-items: center; gap: 4px; }
-        
-        @keyframes pokeball-throw {
-            0% { transform: translateY(150px) scale(0) rotate(-180deg); opacity: 0; }
-            50% { transform: translateY(-50px) scale(1.5) rotate(20deg); opacity: 1; }
-            70% { transform: translateY(0) scale(1.2) rotate(-10deg); }
-            85% { transform: translateY(-20px) scale(1) rotate(5deg); }
-            100% { transform: translateY(0) scale(1) rotate(0); }
-        }
-        @keyframes pokeball-shake {
-            0%, 100% { transform: translateX(0) rotate(0); }
-            20% { transform: translateX(-15px) rotate(-15deg); }
-            40% { transform: translateX(15px) rotate(15deg); }
-            60% { transform: translateX(-10px) rotate(-10deg); }
-            80% { transform: translateX(10px) rotate(10deg); }
-        }
+        @keyframes pokeball-throw { 0% { transform: translateY(150px) scale(0) rotate(-180deg); opacity: 0; } 50% { transform: translateY(-50px) scale(1.5) rotate(20deg); opacity: 1; } 70% { transform: translateY(0) scale(1.2) rotate(-10deg); } 85% { transform: translateY(-20px) scale(1) rotate(5deg); } 100% { transform: translateY(0) scale(1) rotate(0); } }
+        @keyframes pokeball-shake { 0%, 100% { transform: translateX(0) rotate(0); } 20% { transform: translateX(-15px) rotate(-15deg); } 40% { transform: translateX(15px) rotate(15deg); } 60% { transform: translateX(-10px) rotate(-10deg); } 80% { transform: translateX(10px) rotate(10deg); } }
         @keyframes pokeball-flash { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(3) drop-shadow(0 0 40px rgba(255,255,255,1)); } }
         @keyframes pack-appear { 0% { transform: scale(0); opacity: 0; filter: blur(10px); } 100% { transform: scale(1); opacity: 1; filter: blur(0); } }
         @keyframes rip-shake { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(-3deg) scale(1.02); } 75% { transform: rotate(3deg) scale(1.02); } }
-        
         .anim-pokeball-throw { animation: pokeball-throw 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         .anim-pokeball-shake { animation: pokeball-shake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite; }
         .anim-pokeball-flash { animation: pokeball-flash 0.5s ease-out forwards; }
         .anim-pack-appear { animation: pack-appear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
         .anim-rip-shake { animation: rip-shake 0.2s ease-in-out infinite; }
-        /* NEW: Improved Rip Animation (Tears at top) */
         .anim-rip-top-new { transform: translateY(-30%) translateX(-20%) rotate(-35deg); opacity: 0; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        
         .modal-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 100; padding: 24px; animation: screenFadeIn 0.3s ease-out; }
         .modal-overlay.active { display: flex; }
-        /* Adjusted Toast Container for non-blocking */
         .toast-container { position: fixed; top: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 12px; pointer-events: none; width: 90%; max-width: 350px; }
         .toast { background: rgba(31, 41, 55, 0.95); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--primary); color: white; padding: 16px 20px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 16px; animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: auto; font-weight: 600; }
         .toast.success { border-left-color: #10b981; }
@@ -221,25 +116,17 @@
         .toast.hiding { animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
-        
-        /* Trade multi-slots */
         .trade-slot { aspect-ratio: 63/88; border: 3px dashed var(--border); border-radius: 16px; display: flex; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.3); position: relative; overflow: hidden; transition: all 0.3s; width: 100%; max-width: 90px; }
         .trade-slot:hover { border-color: #4b5563; background-color: rgba(0,0,0,0.5); }
         .trade-slot img { width: 100%; height: 100%; object-fit: contain; padding: 4px; position: absolute; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
-        
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         @keyframes bounce-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
         .animate-bounce-slow { animation: bounce-slow 2.5s infinite ease-in-out; }
-        
         @media (min-width: 768px) {
             body { flex-direction: row; }
             header { display: none; }
-            .bottom-nav { 
-                position: static; flex-direction: column; width: 280px; height: 100vh; 
-                justify-content: flex-start; padding: 32px 16px; border-top: none; border-right: 1px solid var(--border);
-                background-color: var(--surface); box-shadow: 10px 0 30px rgba(0,0,0,0.3);
-            }
+            .bottom-nav { position: static; flex-direction: column; width: 280px; height: 100vh; justify-content: flex-start; padding: 32px 16px; border-top: none; border-right: 1px solid var(--border); background-color: var(--surface); box-shadow: 10px 0 30px rgba(0,0,0,0.3); }
             .desktop-brand { display: block; text-align: center; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
             .desktop-brand .font-pokemon { font-size: 32px; }
             .nav-item { width: 100%; flex-direction: row; justify-content: flex-start; padding: 16px 24px; border-radius: 16px; margin-bottom: 8px; font-size: 15px; }
@@ -261,9 +148,19 @@
             .trade-modal-chat { border-left: 1px solid var(--border); border-top: none; width: 350px; }
         }
         .desktop-brand { display: none; }
+        .event-banner { background: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6); background-size: 200% 200%; animation: gradientMove 5s ease infinite; color: white; padding: 12px; text-align: center; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; display: none; }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .health-bar { height: 12px; background: #374151; border-radius: 6px; overflow: hidden; width: 100%; border: 1px solid #000; }
+        .health-fill { height: 100%; background: #22c55e; transition: width 0.3s ease, background-color 0.3s ease; }
     </style>
 </head>
 <body>
+    <div id="global-event-banner" class="event-banner">
+        <i class="fa-solid fa-star fa-spin mr-2"></i>
+        <span id="event-text"></span>
+        <span id="event-timer" class="ml-2 font-mono text-yellow-300 bg-black bg-opacity-30 px-2 py-0.5 rounded"></span>
+        <i class="fa-solid fa-star fa-spin ml-2"></i>
+    </div>
     <header class="md:hidden">
         <div class="font-pokemon text-2xl drop-shadow-md">PokeLocal</div>
         <div class="flex items-center text-xs bg-[#0b0c10] px-4 py-2 rounded-full border border-[#262b3a] shadow-inner">
@@ -272,7 +169,6 @@
         </div>
     </header>
     <div id="toast-container" class="toast-container"></div>
-    
     <nav class="bottom-nav">
         <div class="desktop-brand">
             <div class="font-pokemon drop-shadow-md mb-4">PokeLocal</div>
@@ -302,12 +198,15 @@
             <i class="fa-solid fa-user-astronaut nav-icon-fa"></i>
             <span>Profile</span>
         </div>
+        <div class="nav-item hidden" id="nav-admin" data-target="screen-admin">
+            <i class="fa-solid fa-shield-halved nav-icon-fa text-red-500"></i>
+            <span class="text-red-500 font-bold">Admin</span>
+        </div>
         <div class="md:hidden flex items-center justify-center text-xs gap-1 absolute top-2 right-4">
             <i class="fa-solid fa-coins text-yellow-400"></i>
             <span id="nav-coins-mobile" class="font-black text-yellow-400">0</span>
         </div>
     </nav>
-
     <main class="main-content">
         <div id="screen-loading" class="screen active">
             <div class="flex flex-col items-center justify-center h-[70vh]">
@@ -319,9 +218,7 @@
                 <p class="text-sm text-blue-400 font-bold animate-pulse tracking-wide">Syncing secure local instance...</p>
             </div>
         </div>
-
         <div id="screen-setup" class="screen">
-            <!-- Setup profile HTML (Same as original, truncated for brevity in chunking, full code below) -->
             <div class="card-surface p-6 md:p-10 max-w-lg mx-auto mt-4 md:mt-12 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 via-blue-500 to-yellow-500"></div>
                 <div class="text-center mb-10">
@@ -335,7 +232,7 @@
                 <div id="profile-form" class="space-y-6">
                     <div>
                         <label class="block text-[11px] font-black text-blue-400 mb-3 tracking-widest uppercase">Unique Trainer Name</label>
-                        <input type="text" id="setup-username" class="input-field" placeholder="e.g. AshKetchum" maxlength="15">
+                        <input type="text" id="setup-username" class="input-field" placeholder="e.g. Skye" maxlength="15">
                     </div>
                     <div>
                         <label class="block text-[11px] font-black text-blue-400 mb-3 tracking-widest uppercase">Choose Faction</label>
@@ -345,21 +242,10 @@
                             <button class="team-btn" data-team="Instinct"><i class="fa-solid fa-bolt pointer-events-none"></i>Instinct</button>
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-[11px] font-black text-blue-400 mb-3 tracking-widest uppercase">Select Buddy Pokemon</label>
-                        <div class="flex gap-3">
-                            <input type="text" id="setup-buddy-input" class="input-field flex-1" placeholder="Name or ID (e.g. pikachu)">
-                            <button id="btn-fetch-buddy" class="btn-secondary whitespace-nowrap border-blue-500 text-blue-400">Find</button>
-                        </div>
-                        <div id="setup-buddy-preview" class="mt-4 flex flex-col items-center justify-center min-h-[80px] bg-[#0b0c10] border border-dashed border-[#262b3a] rounded-xl py-4">
-                            <span class="text-[10px] text-gray-600 font-bold uppercase tracking-widest">No Buddy Selected</span>
-                        </div>
-                    </div>
                     <button id="btn-save-profile" class="btn-primary w-full mt-8 py-5 text-lg shadow-[0_10px_30px_rgba(37,99,235,0.4)]">Initialize Setup</button>
                 </div>
             </div>
         </div>
-
         <div id="screen-packs" class="screen">
             <div class="text-center mb-10 mt-4 md:mt-8">
                 <h2 class="text-4xl font-black text-white mb-4 tracking-widest uppercase text-shadow-md">Card Shop</h2>
@@ -368,9 +254,8 @@
                     <p class="text-sm text-gray-300 font-bold uppercase tracking-widest">Daily Free: <span id="packs-count" class="text-blue-400 text-xl ml-2">2</span></p>
                 </div>
                 <p class="text-xs text-gray-500 mt-4 font-bold tracking-widest uppercase" id="pack-timer">Connecting to server time...</p>
+                <div class="mt-4 flex flex-wrap gap-2 justify-center" id="inventory-packs-container"></div>
             </div>
-
-            <!-- Daily Free Packs -->
             <div class="pack-grid flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 pb-8 border-b border-[#262b3a] mb-8">
                 <div id="the-pack" class="pack-item w-full max-w-xs md:max-w-[280px]">
                     <div class="pack-price text-green-400 border-green-400">FREE</div>
@@ -380,7 +265,6 @@
                     <h3 class="font-black text-2xl text-white tracking-widest uppercase mb-2 relative z-10">Daily Drop</h3>
                     <p class="text-[11px] text-gray-400 font-bold tracking-widest uppercase relative z-10 bg-black bg-opacity-30 inline-block px-3 py-1 rounded border border-[#333]">3 Cards (Random)</p>
                 </div>
-                
                 <div id="holo-pack" class="pack-item holo hidden w-full max-w-xs md:max-w-[280px] border-pink-500 border-opacity-50">
                     <div class="absolute inset-0 bg-gradient-to-br from-pink-600 via-purple-600 to-blue-600 opacity-20 z-0"></div>
                     <div class="pack-price text-pink-400 border-pink-400">FREE</div>
@@ -391,31 +275,73 @@
                     <p class="text-[11px] text-pink-300 font-bold tracking-widest uppercase relative z-10 bg-black bg-opacity-40 inline-block px-3 py-1 rounded border border-pink-500 border-opacity-50 shadow-md">Trade Unlock</p>
                 </div>
             </div>
-
-            <!-- Premium Packs -->
             <h3 class="text-center text-lg font-black text-yellow-500 mb-6 tracking-widest uppercase"><i class="fa-solid fa-store mr-2"></i> Premium Packs</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto pb-12 px-4">
-                <div class="pack-item premium-pack" data-type="gen1" data-cost="100">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto pb-12 px-4">
+                <!-- Base Set -->
+                <div class="pack-item premium-pack" data-type="base" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
-                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none">
-                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Kanto Classic</h3>
-                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 1 • 3 Cards • High Rarity Odds</p>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Base Set</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 1 • 3 Cards</p>
                 </div>
-                <div class="pack-item premium-pack" data-type="gen2" data-cost="100">
+                <!-- Neo Genesis -->
+                <div class="pack-item premium-pack" data-type="neo" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
-                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none">
-                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Johto Journeys</h3>
-                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 2 • 3 Cards • High Rarity Odds</p>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Neo Genesis</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 2 • 3 Cards</p>
                 </div>
-                <div class="pack-item premium-pack" data-type="gen3" data-cost="100">
+                <!-- Ruby & Sapphire -->
+                <div class="pack-item premium-pack" data-type="ruby_sapphire" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
-                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none">
-                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Hoenn Heroes</h3>
-                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 3 • 3 Cards • High Rarity Odds</p>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Ruby & Sapphire</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 3 • 3 Cards</p>
+                </div>
+                <!-- Diamond & Pearl -->
+                <div class="pack-item premium-pack" data-type="diamond_pearl" data-cost="100">
+                    <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/483.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Diamond & Pearl</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 4 • 3 Cards</p>
+                </div>
+                <!-- Black & White -->
+                <div class="pack-item premium-pack" data-type="black_white" data-cost="100">
+                    <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/644.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Black & White</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 5 • 3 Cards</p>
+                </div>
+                <!-- XY - Mega Evolution -->
+                <div class="pack-item premium-pack" data-type="xy" data-cost="100">
+                    <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/716.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">XY</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 6 • 3 Cards</p>
+                </div>
+                <!-- Sun & Moon -->
+                <div class="pack-item premium-pack" data-type="sun_moon" data-cost="100">
+                    <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/791.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Sun & Moon</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 7 • 3 Cards</p>
+                </div>
+                <!-- Sword & Shield -->
+                <div class="pack-item premium-pack" data-type="sword_shield" data-cost="100">
+                    <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/888.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Sword & Shield</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 8 • 3 Cards</p>
+                </div>
+                <!-- Scarlet & Violet -->
+                <div class="pack-item premium-pack" data-type="scarlet_violet" data-cost="100">
+                    <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1007.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Scarlet & Violet</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 9 • 3 Cards</p>
                 </div>
             </div>
         </div>
-
         <div id="screen-collection" class="screen">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 bg-[#151821] p-6 rounded-3xl border-2 border-[#262b3a] shadow-xl gap-4">
                 <div class="flex items-center gap-5">
@@ -446,7 +372,6 @@
                 <p class="text-sm mt-3 text-gray-500 font-bold">Try adjusting filters or rip more packs.</p>
             </div>
         </div>
-
         <div id="screen-network" class="screen">
             <div class="radar-layout">
                 <div class="radar-container shadow-2xl relative order-2 md:order-1 flex-1 mb-8 md:mb-0">
@@ -457,6 +382,11 @@
                     <div class="user-node absolute w-16 h-16 rounded-full bg-[#151821] border-4 border-blue-500 flex flex-col justify-center items-center z-30 shadow-[0_0_30px_rgba(59,130,246,0.8)]" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
                         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/trainer-band.png" class="w-8 h-8 object-contain drop-shadow">
                         <span class="absolute -bottom-8 font-black text-[10px] text-white bg-black px-3 py-1.5 rounded border border-blue-500 tracking-widest uppercase">YOU</span>
+                    </div>
+                    <div id="raid-boss-node" class="absolute w-24 h-24 rounded-full bg-red-900 bg-opacity-80 border-4 border-red-500 hidden flex flex-col justify-center items-center z-30 shadow-[0_0_40px_rgba(239,68,68,0.8)] cursor-pointer hover:scale-110 transition-transform backdrop-blur-sm">
+                        <img id="raid-boss-img" src="" class="w-20 h-20 object-contain drop-shadow-xl animate-bounce-slow">
+                        <span class="absolute -bottom-6 font-black text-[10px] text-white bg-black px-3 py-1 rounded border border-red-500 tracking-widest uppercase text-shadow whitespace-nowrap">RAID BOSS</span>
+                        <div class="absolute -top-3 w-full"><div class="health-bar h-2"><div id="raid-hp-fill" class="health-fill w-full bg-red-500"></div></div></div>
                     </div>
                     <div id="network-nodes"></div>
                     <button id="btn-refresh-network" class="absolute top-6 right-6 bg-[#0b0c10] text-gray-400 hover:text-white w-12 h-12 rounded-full border-2 border-[#262b3a] transition-all flex items-center justify-center shadow-lg hover:border-blue-500 z-40"><i class="fa-solid fa-radar fa-spin-pulse"></i></button>
@@ -478,7 +408,6 @@
                 </div>
             </div>
         </div>
-
         <div id="screen-info" class="screen">
             <div class="card-surface p-8 md:p-12 mb-8 bg-gradient-to-br from-[#1f2330] to-[#0b0c10] shadow-2xl relative overflow-hidden mt-4 border-t-4 border-t-blue-500">
                 <div class="absolute -right-10 -top-10 opacity-[0.03] rotate-12">
@@ -494,7 +423,7 @@
                             <h3 class="font-black text-3xl text-white mb-2 tracking-widest uppercase text-shadow-md" id="info-name">Trainer</h3>
                             <div class="flex flex-wrap gap-2 mb-3">
                                 <span id="info-team" class="text-[9px] px-2 py-1 rounded-md font-black uppercase tracking-widest border shadow-sm"></span>
-                                <span id="info-rank" class="text-[9px] px-2 py-1 bg-gradient-to-r from-gray-700 to-gray-600 text-white border border-gray-500 rounded-md font-black uppercase tracking-widest shadow-sm">Rank</span>
+                                <span id="info-rank" class="text-[9px] px-2 py-1 text-white border rounded-md font-black uppercase tracking-widest shadow-sm flex items-center gap-1"><i id="rank-icon" class="fa-solid fa-medal"></i> <span id="rank-text">Bronze</span></span>
                             </div>
                             <div class="w-full max-w-[200px]">
                                 <div class="flex justify-between text-[9px] font-black tracking-widest uppercase text-gray-400 mb-1">
@@ -523,7 +452,17 @@
                     </div>
                 </div>
             </div>
-            
+            <div id="event-manager" class="card-surface p-6 mb-8 shadow-xl hidden border border-pink-500">
+                <h3 class="font-black text-pink-500 text-sm tracking-widest uppercase mb-5"><i class="fa-solid fa-star mr-2"></i>Skye's Event Manager</h3>
+                <div class="space-y-4">
+                    <input type="text" id="ev-title" class="input-field py-2 text-sm" placeholder="Event Title">
+                    <input type="text" id="ev-desc" class="input-field py-2 text-sm" placeholder="Condition / Description">
+                    <input type="number" id="ev-reward" class="input-field py-2 text-sm" placeholder="Coin Reward">
+                    <input type="number" id="ev-hours" class="input-field py-2 text-sm" placeholder="Duration (Hours)">
+                    <button id="btn-create-event" class="btn-primary w-full py-3 text-sm bg-gradient-to-r from-pink-500 to-purple-600 border-none shadow-[0_0_15px_rgba(236,72,153,0.5)]">Broadcast Event</button>
+                    <button id="btn-spawn-raid" class="btn-primary w-full py-3 text-sm bg-gradient-to-r from-red-700 to-red-500 border-none shadow-[0_0_15px_rgba(239,68,68,0.5)] mt-4">Spawn Raid Boss</button>
+                </div>
+            </div>
             <h3 class="font-black text-white text-sm tracking-widest uppercase mb-5 px-4 text-blue-400">Settings & Save Data</h3>
             <div class="card-surface p-6 mb-8 shadow-xl">
                 <div class="flex justify-between items-center mb-6 pb-6 border-b border-[#262b3a]">
@@ -547,15 +486,38 @@
                 </div>
             </div>
         </div>
+        <div id="screen-admin" class="screen">
+            <h2 class="text-3xl font-black text-red-500 mb-6 tracking-widest uppercase">Admin Terminal</h2>
+            <div id="admin-sales-list" class="space-y-4"></div>
+        </div>
     </main>
-
-    <!-- Pack Rip Animation Modal -->
+    <div id="modal-raid" class="modal-overlay z-[160]">
+        <div class="card-surface w-full max-w-md p-6 relative bg-[#0b0c10] border-2 border-red-500 shadow-[0_0_50px_rgba(239,68,68,0.5)]">
+            <button class="close-raid absolute top-4 right-4 text-gray-400 hover:text-white bg-[#151821] w-8 h-8 rounded-full border border-[#262b3a] flex justify-center items-center shadow-inner transition-colors"><i class="fa-solid fa-times"></i></button>
+            <div class="text-center mb-6">
+                <h3 class="font-black text-red-500 text-2xl tracking-widest uppercase mb-1">Network Raid</h3>
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Co-op Boss Battle</p>
+            </div>
+            <div class="flex flex-col items-center mb-6">
+                <div class="w-32 h-32 bg-red-900 bg-opacity-20 rounded-full flex items-center justify-center border-4 border-red-500 relative mb-4 shadow-[0_0_30px_rgba(239,68,68,0.4)]">
+                    <img id="raid-modal-img" src="" class="w-24 h-24 object-contain filter drop-shadow-lg animate-bounce-slow">
+                </div>
+                <h4 id="raid-modal-name" class="text-xl font-black text-white uppercase tracking-widest text-shadow-md mb-2">Boss Name</h4>
+                <div class="w-full max-w-[200px]">
+                    <div class="flex justify-between text-[10px] font-black tracking-widest uppercase text-gray-300 mb-1">
+                        <span>HP</span><span id="raid-modal-hp-text"></span>
+                    </div>
+                    <div class="health-bar h-3 bg-gray-800"><div id="raid-modal-hp-fill" class="health-fill bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)]" style="width:100%"></div></div>
+                </div>
+            </div>
+            <button id="btn-raid-attack" class="btn-primary w-full py-4 text-sm bg-gradient-to-r from-red-600 to-red-500 shadow-[0_10px_20px_rgba(239,68,68,0.4)]"><i class="fa-solid fa-khanda mr-2"></i> Select Card & Attack</button>
+        </div>
+    </div>
     <div id="modal-pack-rip" class="modal-overlay z-[200]">
         <div class="relative w-full h-full flex flex-col items-center justify-center">
             <img id="rip-pokeball" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-32 h-32 hidden absolute z-50 filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]">
             <div class="relative w-64 h-96 cursor-pointer group flex flex-col items-center justify-center hidden perspective-1000" id="rip-pack-container">
                 <div class="absolute inset-0 z-10 w-full h-full shadow-[0_0_50px_rgba(37,99,235,0.4)]" id="rip-halves-wrapper">
-                    <!-- Improved tear animation: top rips up and away -->
                     <div class="absolute top-0 left-0 w-full h-[30%] bg-gradient-to-b from-blue-700 to-blue-600 rounded-t-3xl shadow-2xl border-4 border-b-0 border-blue-400 flex flex-col items-center justify-center overflow-hidden z-20 origin-bottom-left" id="rip-top-half">
                         <div class="w-full h-2 absolute bottom-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-50 jagged-edge"></div>
                     </div>
@@ -567,8 +529,6 @@
             <p class="absolute bottom-24 text-white font-black text-xl tracking-[0.3em] uppercase animate-pulse drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)] bg-black bg-opacity-50 px-8 py-4 rounded-full border border-gray-600 hidden" id="rip-instructions">Tap to Tear Top</p>
         </div>
     </div>
-
-    <!-- Post-Rip Pulls Modal -->
     <div id="modal-pulls" class="modal-overlay z-[150]">
         <div id="pulls-view" class="flex flex-col items-center pb-12 w-full">
             <div class="w-full max-w-md flex justify-between items-center mb-10 px-4">
@@ -583,20 +543,22 @@
             <p class="text-xs font-black tracking-widest uppercase text-gray-500 mt-10 text-center bg-[#0b0c10] px-6 py-2 rounded-full border border-[#262b3a]"><i class="fa-solid fa-hand-pointer mr-3 text-blue-400"></i>Tap card to reveal stats</p>
         </div>
     </div>
-
-    <!-- Detail Modal -->
     <div id="modal-card-detail" class="modal-overlay">
         <div class="w-full max-w-sm flex flex-col items-center">
-            <div id="detail-card-container" class="w-full max-w-[320px] mb-10 flex justify-center" style="perspective: 1500px;"></div>
-            <div class="flex w-full gap-5 bg-[#151821] p-5 rounded-3xl border-2 border-[#262b3a] shadow-2xl">
-                <button id="btn-toggle-showcase" class="btn-secondary flex-1 flex items-center justify-center gap-3 py-4 bg-[#0b0c10] text-sm uppercase tracking-widest">
-                    <i class="fa-regular fa-star text-xl" id="showcase-icon"></i> <span class="font-black">Showcase</span>
-                </button>
-                <button class="btn-primary flex-1 close-modal py-4 text-sm shadow-md">Close</button>
+            <div id="detail-card-container" class="w-full max-w-[320px] mb-6 flex justify-center" style="perspective: 1500px;"></div>
+            <div class="flex w-full gap-3 bg-[#151821] p-4 rounded-3xl border-2 border-[#262b3a] shadow-2xl flex-col">
+                <div class="flex gap-3 w-full">
+                    <button id="btn-toggle-showcase" class="btn-secondary flex-1 flex items-center justify-center gap-2 py-3 bg-[#0b0c10] text-[10px] uppercase tracking-widest">
+                        <i class="fa-regular fa-star text-base" id="showcase-icon"></i> <span class="font-black">Showcase</span>
+                    </button>
+                    <button id="btn-sell-card" class="btn-secondary flex-1 flex items-center justify-center gap-2 py-3 bg-yellow-900 border-yellow-500 text-yellow-300 text-[10px] uppercase tracking-widest">
+                        <i class="fa-solid fa-coins text-base"></i> <span class="font-black">Sell to Admin</span>
+                    </button>
+                </div>
+                <button class="btn-primary w-full close-modal py-3 text-sm shadow-md">Close</button>
             </div>
         </div>
     </div>
-
     <div id="modal-trade" class="modal-overlay">
         <div class="card-surface w-full max-w-5xl h-[95vh] md:h-[85vh] flex flex-col overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] border-2">
             <div class="p-4 border-b-2 border-[#262b3a] flex justify-between items-center bg-[#0b0c10]">
@@ -606,35 +568,22 @@
                 </div>
                 <button class="close-trade text-gray-400 hover:text-red-400 bg-[#151821] w-10 h-10 rounded-full flex items-center justify-center border border-[#262b3a] transition-all text-lg shadow-inner hover:border-red-500"><i class="fa-solid fa-times"></i></button>
             </div>
-            
             <div class="flex-1 flex flex-col md:flex-row trade-modal-content overflow-hidden bg-[#0b0c10]">
-                <!-- Trade Slots Area -->
                 <div class="flex-1 flex flex-col md:flex-row trade-modal-slots p-4 gap-4 md:gap-8 items-center justify-center overflow-y-auto md:overflow-visible relative">
-                    
-                    <!-- You Offer (Up to 3) -->
                     <div class="w-full flex flex-col items-center">
                         <span class="text-[10px] font-black text-blue-400 mb-2 md:mb-4 tracking-widest uppercase bg-blue-900 bg-opacity-20 px-4 py-1.5 rounded-full border border-blue-500 border-opacity-30 shadow-md">You Offer (Max 3)</span>
-                        <div id="my-offer-slots" class="flex gap-2 justify-center w-full">
-                            <!-- JS will generate 3 slots -->
-                        </div>
+                        <div id="my-offer-slots" class="flex gap-2 justify-center w-full"></div>
                         <span id="my-trade-status" class="text-[10px] md:text-[11px] font-black mt-3 md:mt-5 px-3 py-2 md:px-4 md:py-2.5 rounded-xl bg-[#151821] text-gray-400 border-2 border-[#262b3a] w-full max-w-[200px] text-center tracking-widest uppercase shadow-inner">Selecting...</span>
                     </div>
-                    
                     <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#151821] flex items-center justify-center border-2 md:border-4 border-[#0b0c10] shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10 my-2 md:my-0 flex-shrink-0">
                         <i class="fa-solid fa-arrow-right-arrow-left rotate-90 md:rotate-0 text-gray-400 text-sm md:text-lg"></i>
                     </div>
-                    
-                    <!-- They Offer (Up to 3) -->
                     <div class="w-full flex flex-col items-center">
                         <span class="text-[10px] font-black text-red-400 mb-2 md:mb-4 tracking-widest uppercase bg-red-900 bg-opacity-20 px-4 py-1.5 rounded-full border border-red-500 border-opacity-30 shadow-md">They Offer</span>
-                        <div id="their-offer-slots" class="flex gap-2 justify-center w-full">
-                            <!-- JS will generate 3 slots -->
-                        </div>
+                        <div id="their-offer-slots" class="flex gap-2 justify-center w-full"></div>
                         <span id="their-trade-status" class="text-[10px] md:text-[11px] font-black mt-3 md:mt-5 px-3 py-2 md:px-4 md:py-2.5 rounded-xl bg-[#151821] text-gray-400 border-2 border-[#262b3a] w-full max-w-[200px] text-center tracking-widest uppercase shadow-inner">Selecting...</span>
                     </div>
                 </div>
-                
-                <!-- Chat -->
                 <div class="h-40 md:h-full trade-modal-chat border-t-2 border-[#262b3a] flex flex-col bg-[#151821]">
                     <div class="bg-[#0b0c10] px-5 py-3 border-b border-[#262b3a] flex items-center gap-3">
                         <i class="fa-solid fa-shield-halved text-green-500"></i>
@@ -647,29 +596,26 @@
                     </div>
                 </div>
             </div>
-            
             <div class="p-6 border-t-2 border-[#262b3a] bg-[#0b0c10] flex gap-5">
                 <button id="btn-trade-lock" class="btn-secondary flex-1 py-4 text-white border-gray-600 bg-[#151821] tracking-widest uppercase text-xs md:text-sm">Lock Offer</button>
                 <button id="btn-trade-accept" class="btn-primary flex-1 hidden bg-gradient-to-r from-green-600 to-green-500 py-4 shadow-[0_10px_20px_rgba(34,197,94,0.4)] tracking-widest uppercase text-xs md:text-sm"><i class="fa-solid fa-check mr-2"></i>Accept Trade</button>
             </div>
         </div>
     </div>
-
     <div id="modal-select-card" class="modal-overlay" style="z-index: 150;">
         <div class="card-surface w-full max-w-4xl h-[85vh] flex flex-col overflow-hidden bg-[#151821] border-2">
             <div class="p-6 border-b-2 border-[#262b3a] flex justify-between items-center bg-[#0b0c10]">
                 <div class="flex items-center gap-4">
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/pokedex.png" class="w-8 h-8">
-                    <h3 class="font-black text-white text-xl tracking-widest uppercase">Select Offer</h3>
+                    <h3 class="font-black text-white text-xl tracking-widest uppercase">Select Card</h3>
                 </div>
                 <button class="close-select text-gray-400 hover:text-white bg-[#151821] w-10 h-10 rounded-full border border-[#262b3a] shadow-inner transition-colors"><i class="fa-solid fa-times"></i></button>
             </div>
             <div class="flex-1 overflow-y-auto p-6 md:p-8 no-scrollbar bg-[#0b0c10]">
-                <div id="trade-collection-grid" class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5"></div>
+                <div id="select-collection-grid" class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5"></div>
             </div>
         </div>
     </div>
-
     <div id="modal-save-data" class="modal-overlay z-[200]">
         <div class="card-surface w-full max-w-sm p-6 relative bg-[#151821]">
             <button class="close-save-modal absolute top-4 right-4 text-gray-400 hover:text-white bg-[#0b0c10] w-8 h-8 rounded-full border border-[#262b3a] flex justify-center items-center shadow-inner"><i class="fa-solid fa-times"></i></button>
@@ -679,1003 +625,499 @@
             <button id="btn-save-modal-action" class="btn-primary w-full py-4 text-sm shadow-md">Action</button>
         </div>
     </div>
-
-    <!-- Battle Result Modal -->
-    <div id="modal-battle-result" class="modal-overlay z-[200]">
-        <div class="card-surface w-full max-w-md p-8 relative bg-[#151821] text-center border-4 border-blue-500">
-            <button class="close-battle absolute top-4 right-4 text-gray-400 hover:text-white bg-[#0b0c10] w-8 h-8 rounded-full border border-[#262b3a] flex justify-center items-center"><i class="fa-solid fa-times"></i></button>
-            <h2 id="battle-title" class="text-3xl font-black uppercase tracking-widest text-white mb-6">Battle Result</h2>
-            <div id="battle-details" class="flex flex-col gap-4 mb-8"></div>
-            <div id="battle-reward" class="text-xl font-black text-yellow-400 mb-6 hidden"><i class="fa-solid fa-coins mr-2"></i>+<span id="battle-reward-amt"></span> Coins</div>
-            <button class="btn-primary close-battle w-full">Return</button>
+    <div id="modal-battle-ui" class="modal-overlay z-[200]">
+        <div class="card-surface w-full max-w-3xl flex flex-col h-[90vh] md:h-[80vh] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] border-4 border-blue-500 relative bg-[#0b0c10]">
+            <div class="p-4 bg-[#151821] border-b-2 border-[#262b3a] flex justify-between items-center z-10">
+                <div class="font-black text-white text-lg tracking-widest uppercase">Battle <span class="text-gray-600 mx-2">|</span> <span id="battle-opp-name" class="text-red-500">Opponent</span></div>
+                <button class="close-battle text-gray-400 hover:text-red-400 w-10 h-10 rounded-full flex items-center justify-center border border-[#262b3a] transition-all text-lg"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="flex-1 flex flex-col relative overflow-hidden p-6 gap-6" id="battle-arena">
+                <div class="absolute inset-0 bg-gradient-to-b from-[#1a202c] to-[#0f172a] opacity-50 z-0"></div>
+                <div class="flex justify-between items-center w-full z-10 relative">
+                    <div class="w-1/3 flex flex-col items-center relative">
+                        <span class="text-[10px] font-black text-blue-400 tracking-widest uppercase mb-2">You</span>
+                        <img id="bat-my-img" src="" class="h-24 md:h-32 object-contain drop-shadow-xl filter transition-transform">
+                        <div class="w-full max-w-[120px] mt-2"><div class="health-bar"><div id="bat-my-hp" class="health-fill w-full"></div></div></div>
+                        <span id="bat-my-name" class="text-xs font-black text-white mt-1 uppercase tracking-widest text-center w-full truncate"></span>
+                        <div id="my-team-count" class="flex gap-1 mt-2"></div>
+                    </div>
+                    <div class="font-black text-4xl text-gray-600 italic">VS</div>
+                    <div class="w-1/3 flex flex-col items-center relative">
+                        <span class="text-[10px] font-black text-red-400 tracking-widest uppercase mb-2">Enemy</span>
+                        <img id="bat-opp-img" src="" class="h-24 md:h-32 object-contain drop-shadow-xl filter transition-transform">
+                        <div class="w-full max-w-[120px] mt-2"><div class="health-bar"><div id="bat-opp-hp" class="health-fill w-full bg-red-500"></div></div></div>
+                        <span id="bat-opp-name" class="text-xs font-black text-white mt-1 uppercase tracking-widest text-center w-full truncate"></span>
+                        <div id="opp-team-count" class="flex gap-1 mt-2"></div>
+                    </div>
+                </div>
+                <div class="w-full text-center z-10"><span id="battle-log" class="text-xs font-bold text-white bg-black bg-opacity-50 px-4 py-2 rounded-xl border border-gray-600 block min-h-[40px] flex items-center justify-center">Battle initiated!</span></div>
+            </div>
+            <div class="p-6 bg-[#151821] border-t-2 border-[#262b3a] z-10" id="battle-controls">
+                <div class="grid grid-cols-2 gap-4" id="battle-moves-container">
+                    <button class="btn-move btn-secondary py-3 text-[10px] md:text-xs tracking-widest uppercase shadow-md" data-move="0"></button>
+                    <button class="btn-move btn-secondary py-3 text-[10px] md:text-xs tracking-widest uppercase shadow-md border-blue-500 text-blue-300" data-move="1"></button>
+                    <button class="btn-move btn-secondary py-3 text-[10px] md:text-xs tracking-widest uppercase shadow-md" data-move="2"></button>
+                    <button class="btn-move btn-secondary py-3 text-[10px] md:text-xs tracking-widest uppercase shadow-md border-purple-500 text-purple-300" data-move="3"></button>
+                </div>
+            </div>
         </div>
     </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
-        const TOTAL_POKEMON = 1025;
-        const typeColors = { normal: '#A8A77A', fire: '#EE8130', water: '#6390F0', electric: '#F7D02C', grass: '#7AC74C', ice: '#96D9D6', fighting: '#C22E28', poison: '#A33EA1', ground: '#E2BF65', flying: '#A98FF3', psychic: '#F95587', bug: '#A6B91A', rock: '#B6A136', ghost: '#735797', dragon: '#6F35FC', dark: '#705848', steel: '#B7B7CE', fairy: '#D685AD' };
-        
-        const fallbackConfig = {
-          apiKey: "AIzaSyCcr1eMPHy66OrGNqw0sxHycmKOjZplhQw",
-          authDomain: "pokelocal-464e3.firebaseapp.com",
-          projectId: "pokelocal-464e3",
-          storageBucket: "pokelocal-464e3.firebasestorage.app",
-          messagingSenderId: "433790248881",
-          appId: "1:433790248881:web:52c5aeda3d6f73858f3f90",
-        };
+        const fallbackConfig = { apiKey: "AIzaSyCcr1eMPHy66OrGNqw0sxHycmKOjZplhQw", authDomain: "pokelocal-464e3.firebaseapp.com", projectId: "pokelocal-464e3", storageBucket: "pokelocal-464e3.firebasestorage.app", messagingSenderId: "433790248881", appId: "1:433790248881:web:52c5aeda3d6f73858f3f90" };
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'pokelocal-default';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : fallbackConfig;
         
-        const state = {
-            profile: { id: '', name: '', nameLower: '', team: '', info: '', trades: 0, battles: 0, coins: 0, settings: { skipAnimations: false }, xp: 0, buddy: null, lastCheckIn: 0 },
-            collection: [],
-            packs: { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false },
-            onlineUsers: {},
-            userId: null,
-            pendingBuddy: null,
-            currentPulls: [], pullIndex: 0, activeTrade: null, activePackType: null,
-            pogoRarities: {}
-        };
-        
-        const DOM = {
-            screens: document.querySelectorAll('.screen'),
-            navItems: document.querySelectorAll('.nav-item'),
-            statusDot: document.getElementById('status-dot'),
-            headerName: document.getElementById('header-name'),
-            statusDotDesktop: document.getElementById('status-dot-desktop'),
-            headerNameDesktop: document.getElementById('header-name-desktop'),
-            packUI: document.getElementById('the-pack'),
-            holoPackUI: document.getElementById('holo-pack'),
-            loadingScreen: document.getElementById('screen-loading')
-        };
-        
-        let db, auth;
-        let firebaseListeners = { presence: null, incomingTrade: null, activeTrade: null, battles: null };
-        let selectedTeam = '';
-        let serverTimeOffset = 0;
+        const state = { profile: { id: '', name: '', nameLower: '', team: '', info: '', trades: 0, battles: 0, coins: 0, settings: { skipAnimations: false }, xp: 0, buddy: null, lastCheckIn: 0 }, collection: [], packs: { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false, inventory: {} }, onlineUsers: {}, userId: null, currentPulls: [], pullIndex: 0, activeTrade: null, activePackType: null, pogoRarities: {}, isAdmin: false, isSkye: false, activeBattle: null, teamSelection: [], selectingFor: null };
+        const DOM = { screens: document.querySelectorAll('.screen'), navItems: document.querySelectorAll('.nav-item'), statusDot: document.getElementById('status-dot'), headerName: document.getElementById('header-name'), statusDotDesktop: document.getElementById('status-dot-desktop'), headerNameDesktop: document.getElementById('header-name-desktop'), packUI: document.getElementById('the-pack'), holoPackUI: document.getElementById('holo-pack'), loadingScreen: document.getElementById('screen-loading') };
+        let db, auth; let firebaseListeners = { presence: null, incomingTrade: null, activeTrade: null, battles: null, sales: null, events: null, raids: null };
+        let selectedTeam = ''; let serverTimeOffset = 0; let activeSlotIndex = 0; let currentDetailCard = null; let battleSelectionCallback = null; let currentEventTimer = null; let myActiveTeam = []; let oppActiveTeam = [];
 
-        // Fetch reliable server time for daily resets
-        async function fetchServerTime() {
-            try {
-                const res = await fetch('https://worldtimeapi.org/api/timezone/Etc/UTC');
-                if (res.ok) {
-                    const data = await res.json();
-                    const serverTime = new Date(data.datetime).getTime();
-                    serverTimeOffset = serverTime - Date.now();
-                    return serverTime;
-                }
-            } catch (e) {
-                console.warn("Time sync failed, using local");
-            }
-            return Date.now();
-        }
-
-        function getNow() {
-            return Date.now() + serverTimeOffset;
-        }
+        async function fetchServerTime() { try { const res = await fetch('https://worldtimeapi.org/api/timezone/Etc/UTC'); if (res.ok) { const data = await res.json(); serverTimeOffset = new Date(data.datetime).getTime() - Date.now(); return; } } catch (e) {} }
+        function getNow() { return Date.now() + serverTimeOffset; }
 
         async function initApp() {
-            fetchPogoRarities();
-            await fetchServerTime();
-
+            fetchPogoRarities(); await fetchServerTime();
             try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
+                const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app);
                 const storedUserId = localStorage.getItem(`pokeLocal_userId_${appId}`);
                 await signInAnonymously(auth);
-                if (storedUserId) {
-                    state.userId = storedUserId;
-                } else if (auth.currentUser) {
-                    state.userId = auth.currentUser.uid;
-                    localStorage.setItem(`pokeLocal_userId_${appId}`, state.userId);
-                } else {
-                    state.userId = 'guest_' + Math.random().toString(36).substring(2, 9);
-                    localStorage.setItem(`pokeLocal_userId_${appId}`, state.userId);
-                }
-                DOM.statusDot.classList.replace('bg-red-500', 'bg-green-500');
-                DOM.statusDot.style.boxShadow = '0 0 10px rgba(34,197,94,0.8)';
-                DOM.statusDotDesktop.classList.replace('bg-red-500', 'bg-green-500');
-                DOM.statusDotDesktop.style.boxShadow = '0 0 10px rgba(34,197,94,0.8)';
+                state.userId = storedUserId || auth.currentUser?.uid || ('guest_' + Math.random().toString(36).substring(2, 9));
+                localStorage.setItem(`pokeLocal_userId_${appId}`, state.userId);
+                DOM.statusDot.classList.replace('bg-red-500', 'bg-green-500'); DOM.statusDotDesktop.classList.replace('bg-red-500', 'bg-green-500');
                 await loadCloudData();
             } catch (error) { 
-                if (!state.userId) {
-                    state.userId = localStorage.getItem(`pokeLocal_userId_${appId}`) || ('guest_' + Math.random().toString(36).substring(2, 9));
-                    localStorage.setItem(`pokeLocal_userId_${appId}`, state.userId);
-                }
-                showToast("Started in offline session mode.", "info"); 
-                showSetupScreen();
+                state.userId = localStorage.getItem(`pokeLocal_userId_${appId}`) || ('guest_' + Math.random().toString(36).substring(2, 9));
+                localStorage.setItem(`pokeLocal_userId_${appId}`, state.userId); showSetupScreen(); 
             }
-            setupEventListeners();
-            initTradeSlotsUI();
-            checkPackReset();
+            setupEventListeners(); initTradeSlotsUI(); checkPackReset();
         }
 
-        async function fetchPogoRarities() {
-            try {
-                const res = await fetch('https://pogoapi.net/api/v1/pokemon_rarity.json');
-                const data = await res.json();
-                for (const rarity in data) {
-                    data[rarity].forEach(p => {
-                        state.pogoRarities[p.pokemon_id] = rarity.replace('1_','').replace('2_','').replace('3_','').replace('4_','').replace('_', ' ');
-                    });
-                }
-            } catch (e) { }
-        }
-
+        async function fetchPogoRarities() { try { const res = await fetch('https://pogoapi.net/api/v1/pokemon_rarity.json'); const data = await res.json(); for (const rarity in data) { data[rarity].forEach(p => { state.pogoRarities[p.pokemon_id] = rarity.replace(/[0-9]_|_/g, ' ').trim(); }); } } catch (e) { } }
         function showToast(msg, type = 'info', duration = 4000, actions = null) {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
+            const toast = document.createElement('div'); toast.className = `toast ${type}`;
             let icon = '<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-6 h-6">';
             if (type === 'success') icon = '<i class="fa-solid fa-circle-check text-green-400 text-2xl"></i>';
             if (type === 'error') icon = '<i class="fa-solid fa-circle-xmark text-red-400 text-2xl"></i>';
-            if (type === 'trade' || type === 'battle') icon = '<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/vs-seeker.png" class="w-8 h-8 filter drop-shadow">';
-            let actionHtml = '';
-            if (actions) {
-                actionHtml = `<div class="flex gap-2 ml-auto">
-                    <button class="bg-[#0b0c10] border border-[#262b3a] px-3 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest btn-decline hover:bg-[#151821] transition">Decline</button>
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest btn-accept hover:bg-blue-500 transition shadow-lg">Accept</button>
-                </div>`;
-            }
+            let actionHtml = ''; if (actions) { actionHtml = `<div class="flex gap-2 ml-auto"><button class="bg-[#0b0c10] border border-[#262b3a] px-3 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest btn-decline">Decline</button><button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest btn-accept">Accept</button></div>`; }
             toast.innerHTML = `${icon}<div class="text-xs md:text-sm flex-1 tracking-wide">${msg}</div>${actionHtml}`;
-            
-            // Limit to 3 toasts max
-            const container = document.getElementById('toast-container');
-            if (container.children.length >= 3) {
-                removeToast(container.firstElementChild);
-            }
+            const container = document.getElementById('toast-container'); if (container.children.length >= 3) removeToast(container.firstElementChild);
             container.appendChild(toast);
-            
-            if (actions) {
-                toast.querySelector('.btn-accept').addEventListener('click', () => { actions.onAccept(); removeToast(toast); });
-                toast.querySelector('.btn-decline').addEventListener('click', () => { actions.onDecline(); removeToast(toast); });
-                if(duration > 0) setTimeout(() => { if(toast.parentNode) { actions.onDecline(); removeToast(toast); } }, duration);
-            } else {
-                setTimeout(() => removeToast(toast), duration);
-            }
+            if (actions) { toast.querySelector('.btn-accept').addEventListener('click', () => { actions.onAccept(); removeToast(toast); }); toast.querySelector('.btn-decline').addEventListener('click', () => { actions.onDecline(); removeToast(toast); }); if(duration > 0) setTimeout(() => { if(toast.parentNode) { actions.onDecline(); removeToast(toast); } }, duration); } else { setTimeout(() => removeToast(toast), duration); }
         }
-        function removeToast(toast) {
-            if(!toast) return;
-            toast.classList.add('hiding');
-            toast.addEventListener('animationend', () => toast.remove());
-        }
-
+        function removeToast(toast) { if(!toast) return; toast.classList.add('hiding'); toast.addEventListener('animationend', () => toast.remove()); }
         async function loadCloudData() {
             if (!db || !state.userId) return showSetupScreen();
             try {
-                const docRef = doc(db, 'artifacts', appId, 'users', state.userId, 'userData', 'profile');
-                const docSnap = await getDoc(docRef);
+                const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', state.userId, 'userData', 'profile'));
                 if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    state.profile = data.profile || { id: state.userId, name: '', nameLower: '', team: '', info: '', trades: 0, battles: 0, coins: 0, settings: { skipAnimations: false }, xp: 0, buddy: null, lastCheckIn: 0 };
-                    if (state.profile.coins === undefined) state.profile.coins = 0;
-                    if (state.profile.battles === undefined) state.profile.battles = 0;
-                    state.collection = data.collection || [];
-                    state.packs = data.packs || { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false };
+                    const data = docSnap.data(); state.profile = data.profile || { id: state.userId, name: '', nameLower: '', team: '', info: '', trades: 0, battles: 0, coins: 0, settings: { skipAnimations: false }, xp: 0, buddy: null, lastCheckIn: 0 };
+                    state.collection = data.collection || []; state.packs = data.packs || { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false, inventory: {} };
+                    if(!state.packs.inventory) state.packs.inventory = {};
                     document.getElementById('toggle-animations').checked = !state.profile.settings.skipAnimations;
                     if (state.profile.name) {
-                        selectedTeam = state.profile.team;
-                        updateProfileUI();
-                        renderCollection();
-                        switchScreen('screen-packs');
-                        DOM.navItems.forEach(n => n.classList.remove('active'));
-                        document.querySelector('[data-target="screen-packs"]').classList.add('active');
-                        setupFirebaseListeners();
-                        updatePresence();
-                    } else {
-                        showSetupScreen();
-                    }
-                } else {
-                    state.profile.id = state.userId;
-                    showSetupScreen();
-                }
+                        selectedTeam = state.profile.team; state.isAdmin = (state.profile.nameLower === 'skye' || state.profile.nameLower === 'admin'); state.isSkye = (state.profile.nameLower === 'skye');
+                        if (state.isAdmin) { document.getElementById('nav-admin').classList.remove('hidden'); if(state.isSkye) document.getElementById('event-manager').classList.remove('hidden'); }
+                        updateProfileUI(); renderCollection(); switchScreen('screen-packs'); setupFirebaseListeners(); updatePresence();
+                    } else showSetupScreen();
+                } else showSetupScreen();
             } catch(e) { showSetupScreen(); }
         }
         function showSetupScreen() { switchScreen('screen-setup'); }
-
-        async function saveCloudData() {
-            updateProfileUI();
-            if (!db || !state.userId) return;
-            try { await setDoc(doc(db, 'artifacts', appId, 'users', state.userId, 'userData', 'profile'), { profile: state.profile, collection: state.collection, packs: state.packs }); } catch (e) { }
-        }
-
-        function switchScreen(id) {
-            DOM.screens.forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if(id === 'screen-network' && db && state.profile.name) { updatePresence(); renderNetworkList(); }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        async function saveCloudData() { updateProfileUI(); if (!db || !state.userId) return; try { await setDoc(doc(db, 'artifacts', appId, 'users', state.userId, 'userData', 'profile'), { profile: state.profile, collection: state.collection, packs: state.packs }); } catch (e) {} }
+        function switchScreen(id) { DOM.screens.forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); DOM.navItems.forEach(n => { if(n.dataset.target === id) n.classList.add('active'); else n.classList.remove('active'); }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        
+        function getRank(xp) {
+            if(xp >= 10000) return { n:'Master', i:'fa-crown', c:'text-purple-400 border-purple-500 bg-purple-900 bg-opacity-30' };
+            if(xp >= 5000) return { n:'Platinum', i:'fa-gem', c:'text-cyan-300 border-cyan-400 bg-cyan-900 bg-opacity-30' };
+            if(xp >= 2000) return { n:'Gold', i:'fa-medal', c:'text-yellow-400 border-yellow-500 bg-yellow-900 bg-opacity-30' };
+            if(xp >= 500) return { n:'Silver', i:'fa-medal', c:'text-gray-300 border-gray-400 bg-gray-700 bg-opacity-30' };
+            return { n:'Bronze', i:'fa-medal', c:'text-orange-400 border-orange-500 bg-orange-900 bg-opacity-30' };
         }
 
         function setupEventListeners() {
-            DOM.navItems.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    const target = e.currentTarget;
-                    if(!state.profile.name && target.dataset.target !== 'screen-setup') { showToast("Please setup a profile first."); return; }
-                    DOM.navItems.forEach(n => n.classList.remove('active'));
-                    target.classList.add('active');
-                    switchScreen(target.dataset.target);
-                });
-            });
-
-            document.querySelectorAll('.team-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.team-btn').forEach(b => b.classList.remove('selected'));
-                    e.currentTarget.classList.add('selected'); selectedTeam = e.currentTarget.dataset.team;
-                });
-            });
-
+            DOM.navItems.forEach(item => { item.addEventListener('click', (e) => { const tgt = e.currentTarget.dataset.target; if(!state.profile.name && tgt !== 'screen-setup') return showToast("Please setup a profile first."); switchScreen(tgt); }); });
+            document.querySelectorAll('.team-btn').forEach(btn => { btn.addEventListener('click', (e) => { document.querySelectorAll('.team-btn').forEach(b => b.classList.remove('selected')); e.currentTarget.classList.add('selected'); selectedTeam = e.currentTarget.dataset.team; }); });
             document.getElementById('btn-save-profile').addEventListener('click', async () => {
-                const username = document.getElementById('setup-username').value.trim();
-                if (!username || username.length < 3) { showToast("Valid trainer name required.", "error"); return; }
-                if (!selectedTeam) { showToast("Select a faction.", "error"); return; }
-                state.profile.name = username; state.profile.nameLower = username.toLowerCase();
-                state.profile.team = selectedTeam; state.profile.id = state.userId;
-                await saveCloudData(); setupFirebaseListeners(); updatePresence();
-                DOM.navItems.forEach(n => n.classList.remove('active')); switchScreen('screen-packs');
-                document.querySelector('[data-target="screen-packs"]').classList.add('active');
+                const username = document.getElementById('setup-username').value.trim(); if (!username || username.length < 3) return showToast("Valid trainer name required.", "error"); if (!selectedTeam) return showToast("Select a faction.", "error");
+                state.profile.name = username; state.profile.nameLower = username.toLowerCase(); state.profile.team = selectedTeam; state.profile.id = state.userId;
+                state.isAdmin = (state.profile.nameLower === 'skye' || state.profile.nameLower === 'admin'); state.isSkye = (state.profile.nameLower === 'skye'); if (state.isAdmin) { document.getElementById('nav-admin').classList.remove('hidden'); if(state.isSkye) document.getElementById('event-manager').classList.remove('hidden'); }
+                await saveCloudData(); setupFirebaseListeners(); updatePresence(); switchScreen('screen-packs');
             });
-
-            document.getElementById('toggle-animations').addEventListener('change', (e) => {
-                state.profile.settings.skipAnimations = !e.target.checked; saveCloudData();
-            });
-
-            // Pack Buttons
-            DOM.packUI.addEventListener('click', () => openPack('daily'));
-            DOM.holoPackUI.addEventListener('click', () => openPack('holo'));
-            document.querySelectorAll('.premium-pack').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const type = e.currentTarget.dataset.type;
-                    const cost = parseInt(e.currentTarget.dataset.cost);
-                    if (state.profile.coins >= cost) {
-                        state.profile.coins -= cost;
-                        saveCloudData();
-                        openPack(type);
-                    } else {
-                        showToast("Not enough coins! Level up or battle to earn more.", "error");
-                    }
-                });
-            });
-
+            document.getElementById('toggle-animations').addEventListener('change', (e) => { state.profile.settings.skipAnimations = !e.target.checked; saveCloudData(); });
+            DOM.packUI.addEventListener('click', () => openPack('daily')); DOM.holoPackUI.addEventListener('click', () => openPack('holo'));
+            document.querySelectorAll('.premium-pack').forEach(btn => { btn.addEventListener('click', (e) => { const cost = parseInt(e.currentTarget.dataset.cost); if (state.profile.coins >= cost) { state.profile.coins -= cost; saveCloudData(); openPack(e.currentTarget.dataset.type); } else showToast("Not enough coins!", "error"); }); });
             document.getElementById('rip-pack-container').addEventListener('click', triggerPackRipFinish);
             document.getElementById('btn-next-card').addEventListener('click', () => { if (state.pullIndex < state.currentPulls.length - 1) { state.pullIndex++; renderCurrentPull(); } });
             document.getElementById('btn-prev-card').addEventListener('click', () => { if (state.pullIndex > 0) { state.pullIndex--; renderCurrentPull(); } });
-            
-            document.getElementById('btn-collect-all').addEventListener('click', () => {
-                state.collection = [...state.currentPulls, ...state.collection];
-                state.currentPulls = []; saveCloudData(); renderCollection();
-                document.getElementById('modal-pulls').classList.remove('active');
-                updatePackUI();
-            });
-
-            document.getElementById('search-collection').addEventListener('input', renderCollection);
-            document.getElementById('filter-collection').addEventListener('change', renderCollection);
-
-            document.getElementById('btn-refresh-network').addEventListener('click', () => { 
-                const btn = document.getElementById('btn-refresh-network');
-                btn.classList.add('rotate-180'); setTimeout(() => btn.classList.remove('rotate-180'), 500);
-                if(db) { updatePresence(); renderNetworkList(); showToast("Radar pulse sent", "success"); }
-            });
-
-            document.querySelectorAll('.close-modal, .close-select, .close-battle').forEach(btn => { 
-                btn.addEventListener('click', (e) => { e.target.closest('.modal-overlay').classList.remove('active'); }); 
-            });
-
-            document.getElementById('btn-trade-lock').addEventListener('click', toggleTradeLock);
-            document.getElementById('btn-trade-accept').addEventListener('click', acceptTrade);
-            document.querySelector('.close-trade').addEventListener('click', cancelTrade);
-            
-            document.getElementById('btn-send-chat').addEventListener('click', sendChat);
-            document.getElementById('trade-chat-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') sendChat(); });
-            
+            document.getElementById('btn-collect-all').addEventListener('click', () => { state.collection = [...state.currentPulls, ...state.collection]; state.currentPulls = []; saveCloudData(); renderCollection(); document.getElementById('modal-pulls').classList.remove('active'); updatePackUI(); });
+            document.getElementById('search-collection').addEventListener('input', renderCollection); document.getElementById('filter-collection').addEventListener('change', renderCollection);
+            document.getElementById('btn-refresh-network').addEventListener('click', () => { if(db) { updatePresence(); renderNetworkList(); showToast("Radar pulse sent", "success"); } });
+            document.querySelectorAll('.close-modal, .close-select, .close-battle, .close-save-modal, .close-raid').forEach(btn => { btn.addEventListener('click', (e) => { e.target.closest('.modal-overlay').classList.remove('active'); }); });
+            document.getElementById('btn-trade-lock').addEventListener('click', toggleTradeLock); document.getElementById('btn-trade-accept').addEventListener('click', acceptTrade); document.querySelector('.close-trade').addEventListener('click', cancelTrade);
+            document.getElementById('btn-send-chat').addEventListener('click', sendChat); document.getElementById('trade-chat-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') sendChat(); });
             document.addEventListener('click', (e) => { if (e.target.closest('.flip-card')) e.target.closest('.flip-card').classList.toggle('is-flipped'); });
+            
+            document.getElementById('btn-sell-card').addEventListener('click', async () => {
+                if(!currentDetailCard || !db) return;
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'sales', currentDetailCard.id), { id: currentDetailCard.id, card: currentDetailCard, sellerId: state.userId, sellerName: state.profile.name, status: 'pending', timestamp: getNow() });
+                state.collection = state.collection.filter(c => c.id !== currentDetailCard.id); saveCloudData(); renderCollection(); document.getElementById('modal-card-detail').classList.remove('active'); showToast("Card sent to Admins for review.", "success");
+            });
 
-            // Export / Import
+            document.getElementById('btn-create-event').addEventListener('click', async () => {
+                const t = document.getElementById('ev-title').value, d = document.getElementById('ev-desc').value, r = parseInt(document.getElementById('ev-reward').value), h = parseInt(document.getElementById('ev-hours').value);
+                if(!t || !d || !r || !h) return showToast("Fill all event fields.", "error");
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'events', 'activeEvent'), { title: t, desc: d, reward: r, endTime: getNow() + (h*3600000) }); showToast("Event Broadcasted!", "success");
+            });
+            document.getElementById('btn-spawn-raid').addEventListener('click', async () => {
+                const legendaries = [150, 249, 384, 483, 484, 643, 644, 716, 717, 791, 792, 888, 889, 1007, 1008];
+                const bossId = legendaries[Math.floor(Math.random() * legendaries.length)];
+                try {
+                    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${bossId}`);
+                    const data = await res.json();
+                    const sprite = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default;
+                    const bId = 'raid_' + Date.now();
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'raids', 'activeBoss'), { id: bId, name: data.name, sprite: sprite, hp: 25000, maxHp: 25000, status: 'active', endTime: getNow() + (6*3600000) }); 
+                    showToast(`Raid Boss ${data.name.toUpperCase()} Deployed!`, "success");
+                } catch(e) { showToast("Failed to fetch boss data.", "error"); }
+            });
+
             document.getElementById('btn-export-save').addEventListener('click', () => {
-                document.getElementById('save-modal-title').textContent = 'Export Save';
-                document.getElementById('save-data-code').value = btoa(`pokelocal_save:${state.userId}`);
-                const btn = document.getElementById('btn-save-modal-action');
-                btn.textContent = 'Copy to Clipboard';
-                btn.onclick = () => {
-                    document.getElementById('save-data-code').select(); document.execCommand('copy');
-                    showToast("Code copied!", "success"); document.getElementById('modal-save-data').classList.remove('active');
-                };
+                const dataToExport = { uid: state.userId, collection: state.collection, profile: state.profile, packs: state.packs };
+                document.getElementById('save-data-code').value = btoa(encodeURIComponent(JSON.stringify(dataToExport)));
                 document.getElementById('modal-save-data').classList.add('active');
             });
-
             document.getElementById('btn-import-save').addEventListener('click', () => {
-                document.getElementById('save-modal-title').textContent = 'Import Save';
                 document.getElementById('save-data-code').value = '';
-                const btn = document.getElementById('btn-save-modal-action');
-                btn.textContent = 'Restore Account';
+                const btn = document.getElementById('btn-save-modal-action'); btn.textContent = 'Import & Overwrite';
                 btn.onclick = () => {
                     try {
-                        const val = document.getElementById('save-data-code').value.trim();
-                        const decoded = atob(val);
-                        if (decoded.startsWith('pokelocal_save:')) {
-                            localStorage.setItem(`pokeLocal_userId_${appId}`, decoded.split(':')[1]);
-                            showToast("Account restored! Reloading...", "success"); setTimeout(() => window.location.reload(), 1000);
-                        } else throw new Error();
-                    } catch(e) { showToast("Invalid save code.", "error"); }
+                        const parsed = JSON.parse(decodeURIComponent(atob(document.getElementById('save-data-code').value)));
+                        state.userId = parsed.uid || state.userId; state.collection = parsed.collection || []; state.profile = parsed.profile || state.profile; state.packs = parsed.packs || state.packs;
+                        saveCloudData(); showToast("Save imported! Reloading...", "success"); setTimeout(() => window.location.reload(), 1000);
+                    } catch(e) { showToast("Invalid save data.", "error"); }
                 };
                 document.getElementById('modal-save-data').classList.add('active');
             });
         }
 
+        const packNames = { 'base': 'Base Set', 'neo': 'Neo Genesis', 'ruby_sapphire': 'Ruby & Sapphire', 'diamond_pearl': 'Diamond & Pearl', 'black_white': 'Black & White', 'xy': 'XY', 'sun_moon': 'Sun & Moon', 'sword_shield': 'Sword & Shield', 'scarlet_violet': 'Scarlet & Violet' };
+
         function updateProfileUI() {
-            DOM.headerName.textContent = state.profile.name || 'Setup Profile';
-            DOM.headerNameDesktop.textContent = state.profile.name || 'Setup Profile';
+            DOM.headerName.textContent = state.profile.name || 'Setup Profile'; DOM.headerNameDesktop.textContent = state.profile.name || 'Setup Profile';
             document.getElementById('info-name').textContent = state.profile.name;
-            const lvlInfo = getLevelInfo(state.profile.xp || 0);
-            document.getElementById('info-level').textContent = lvlInfo.level;
-            document.getElementById('info-xp-text').textContent = `${(state.profile.xp || 0) - lvlInfo.currentLevelReq} / ${lvlInfo.nextLevelReq - lvlInfo.currentLevelReq} XP`;
+            const lvlInfo = getLevelInfo(state.profile.xp || 0); const rankInfo = getRank(state.profile.xp || 0);
+            document.getElementById('info-level').textContent = lvlInfo.level; document.getElementById('info-xp-text').textContent = `${(state.profile.xp || 0) - lvlInfo.currentLevelReq} / ${lvlInfo.nextLevelReq - lvlInfo.currentLevelReq} XP`;
             document.getElementById('info-xp-fill').style.width = `${lvlInfo.progress}%`;
+            document.getElementById('info-team').textContent = state.profile.team; document.getElementById('info-team').className = `text-[9px] px-2 py-1 rounded-md font-black uppercase tracking-widest border shadow-sm border-${state.profile.team.toLowerCase()} text-${state.profile.team.toLowerCase()}`;
+            const rankEl = document.getElementById('info-rank'); rankEl.className = `text-[9px] px-2 py-1 rounded-md font-black uppercase tracking-widest shadow-sm flex items-center gap-1 ${rankInfo.c}`;
+            document.getElementById('rank-icon').className = `fa-solid ${rankInfo.i}`; document.getElementById('rank-text').textContent = rankInfo.n;
+            document.getElementById('nav-coins-desktop').textContent = state.profile.coins; document.getElementById('nav-coins-mobile').textContent = state.profile.coins;
+            document.getElementById('info-card-count').textContent = state.collection.length; document.getElementById('info-trade-count').textContent = state.profile.trades; document.getElementById('info-battle-count').textContent = state.profile.battles;
             
-            document.getElementById('nav-coins-desktop').textContent = state.profile.coins;
-            document.getElementById('nav-coins-mobile').textContent = state.profile.coins;
-
-            document.getElementById('info-card-count').textContent = state.collection.length;
-            document.getElementById('info-trade-count').textContent = state.profile.trades;
-            document.getElementById('info-battle-count').textContent = state.profile.battles;
-        }
-
-        function getLevelInfo(xp) {
-            let level = 1; while (xp >= (level * (level + 1) / 2) * 100) { level++; }
-            const currentLevelReq = ((level - 1) * level / 2) * 100;
-            const nextLevelReq = (level * (level + 1) / 2) * 100;
-            const progress = Math.max(0, Math.min(100, ((xp - currentLevelReq) / (nextLevelReq - currentLevelReq)) * 100));
-            return { level, progress, currentLevelReq, nextLevelReq };
-        }
-
-        function gainXP(amount, reason = "") {
-            const oldLevel = getLevelInfo(state.profile.xp).level;
-            state.profile.xp += amount;
-            const newLevel = getLevelInfo(state.profile.xp).level;
-            if (newLevel > oldLevel) {
-                const chestCoins = newLevel * 50;
-                state.profile.coins += chestCoins;
-                showToast(`Level Up! Lv ${newLevel} reached. Chest opened: +${chestCoins} Coins!`, "success", 6000);
-            } else if (reason) {
-                showToast(`+${amount} XP (${reason})`, "info", 2000);
+            const pC = document.getElementById('inventory-packs-container'); pC.innerHTML = '';
+            if(state.packs.inventory) {
+                Object.keys(state.packs.inventory).forEach(pt => {
+                    const ct = state.packs.inventory[pt]; if(ct > 0) {
+                        const b = document.createElement('button'); b.className = 'btn-secondary text-[10px] py-2 px-3 border-blue-500 text-blue-300 shadow-md uppercase tracking-widest font-black'; b.innerHTML = `<i class="fa-solid fa-box-open mr-1"></i> Open ${packNames[pt] || pt} (${ct})`;
+                        b.onclick = () => { state.packs.inventory[pt]--; saveCloudData(); openPack(pt); updateProfileUI(); }; pC.appendChild(b);
+                    }
+                });
             }
-            saveCloudData(); updateProfileUI();
         }
 
-        // Probability Based Pulls
+        function getLevelInfo(xp) { let l = 1; while (xp >= (l * (l + 1) / 2) * 100) l++; const c = ((l - 1) * l / 2) * 100; const n = (l * (l + 1) / 2) * 100; return { level: l, progress: Math.max(0, Math.min(100, ((xp - c) / (n - c)) * 100)), currentLevelReq: c, nextLevelReq: n }; }
+        function gainXP(amt, r = "") { const ol = getLevelInfo(state.profile.xp).level; state.profile.xp += amt; const nl = getLevelInfo(state.profile.xp).level; if (nl > ol) { const c = nl * 50; state.profile.coins += c; showToast(`Level Up! Chest opened: +${c} Coins!`, "success", 6000); } else if (r) showToast(`+${amt} XP (${r})`, "info", 2000); saveCloudData(); updateProfileUI(); }
+
         function generatePackIds(type) {
-            let count = 3;
-            if(type === 'daily') count = 3;
-            else if(type === 'holo') count = 1;
-            else count = 3; // Premium packs
-
-            const ids = [];
+            let count = type === 'holo' ? 1 : 3; const ids = []; const regions = ['[EN]', '[JP]', '[KR]'];
             for (let i = 0; i < count; i++) {
-                if (type === 'holo') {
-                    const holoIds = [144, 145, 146, 150, 151, 249, 250, 251, 384, 385]; 
-                    ids.push(holoIds[Math.floor(Math.random() * holoIds.length)]);
-                    continue;
-                }
-
-                // Probability: 60% Common, 25% Uncommon, 10% Rare, 5% Legendary
-                const rand = Math.random();
-                let targetRarity = rand < 0.05 ? 'legendary' : rand < 0.15 ? 'rare' : rand < 0.40 ? 'uncommon' : 'common';
+                if (type === 'holo') { ids.push({ id: [144, 145, 146, 150, 151, 249, 250, 251, 384, 385, 483, 484, 643, 644][Math.floor(Math.random() * 14)], reg: '[Global]' }); continue; }
+                const rand = Math.random(); let r = rand < 0.05 ? 'legendary' : rand < 0.15 ? 'rare' : rand < 0.40 ? 'uncommon' : 'common';
+                let min = 1, max = 151; 
+                if (type === 'base') { min = 1; max = 151; }
+                else if (type === 'neo') { min = 152; max = 251; }
+                else if (type === 'ruby_sapphire') { min = 252; max = 386; }
+                else if (type === 'diamond_pearl') { min = 387; max = 493; }
+                else if (type === 'black_white') { min = 494; max = 649; }
+                else if (type === 'xy') { min = 650; max = 721; }
+                else if (type === 'sun_moon') { min = 722; max = 809; }
+                else if (type === 'sword_shield') { min = 810; max = 905; }
+                else if (type === 'scarlet_violet') { min = 906; max = 1025; }
+                else { min = 1; max = 1025; }
                 
-                let rangeMin = 1, rangeMax = 151; // Default Kanto
-                if (type === 'gen2') { rangeMin = 152; rangeMax = 251; }
-                if (type === 'gen3') { rangeMin = 252; rangeMax = 386; }
-                
-                // Estimate IDs based on target rarity to apply probabilities
-                let pickedId = Math.floor(Math.random() * (rangeMax - rangeMin + 1)) + rangeMin;
-                // Soft enforcement: if it's a legendary roll, force picking from a legendary pool
-                if (targetRarity === 'legendary') {
-                    if (type === 'gen1' || type === 'daily') pickedId = [144, 145, 146, 150, 151][Math.floor(Math.random() * 5)];
-                    else if (type === 'gen2') pickedId = [243, 244, 245, 249, 250, 251][Math.floor(Math.random() * 6)];
-                    else if (type === 'gen3') pickedId = [377, 378, 379, 380, 381, 382, 383, 384, 385, 386][Math.floor(Math.random() * 10)];
+                let pid = Math.floor(Math.random() * (max - min + 1)) + min;
+                if (r === 'legendary') {
+                    if (type === 'base' || type === 'daily') pid = [144, 145, 146, 150, 151][Math.floor(Math.random()*5)];
+                    else if (type === 'neo') pid = [243, 244, 245, 249, 250, 251][Math.floor(Math.random()*6)];
+                    else if (type === 'ruby_sapphire') pid = [377, 378, 379, 380, 381, 382, 383, 384, 385, 386][Math.floor(Math.random()*10)];
+                    else if (type === 'diamond_pearl') pid = [480, 481, 482, 483, 484, 485, 486, 487, 488][Math.floor(Math.random()*9)];
+                    else if (type === 'black_white') pid = [638, 639, 640, 641, 642, 643, 644, 645, 646][Math.floor(Math.random()*9)];
+                    else if (type === 'xy') pid = [716, 717, 718, 719, 720, 721][Math.floor(Math.random()*6)];
+                    else if (type === 'sun_moon') pid = [785, 786, 787, 788, 789, 790, 791, 792][Math.floor(Math.random()*8)];
+                    else if (type === 'sword_shield') pid = [888, 889, 890, 891, 892, 893][Math.floor(Math.random()*6)];
+                    else if (type === 'scarlet_violet') pid = [1001, 1002, 1003, 1004, 1007, 1008][Math.floor(Math.random()*6)];
                 }
-                ids.push(pickedId);
+                ids.push({ id: pid, reg: rand < 0.2 ? regions[Math.floor(Math.random()*3)] : '' });
             }
             return ids;
         }
 
-        function checkPackReset() {
-            const now = getNow();
-            const date = new Date(now);
-            const today = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()).getTime(); // UTC midnight reset
-            if (state.packs.lastReset < today) {
-                state.packs.openedToday = 0; state.packs.lastReset = today; state.packs.holoClaimedToday = false; saveCloudData();
-            }
-            if (state.profile.name && (!state.profile.lastCheckIn || state.profile.lastCheckIn < today)) {
-                state.profile.lastCheckIn = today; gainXP(50, "Daily Check-in");
-            }
-            updatePackUI();
-        }
-
-        function updatePackUI() {
-            const remaining = Math.max(0, 2 - state.packs.openedToday);
-            document.getElementById('packs-count').textContent = remaining;
-            if (remaining > 0) {
-                DOM.packUI.style.opacity = '1'; DOM.packUI.style.pointerEvents = 'auto'; DOM.packUI.style.filter = 'grayscale(0)';
-                document.getElementById('pack-timer').textContent = "Ready to Rip";
-                document.getElementById('pack-timer').classList.replace('text-gray-500', 'text-green-400');
-            } else {
-                DOM.packUI.style.opacity = '0.5'; DOM.packUI.style.pointerEvents = 'none'; DOM.packUI.style.filter = 'grayscale(100%)';
-                document.getElementById('pack-timer').textContent = "Resets Tomorrow (UTC)";
-                document.getElementById('pack-timer').classList.replace('text-green-400', 'text-gray-500');
-            }
-            if (state.packs.holoUnlocked && !state.packs.holoClaimedToday) DOM.holoPackUI.classList.remove('hidden');
-            else DOM.holoPackUI.classList.add('hidden');
-        }
+        function checkPackReset() { const n = getNow(); const d = new Date(n); const today = new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()).getTime(); if (state.packs.lastReset < today) { state.packs.openedToday = 0; state.packs.lastReset = today; state.packs.holoClaimedToday = false; saveCloudData(); } if (state.profile.name && (!state.profile.lastCheckIn || state.profile.lastCheckIn < today)) { state.profile.lastCheckIn = today; gainXP(50, "Daily Check-in"); } updatePackUI(); }
+        function updatePackUI() { const r = Math.max(0, 2 - state.packs.openedToday); document.getElementById('packs-count').textContent = r; if (r > 0) { DOM.packUI.style.opacity = '1'; DOM.packUI.style.pointerEvents = 'auto'; DOM.packUI.style.filter = 'grayscale(0)'; document.getElementById('pack-timer').textContent = "Ready to Rip"; document.getElementById('pack-timer').classList.replace('text-gray-500', 'text-green-400'); } else { DOM.packUI.style.opacity = '0.5'; DOM.packUI.style.pointerEvents = 'none'; DOM.packUI.style.filter = 'grayscale(100%)'; document.getElementById('pack-timer').textContent = "Resets Tomorrow (UTC)"; document.getElementById('pack-timer').classList.replace('text-green-400', 'text-gray-500'); } if (state.packs.holoUnlocked && !state.packs.holoClaimedToday) DOM.holoPackUI.classList.remove('hidden'); else DOM.holoPackUI.classList.add('hidden'); }
 
         async function openPack(type) {
-            if (type === 'daily' && state.packs.openedToday >= 2) return;
-            if (type === 'holo' && (!state.packs.holoUnlocked || state.packs.holoClaimedToday)) return;
-            
-            state.activePackType = type;
-            if (!state.profile.settings.skipAnimations) runGamifiedRipAnimation();
-            else { DOM.loadingScreen.classList.remove('hidden'); }
-            
+            if (type === 'daily' && state.packs.openedToday >= 2) return; if (type === 'holo' && (!state.packs.holoUnlocked || state.packs.holoClaimedToday)) return;
+            state.activePackType = type; if (!state.profile.settings.skipAnimations) runGamifiedRipAnimation(); else DOM.loadingScreen.classList.remove('hidden');
             try {
-                const ids = generatePackIds(type);
-                const promises = ids.map(id => fetch(`${POKEAPI_BASE}/pokemon/${id}`).then(r => r.json()));
+                const reqs = generatePackIds(type);
+                const promises = reqs.map(r => fetch(`${POKEAPI_BASE}/pokemon/${r.id}`).then(res => res.json()).then(data => ({ data, reg: r.reg })));
                 const results = await Promise.all(promises);
-                
-                state.currentPulls = results.map(data => {
-                    let hp = 0, atk = 0, def = 0, spd = 0, bst = 0;
+                state.currentPulls = results.map(res => {
+                    const data = res.data; let hp = 0, atk = 0, def = 0, spd = 0, bst = 0;
                     data.stats.forEach(s => { bst += s.base_stat; if(s.stat.name === 'hp') hp = s.base_stat; if(s.stat.name === 'attack') atk = s.base_stat; if(s.stat.name === 'defense') def = s.base_stat; if(s.stat.name === 'speed') spd = s.base_stat; });
-                    const rarityInfo = getRarity(data.id, bst);
-                    const isMythic = type === 'holo' || bst > 600;
-                    const img = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default;
-                    const gif = data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || img;
-                    return {
-                        id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: data.name, types: data.types.map(t => t.type.name),
-                        hp, atk, def, spd, bst, image: img, gif: gif, rarity: isMythic ? 'Mythic Holo' : rarityInfo.name, rarityClass: isMythic ? 'rarity-legendary mythic-holo' : rarityInfo.class,
-                        showcase: isMythic, acquiredAt: Date.now()
-                    };
+                    const r = getRarity(data.id, bst); const isM = type === 'holo' || bst > 600; const img = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default;
+                    const cMoves = []; for(let i=0; i<Math.min(4, data.moves.length); i++) { const md = data.moves[i].move; cMoves.push({ n: md.name, p: Math.floor((atk*0.5) + (Math.random()*20)) }); }
+                    if(cMoves.length === 0) cMoves.push({n: "Struggle", p: 10});
+                    return { id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: `${data.name} ${res.reg}`.trim(), types: data.types.map(t => t.type.name), hp: hp * 3, maxHp: hp * 3, atk, def, spd, bst, image: img, gif: data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || img, rarity: isM ? 'Mythic Holo' : r.name, rarityClass: isM ? 'rarity-legendary mythic-holo' : r.class, showcase: isM, acquiredAt: Date.now(), moves: cMoves };
                 });
-                
-                if(type === 'daily') state.packs.openedToday++;
-                if(type === 'holo') state.packs.holoClaimedToday = true;
-                
-                let xpGain = type === 'holo' ? 0 : 10;
-                state.currentPulls.forEach(c => {
-                    if (c.rarityClass.includes('mythic-holo')) xpGain += 50;
-                    else if (c.rarityClass.includes('rarity-legendary')) xpGain += 20;
-                    else if (c.rarityClass.includes('rarity-rare')) xpGain += 5;
-                });
-                if(xpGain > 0) gainXP(xpGain, "Pack Ripped");
-                saveCloudData();
-                
-                if (state.profile.settings.skipAnimations) {
-                    DOM.loadingScreen.classList.add('hidden'); displayPulls();
-                }
-            } catch(e) {
-                showToast("Network error ripping pack.", "error");
-                document.getElementById('modal-pack-rip').classList.remove('active');
-                DOM.loadingScreen.classList.add('hidden'); updatePackUI();
-            }
+                if(type === 'daily') state.packs.openedToday++; if(type === 'holo') state.packs.holoClaimedToday = true;
+                let xG = type === 'holo' ? 0 : 10; state.currentPulls.forEach(c => { if (c.rarityClass.includes('mythic')) xG += 50; else if (c.rarityClass.includes('legendary')) xG += 20; else if (c.rarityClass.includes('rare')) xG += 5; });
+                if(xG > 0) gainXP(xG, "Pack Ripped"); saveCloudData();
+                if (state.profile.settings.skipAnimations) { DOM.loadingScreen.classList.add('hidden'); displayPulls(); }
+            } catch(e) { showToast("Network error ripping pack.", "error"); document.getElementById('modal-pack-rip').classList.remove('active'); DOM.loadingScreen.classList.add('hidden'); updatePackUI(); }
         }
 
-        // Modified Rip Animation (Tear Top)
         function runGamifiedRipAnimation() {
-            const modal = document.getElementById('modal-pack-rip');
-            const pack = document.getElementById('rip-pack-container');
-            const instructions = document.getElementById('rip-instructions');
-            pack.classList.add('hidden');
-            pack.classList.remove('anim-rip-shake');
-            document.getElementById('rip-top-half').className = "absolute top-0 left-0 w-full h-[30%] bg-gradient-to-b from-blue-700 to-blue-600 rounded-t-3xl shadow-2xl border-4 border-b-0 border-blue-400 flex flex-col items-center justify-center overflow-hidden z-20 origin-bottom-left transition-all duration-700";
-            instructions.classList.add('hidden');
-            modal.classList.add('active');
-            
-            // Skip pokeball intro for brevity, go straight to pack
-            setTimeout(() => {
-                pack.classList.remove('hidden');
-                pack.classList.add('anim-pack-appear');
-                setTimeout(() => {
-                    pack.classList.remove('anim-pack-appear');
-                    pack.classList.add('anim-rip-shake');
-                    instructions.classList.remove('hidden');
-                }, 600);
-            }, 300);
+            const modal = document.getElementById('modal-pack-rip'); const pack = document.getElementById('rip-pack-container'); const inst = document.getElementById('rip-instructions');
+            pack.classList.add('hidden'); pack.classList.remove('anim-rip-shake'); document.getElementById('rip-top-half').className = "absolute top-0 left-0 w-full h-[30%] bg-gradient-to-b from-blue-700 to-blue-600 rounded-t-3xl shadow-2xl border-4 border-b-0 border-blue-400 flex flex-col items-center justify-center overflow-hidden z-20 origin-bottom-left transition-all duration-700";
+            inst.classList.add('hidden'); modal.classList.add('active'); setTimeout(() => { pack.classList.remove('hidden'); pack.classList.add('anim-pack-appear'); setTimeout(() => { pack.classList.remove('anim-pack-appear'); pack.classList.add('anim-rip-shake'); inst.classList.remove('hidden'); }, 600); }, 300);
         }
-
-        function triggerPackRipFinish() {
-            if (state.currentPulls.length === 0) return; 
-            const pack = document.getElementById('rip-pack-container');
-            const topHalf = document.getElementById('rip-top-half');
-            pack.classList.remove('anim-rip-shake');
-            document.getElementById('rip-instructions').classList.add('hidden');
-            
-            topHalf.classList.add('anim-rip-top-new'); // New tear animation
-            setTimeout(() => {
-                document.getElementById('modal-pack-rip').classList.remove('active');
-                displayPulls();
-            }, 800);
-        }
-
-        function displayPulls() {
-            document.getElementById('modal-pulls').classList.add('active');
-            document.getElementById('pull-total').textContent = state.currentPulls.length;
-            state.pullIndex = 0; renderCurrentPull();
-        }
-
-        function renderCurrentPull() {
-            const card = state.currentPulls[state.pullIndex];
-            document.getElementById('single-pull-container').innerHTML = generateCardHTML(card);
-            document.getElementById('pull-current').textContent = state.pullIndex + 1;
-            document.getElementById('btn-prev-card').disabled = state.pullIndex === 0;
-            document.getElementById('btn-next-card').disabled = state.pullIndex === state.currentPulls.length - 1;
-        }
+        function triggerPackRipFinish() { if (state.currentPulls.length === 0) return; const pack = document.getElementById('rip-pack-container'); const tH = document.getElementById('rip-top-half'); pack.classList.remove('anim-rip-shake'); document.getElementById('rip-instructions').classList.add('hidden'); tH.classList.add('anim-rip-top-new'); setTimeout(() => { document.getElementById('modal-pack-rip').classList.remove('active'); displayPulls(); }, 800); }
+        function displayPulls() { document.getElementById('modal-pulls').classList.add('active'); document.getElementById('pull-total').textContent = state.currentPulls.length; state.pullIndex = 0; renderCurrentPull(); }
+        function renderCurrentPull() { const c = state.currentPulls[state.pullIndex]; document.getElementById('single-pull-container').innerHTML = generateCardHTML(c); document.getElementById('pull-current').textContent = state.pullIndex + 1; document.getElementById('btn-prev-card').disabled = state.pullIndex === 0; document.getElementById('btn-next-card').disabled = state.pullIndex === state.currentPulls.length - 1; }
 
         function renderCollection() {
-            const grid = document.getElementById('collection-grid');
-            const empty = document.getElementById('empty-collection');
-            const filter = document.getElementById('filter-collection').value;
-            const search = document.getElementById('search-collection').value.toLowerCase();
-            
-            let displayCards = state.collection;
-            if (filter === 'showcase') displayCards = displayCards.filter(c => c.showcase);
-            if (filter === 'legendary') displayCards = displayCards.filter(c => c.rarityClass.includes('rarity-legendary'));
-            if (search) displayCards = displayCards.filter(c => c.name.toLowerCase().includes(search));
-
-            document.getElementById('collection-total').textContent = state.collection.length;
-            grid.innerHTML = '';
-            
-            if (displayCards.length === 0) { grid.classList.add('hidden'); empty.classList.remove('hidden'); empty.classList.add('flex', 'flex-col'); } 
-            else {
-                grid.classList.remove('hidden'); empty.classList.add('hidden'); empty.classList.remove('flex', 'flex-col');
-                displayCards.forEach(card => {
-                    const el = document.createElement('div');
-                    el.className = `aspect-[63/88] rounded-2xl overflow-hidden cursor-pointer relative border-4 ${card.rarityClass} ${card.showcase ? 'holo-effect' : ''} bg-[#f3f4f6] shadow-lg hover:scale-105 hover:-translate-y-2 hover:shadow-[0_20px_30px_rgba(0,0,0,0.6)] transition-all duration-300 group`;
-                    let tagColor = 'text-gray-800 bg-gray-300';
-                    if (card.rarityClass.includes('legendary')) tagColor = 'text-yellow-900 bg-yellow-400';
-                    else if (card.rarityClass.includes('rare')) tagColor = 'text-purple-100 bg-purple-600';
-                    else if (card.rarityClass.includes('uncommon')) tagColor = 'text-green-900 bg-green-400';
-                    el.innerHTML = `
-                        <div class="absolute inset-0 p-2 flex justify-center items-center">
-                            <img src="${card.image}" class="w-full h-full object-contain filter drop-shadow z-10 transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                        </div>
-                        <div class="absolute top-2 left-2 px-2 py-1 rounded shadow-md ${tagColor} text-[9px] font-black uppercase tracking-widest backdrop-blur-md z-30">${card.rarity.split(' ')[0]}</div>
-                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-80 text-white text-[10px] font-black py-2.5 px-2 text-center z-20 backdrop-blur-md border-t-2 border-gray-700 tracking-wider truncate">${card.name}</div>
-                    `;
-                    el.addEventListener('click', () => {
-                        document.getElementById('detail-card-container').innerHTML = generateCardHTML(card, true);
-                        document.getElementById('modal-card-detail').classList.add('active');
-                    });
-                    grid.appendChild(el);
-                });
-            }
+            const grid = document.getElementById('collection-grid'); const empty = document.getElementById('empty-collection'); const filter = document.getElementById('filter-collection').value; const search = document.getElementById('search-collection').value.toLowerCase();
+            let dC = state.collection; if (filter === 'showcase') dC = dC.filter(c => c.showcase); if (filter === 'legendary') dC = dC.filter(c => c.rarityClass.includes('rarity-legendary')); if (search) dC = dC.filter(c => c.name.toLowerCase().includes(search));
+            document.getElementById('collection-total').textContent = state.collection.length; grid.innerHTML = '';
+            if (dC.length === 0) { grid.classList.add('hidden'); empty.classList.remove('hidden'); empty.classList.add('flex', 'flex-col'); } 
+            else { grid.classList.remove('hidden'); empty.classList.add('hidden'); empty.classList.remove('flex', 'flex-col'); dC.forEach(card => {
+                const el = document.createElement('div'); el.className = `aspect-[63/88] rounded-2xl overflow-hidden cursor-pointer relative border-4 ${card.rarityClass} ${card.showcase ? 'holo-effect' : ''} bg-[#f3f4f6] shadow-lg hover:scale-105 hover:-translate-y-2 transition-all duration-300 group`;
+                let tc = 'text-gray-800 bg-gray-300'; if (card.rarityClass.includes('legendary')) tc = 'text-yellow-900 bg-yellow-400'; else if (card.rarityClass.includes('rare')) tc = 'text-purple-100 bg-purple-600'; else if (card.rarityClass.includes('uncommon')) tc = 'text-green-900 bg-green-400';
+                el.innerHTML = `<div class="absolute inset-0 p-2 flex justify-center items-center"><img src="${card.image}" class="w-full h-full object-contain filter drop-shadow z-10 transition-transform duration-500 group-hover:scale-110" loading="lazy"></div><div class="absolute top-2 left-2 px-2 py-1 rounded shadow-md ${tc} text-[9px] font-black uppercase tracking-widest backdrop-blur-md z-30">${card.rarity.split(' ')[0]}</div><div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-80 text-white text-[10px] font-black py-2.5 px-2 text-center z-20 backdrop-blur-md border-t-2 border-gray-700 tracking-wider truncate">${card.name}</div>`;
+                el.addEventListener('click', () => { currentDetailCard = card; document.getElementById('detail-card-container').innerHTML = generateCardHTML(card, true); document.getElementById('modal-card-detail').classList.add('active'); }); grid.appendChild(el);
+            }); }
         }
 
-        function getRarity(id, bst) {
-            if (state.pogoRarities[id]) {
-                const r = state.pogoRarities[id].toLowerCase();
-                if (r.includes('mythic')) return { name: 'Mythic Holo', class: 'rarity-legendary mythic-holo' };
-                if (r.includes('legendary')) return { name: r, class: 'rarity-legendary' };
-                if (r.includes('rare') || r.includes('ultra')) return { name: r, class: 'rarity-rare' };
-                return { name: r, class: 'rarity-common' };
-            }
-            if (bst > 580) return { name: 'Legendary', class: 'rarity-legendary' };
-            if (bst > 450) return { name: 'Rare', class: 'rarity-rare' };
-            if (bst > 300) return { name: 'Uncommon', class: 'rarity-uncommon' };
-            return { name: 'Common', class: 'rarity-common' };
-        }
-
-        function generateCardHTML(cardData, showInstance = false) {
-            return `
-                <div class="flip-card ${showInstance && cardData.showcase ? 'holo-effect' : ''}">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front flex flex-col bg-[#f3f4f6] ${cardData.rarityClass}">
-                            <div class="card-header">
-                                <div class="card-name">${cardData.name}</div>
-                                <div class="card-hp">HP ${cardData.hp}</div>
-                            </div>
-                            <div class="card-img-container">
-                                <img src="${cardData.image}" class="card-img" loading="lazy">
-                            </div>
-                            <div class="p-3 bg-white text-gray-800 font-black border-t border-gray-200 pb-4 text-xs tracking-wide">
-                                <div class="flex justify-between mb-1"><span>ATK</span> <span class="text-blue-600">${cardData.atk}</span></div>
-                                <div class="flex justify-between"><span>DEF</span> <span class="text-blue-600">${cardData.def}</span></div>
-                            </div>
-                        </div>
-                        <div class="flip-card-back p-6 text-center">
-                            <div class="w-32 h-32 bg-black bg-opacity-50 rounded-full flex items-center justify-center mb-6 mx-auto border-4 border-[#2563eb] shadow-inner relative overflow-hidden">
-                                <img src="${cardData.gif || cardData.image}" class="w-24 h-24 object-contain gamified-gif relative z-10" loading="lazy">
-                            </div>
-                            <div class="text-2xl font-pokemon text-white mb-4 tracking-widest drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">${cardData.name}</div>
-                            <div class="text-[11px] text-blue-200 mt-auto block font-bold tracking-widest uppercase bg-[#1e3a8a] py-2 rounded-lg border border-blue-400">BST: ${cardData.bst}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+        function getRarity(id, bst) { if (state.pogoRarities[id]) { const r = state.pogoRarities[id].toLowerCase(); if (r.includes('mythic')) return { name: 'Mythic Holo', class: 'rarity-legendary mythic-holo' }; if (r.includes('legendary')) return { name: r, class: 'rarity-legendary' }; if (r.includes('rare') || r.includes('ultra')) return { name: r, class: 'rarity-rare' }; return { name: r, class: 'rarity-common' }; } if (bst > 580) return { name: 'Legendary', class: 'rarity-legendary' }; if (bst > 450) return { name: 'Rare', class: 'rarity-rare' }; if (bst > 300) return { name: 'Uncommon', class: 'rarity-uncommon' }; return { name: 'Common', class: 'rarity-common' }; }
+        function generateCardHTML(cardData, showInstance = false) { return `<div class="flip-card ${showInstance && cardData.showcase ? 'holo-effect' : ''}"><div class="flip-card-inner"><div class="flip-card-front flex flex-col bg-[#f3f4f6] ${cardData.rarityClass}"><div class="card-header"><div class="card-name">${cardData.name}</div><div class="card-hp">HP ${cardData.hp}</div></div><div class="card-img-container"><img src="${cardData.image}" class="card-img" loading="lazy"></div><div class="p-3 bg-white text-gray-800 font-black border-t border-gray-200 pb-4 text-xs tracking-wide"><div class="flex justify-between mb-1"><span>ATK</span> <span class="text-blue-600">${cardData.atk}</span></div><div class="flex justify-between"><span>DEF</span> <span class="text-blue-600">${cardData.def}</span></div></div></div><div class="flip-card-back p-6 text-center"><div class="w-32 h-32 bg-black bg-opacity-50 rounded-full flex items-center justify-center mb-6 mx-auto border-4 border-[#2563eb] shadow-inner relative overflow-hidden"><img src="${cardData.gif || cardData.image}" class="w-24 h-24 object-contain gamified-gif relative z-10" loading="lazy"></div><div class="text-2xl font-pokemon text-white mb-4 tracking-widest drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">${cardData.name}</div><div class="text-[11px] text-blue-200 mt-auto block font-bold tracking-widest uppercase bg-[#1e3a8a] py-2 rounded-lg border border-blue-400">BST: ${cardData.bst}</div></div></div></div>`; }
 
         function setupFirebaseListeners() {
-            if (!db || !state.userId || firebaseListeners.presence) return;
-            const now = getNow();
-            firebaseListeners.presence = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'presence'), (snapshot) => {
-                state.onlineUsers = {}; 
-                snapshot.forEach(doc => { const d = doc.data(); if (d.id !== state.userId && (now - d.lastSeen) < 180000) state.onlineUsers[doc.id] = d; });
-                renderNetworkList();
-            }, () => {});
-
-            firebaseListeners.incomingTrade = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'trades'), (snapshot) => {
-                snapshot.docChanges().forEach(change => {
-                    const data = change.doc.data();
-                    if (change.type === "added" || change.type === "modified") {
-                        if (data.receiver === state.userId && data.status === 'requested') {
-                            showToast(`Trade Link from ${data[data.initiator].name}`, 'trade', 10000, {
-                                onAccept: () => updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'active' }),
-                                onDecline: () => updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'rejected' })
-                            });
-                        }
-                        if (data.status === 'active' && (data.initiator === state.userId || data.receiver === state.userId) && !state.activeTrade) {
-                             openTradeUI(data.id, data.initiator === state.userId ? data.receiver : data.initiator);
-                        }
+            if (!db || !state.userId || firebaseListeners.presence) return; const n = getNow();
+            firebaseListeners.presence = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'presence'), (snap) => { state.onlineUsers = {}; snap.forEach(doc => { const d = doc.data(); if (d.id !== state.userId && (n - d.lastSeen) < 180000) state.onlineUsers[doc.id] = d; }); renderNetworkList(); });
+            firebaseListeners.incomingTrade = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'trades'), (snap) => { snap.docChanges().forEach(ch => { const d = ch.doc.data(); if (ch.type === "added" || ch.type === "modified") { if (d.receiver === state.userId && d.status === 'requested') showToast(`Trade Link from ${d[d.initiator].name}`, 'trade', 10000, { onAccept: () => updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', d.id), { status: 'active' }), onDecline: () => updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', d.id), { status: 'rejected' }) }); if (d.status === 'active' && (d.initiator === state.userId || d.receiver === state.userId) && !state.activeTrade) openTradeUI(d.id, d.initiator === state.userId ? d.receiver : d.initiator); } }); });
+            firebaseListeners.battles = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'battles'), (snap) => { snap.docChanges().forEach(ch => { const d = ch.doc.data(); if (d.receiver === state.userId && d.status === 'requested') { showToast(`Battle Request from ${d.initiatorName}`, 'battle', 10000, { onAccept: () => acceptBattle(d), onDecline: () => updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', d.id), { status: 'rejected' }) }); } if (d.status === 'active' && (d.initiator === state.userId || d.receiver === state.userId) && !state.activeBattle) startBattleSession(d); }); });
+            firebaseListeners.events = onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'events', 'activeEvent'), (snap) => { if(snap.exists()) { const d = snap.data(); if(getNow() < d.endTime) { document.getElementById('global-event-banner').style.display = 'block'; document.getElementById('event-text').textContent = `${d.title} - ${d.desc}`; if(currentEventTimer) clearInterval(currentEventTimer); currentEventTimer = setInterval(()=>{ const t = d.endTime - getNow(); if(t<=0) document.getElementById('global-event-banner').style.display = 'none'; else { const h = Math.floor(t/3600000); const m = Math.floor((t%3600000)/60000); const s = Math.floor((t%60000)/1000); document.getElementById('event-timer').textContent = `${h}h ${m}m ${s}s`; } }, 1000); } else document.getElementById('global-event-banner').style.display = 'none'; } });
+            firebaseListeners.raids = onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'raids', 'activeBoss'), (snap) => { 
+                if(snap.exists()) { 
+                    const d = snap.data(); 
+                    if(getNow() < d.endTime && d.hp > 0) { 
+                        const rb = document.getElementById('raid-boss-node'); 
+                        rb.classList.remove('hidden'); 
+                        document.getElementById('raid-hp-fill').style.width = `${(d.hp/d.maxHp)*100}%`; 
+                        document.getElementById('raid-boss-img').src = d.sprite;
+                        rb.onclick = () => openRaidModal(d); 
+                    } else {
+                        document.getElementById('raid-boss-node').classList.add('hidden');
+                        document.getElementById('modal-raid').classList.remove('active');
                     }
-                });
-            }, () => {});
+                } 
+            });
             
-            // Battles
-            firebaseListeners.battles = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'battles'), (snapshot) => {
-                snapshot.docChanges().forEach(change => {
-                    const data = change.doc.data();
-                    if (data.receiver === state.userId && data.status === 'requested') {
-                        showToast(`Battle Request from ${data.initiatorName}`, 'battle', 10000, {
-                            onAccept: () => processBattle(data),
-                            onDecline: () => updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', data.id), { status: 'rejected' })
-                        });
-                    }
-                    if (data.initiator === state.userId && data.status === 'completed') {
-                        showBattleResult(data);
-                    }
+            if(state.isAdmin) {
+                firebaseListeners.sales = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'sales'), (snap) => {
+                    const l = document.getElementById('admin-sales-list'); l.innerHTML = '';
+                    snap.forEach(docSnap => { const s = docSnap.data(); if(s.status === 'pending') {
+                        const el = document.createElement('div'); el.className = 'bg-[#151821] p-4 rounded-xl border border-[#262b3a] flex justify-between items-center flex-wrap gap-2';
+                        el.innerHTML = `<div class="flex items-center gap-3"><img src="${s.card.image}" class="h-12"><div class="flex flex-col"><span class="text-white font-black text-sm">${s.card.name}</span><span class="text-[10px] text-gray-400">Seller: ${s.sellerName}</span></div></div><div class="flex gap-2 items-center"><input type="number" class="w-16 bg-[#0b0c10] text-white text-xs p-2 rounded" placeholder="Coins" id="coin-${s.id}"><select class="bg-[#0b0c10] text-white text-xs p-2 rounded" id="pack-${s.id}"><option value="">No Pack</option><option value="base">Base Set</option><option value="neo">Neo Genesis</option><option value="ruby_sapphire">Ruby & Sapphire</option><option value="diamond_pearl">Diamond & Pearl</option><option value="black_white">Black & White</option><option value="xy">XY</option><option value="sun_moon">Sun & Moon</option><option value="sword_shield">Sword & Shield</option><option value="scarlet_violet">Scarlet & Violet</option></select><button class="bg-green-600 text-white px-3 py-2 rounded text-[10px] font-black uppercase shadow-lg btn-approve">Approve</button></div>`;
+                        el.querySelector('.btn-approve').addEventListener('click', async () => { 
+                            const coins = parseInt(document.getElementById(`coin-${s.id}`).value) || 0; const pk = document.getElementById(`pack-${s.id}`).value;
+                            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'sales', s.id), { status: 'approved', rewardCoins: coins, rewardPack: pk }); 
+                            const pSnap = await getDoc(doc(db, 'artifacts', appId, 'users', s.sellerId, 'userData', 'profile')); 
+                            if(pSnap.exists()) { const pData = pSnap.data(); pData.profile.coins += coins; if(pk) { if(!pData.packs.inventory) pData.packs.inventory = {}; pData.packs.inventory[pk] = (pData.packs.inventory[pk] || 0) + 1; } await setDoc(doc(db, 'artifacts', appId, 'users', s.sellerId, 'userData', 'profile'), pData); } showToast("Sale Approved.", "success"); 
+                        }); l.appendChild(el);
+                    } });
                 });
-            }, () => {});
-
-            setInterval(updatePresence, 45000); 
-            window.addEventListener('beforeunload', () => { if(db && state.userId) deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'presence', state.userId)); });
+            }
+            setInterval(updatePresence, 45000); window.addEventListener('beforeunload', () => { if(db && state.userId) deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'presence', state.userId)); });
         }
-
-        async function updatePresence() {
-            if (!db || !state.userId || !state.profile.name) return;
-            try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'presence', state.userId), { id: state.userId, name: state.profile.name, team: state.profile.team, info: state.profile.info, lastSeen: getNow() }); } catch(e) {}
-        }
-
+        async function updatePresence() { if (!db || !state.userId || !state.profile.name) return; try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'presence', state.userId), { id: state.userId, name: state.profile.name, team: state.profile.team, info: state.profile.info, lastSeen: getNow() }); } catch(e) {} }
+        
         function renderNetworkList() {
-            const list = document.getElementById('network-nodes');
-            const textList = document.getElementById('network-list');
-            const emptyState = document.getElementById('network-empty');
-            list.innerHTML = ''; textList.innerHTML = '';
-            const uids = Object.keys(state.onlineUsers);
-            if (uids.length > 0) { textList.classList.remove('hidden'); emptyState.classList.add('hidden'); } 
-            else { textList.classList.add('hidden'); emptyState.classList.remove('hidden'); }
-            
+            const list = document.getElementById('network-nodes'); const textList = document.getElementById('network-list'); const emptyState = document.getElementById('network-empty');
+            const nodes = list.querySelectorAll('.user-node'); nodes.forEach(n => { if(n.querySelector('img')) return; n.remove(); }); textList.innerHTML = '';
+            const uids = Object.keys(state.onlineUsers); if (uids.length > 0) { textList.classList.remove('hidden'); emptyState.classList.add('hidden'); } else { textList.classList.add('hidden'); emptyState.classList.remove('hidden'); }
             uids.forEach((uid, idx) => {
-                const u = state.onlineUsers[uid];
-                const angle = (idx / uids.length) * Math.PI * 2;
-                const radius = 30 + Math.random() * 15;
-                const x = 50 + Math.cos(angle) * radius; const y = 50 + Math.sin(angle) * radius;
-                
-                const node = document.createElement('div');
-                node.className = 'user-node absolute cursor-pointer hover:scale-110 transition-transform rounded-full border-4 shadow-lg flex items-center justify-center bg-[#151821] w-14 h-14';
-                node.style.left = `calc(${x}% - 28px)`; node.style.top = `calc(${y}% - 28px)`;
+                const u = state.onlineUsers[uid]; const angle = (idx / uids.length) * Math.PI * 2; const r = 30 + Math.random() * 15; const x = 50 + Math.cos(angle) * r; const y = 50 + Math.sin(angle) * r;
+                const node = document.createElement('div'); node.className = 'user-node absolute cursor-pointer hover:scale-110 transition-transform rounded-full border-4 shadow-lg flex items-center justify-center bg-[#151821] w-14 h-14'; node.style.left = `calc(${x}% - 28px)`; node.style.top = `calc(${y}% - 28px)`;
                 node.innerHTML = `<span class="font-black text-xl text-blue-400">${u.name.charAt(0).toUpperCase()}</span><span class="absolute -bottom-8 font-black text-[10px] text-white bg-black px-3 py-1.5 rounded-md border tracking-widest uppercase shadow-md">${u.name}</span>`;
-                node.addEventListener('click', () => initiateTrade(uid));
-                list.appendChild(node);
-                
-                const el = document.createElement('div');
-                el.className = 'bg-[#0b0c10] border border-[#262b3a] rounded-2xl p-4 flex justify-between items-center shadow-inner';
-                el.innerHTML = `
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-[#151821] flex items-center justify-center font-black text-blue-400 border border-blue-500 shadow-md">${u.name.charAt(0).toUpperCase()}</div>
-                        <span class="font-black text-sm text-white tracking-wide">${u.name}</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="btn-trade text-xs bg-[#151821] border border-[#262b3a] hover:bg-blue-600 text-white px-3 py-2 rounded-xl transition-all shadow-md"><i class="fa-solid fa-link"></i> Trade</button>
-                        <button class="btn-battle text-xs bg-[#151821] border border-[#262b3a] hover:bg-red-600 text-white px-3 py-2 rounded-xl transition-all shadow-md"><i class="fa-solid fa-fire"></i> Battle</button>
-                    </div>`;
-                el.querySelector('.btn-trade').addEventListener('click', () => initiateTrade(uid));
-                el.querySelector('.btn-battle').addEventListener('click', () => initiateBattle(uid, u.name));
+                node.addEventListener('click', () => initiateTrade(uid)); list.appendChild(node);
+                const el = document.createElement('div'); el.className = 'bg-[#0b0c10] border border-[#262b3a] rounded-2xl p-4 flex justify-between items-center shadow-inner flex-wrap gap-2';
+                el.innerHTML = `<div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-[#151821] flex items-center justify-center font-black text-blue-400 border border-blue-500 shadow-md">${u.name.charAt(0).toUpperCase()}</div><span class="font-black text-sm text-white tracking-wide">${u.name}</span></div><div class="flex gap-2"><button class="btn-trade text-xs bg-[#151821] border border-[#262b3a] hover:bg-blue-600 text-white px-3 py-2 rounded-xl transition-all shadow-md"><i class="fa-solid fa-link"></i> Trade</button><button class="btn-battle text-xs bg-[#151821] border border-[#262b3a] hover:bg-red-600 text-white px-3 py-2 rounded-xl transition-all shadow-md"><i class="fa-solid fa-fire"></i> Battle</button>${state.isSkye ? '<button class="btn-gift text-xs bg-pink-900 border-pink-500 text-white px-3 py-2 rounded-xl"><i class="fa-solid fa-gift"></i></button>' : ''}</div>`;
+                el.querySelector('.btn-trade').addEventListener('click', () => initiateTrade(uid)); el.querySelector('.btn-battle').addEventListener('click', () => initBattle(uid, u.name)); 
+                if(state.isSkye) { el.querySelector('.btn-gift').addEventListener('click', () => skyeGiftCard(uid, u.name)); }
                 textList.appendChild(el);
             });
         }
 
-        // Multi-card trade init UI
-        function initTradeSlotsUI() {
-            const mySlots = document.getElementById('my-offer-slots');
-            const theirSlots = document.getElementById('their-offer-slots');
-            mySlots.innerHTML = ''; theirSlots.innerHTML = '';
-            for(let i=0; i<3; i++) {
-                mySlots.innerHTML += `<div class="trade-slot my-slot group cursor-pointer" data-index="${i}">
-                    <i class="fa-solid fa-plus text-gray-600 text-2xl group-hover:text-blue-400 transition-colors my-plus"></i>
-                    <img src="" class="hidden rounded-xl my-img">
-                    <button class="btn-remove absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-6 h-6 text-xs hidden shadow-xl z-10 hover:bg-red-400"><i class="fa-solid fa-times"></i></button>
-                </div>`;
-                theirSlots.innerHTML += `<div class="trade-slot their-slot" data-index="${i}">
-                    <i class="fa-solid fa-question text-gray-700 text-2xl opacity-50 their-q"></i>
-                    <img src="" class="hidden rounded-xl their-img">
-                </div>`;
-            }
-            document.querySelectorAll('.my-slot').forEach(el => {
-                el.addEventListener('click', (e) => {
-                    if (e.target.closest('.btn-remove')) {
-                        e.stopPropagation();
-                        removeOffer(parseInt(el.dataset.index));
-                    } else {
-                        openSelectCardModal(parseInt(el.dataset.index));
-                    }
-                });
-            });
-        }
-
-        async function initiateTrade(targetUid) {
-            if (!db || !state.userId) return;
-            const tradeId = [state.userId, targetUid].sort().join('_');
+        async function skyeGiftCard(tUid, tName) {
+            const pId = prompt(`Enter Pokemon ID or Name to gift to ${tName}:`); if(!pId) return;
             try {
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', tradeId), {
-                    id: tradeId, status: 'requested', initiator: state.userId, receiver: targetUid, timestamp: getNow(),
-                    [state.userId]: { locked: false, offers: [null, null, null], name: state.profile.name }, 
-                    [targetUid]: { locked: false, offers: [null, null, null], name: state.onlineUsers[targetUid]?.name || 'Trainer' }, chat: []
-                });
-                showToast("Link request transmitted.", "info");
-            } catch (e) { showToast("Target out of range.", "error"); }
+                const res = await fetch(`${POKEAPI_BASE}/pokemon/${pId.toLowerCase()}`); const data = await res.json();
+                let hp = 0, atk = 0, def = 0, spd = 0, bst = 0; data.stats.forEach(s => { bst += s.base_stat; if(s.stat.name === 'hp') hp = s.base_stat; if(s.stat.name === 'attack') atk = s.base_stat; if(s.stat.name === 'defense') def = s.base_stat; if(s.stat.name === 'speed') spd = s.base_stat; });
+                const r = getRarity(data.id, bst); const img = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default; const cMoves = []; for(let i=0; i<Math.min(4, data.moves.length); i++) { const md = data.moves[i].move; cMoves.push({ n: md.name, p: Math.floor((atk*0.5) + (Math.random()*20)) }); } if(cMoves.length === 0) cMoves.push({n: "Struggle", p: 10});
+                const card = { id: 'gift_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: data.name, types: data.types.map(t => t.type.name), hp: hp * 3, maxHp: hp * 3, atk, def, spd, bst, image: img, gif: data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || img, rarity: r.name, rarityClass: r.class, showcase: true, acquiredAt: Date.now(), moves: cMoves };
+                const pSnap = await getDoc(doc(db, 'artifacts', appId, 'users', tUid, 'userData', 'profile'));
+                if(pSnap.exists()) { const pd = pSnap.data(); pd.collection.unshift(card); await setDoc(doc(db, 'artifacts', appId, 'users', tUid, 'userData', 'profile'), pd); showToast(`Gifted ${card.name} to ${tName}!`, "success"); }
+            } catch(e) { showToast("Failed to fetch or gift Pokemon.", "error"); }
         }
 
-        function openTradeUI(tradeId, partnerId) {
-            state.activeTrade = { id: tradeId, partnerId: partnerId, localOffers: [null, null, null] };
-            document.getElementById('trade-partner-name').textContent = state.onlineUsers[partnerId]?.name || 'Trainer';
-            
+        function initTradeSlotsUI() {
+            const m = document.getElementById('my-offer-slots'); const t = document.getElementById('their-offer-slots'); m.innerHTML = ''; t.innerHTML = '';
+            for(let i=0; i<3; i++) {
+                m.innerHTML += `<div class="trade-slot my-slot group cursor-pointer" data-index="${i}"><i class="fa-solid fa-plus text-gray-600 text-2xl group-hover:text-blue-400 transition-colors my-plus"></i><img src="" class="hidden rounded-xl my-img"><button class="btn-remove absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-6 h-6 text-xs hidden shadow-xl z-10 hover:bg-red-400"><i class="fa-solid fa-times"></i></button></div>`;
+                t.innerHTML += `<div class="trade-slot their-slot" data-index="${i}"><i class="fa-solid fa-question text-gray-700 text-2xl opacity-50 their-q"></i><img src="" class="hidden rounded-xl their-img"></div>`;
+            }
+            document.querySelectorAll('.my-slot').forEach(el => { el.addEventListener('click', (e) => { if (e.target.closest('.btn-remove')) { e.stopPropagation(); removeOffer(parseInt(el.dataset.index)); } else openSelectCardModal(parseInt(el.dataset.index), 'trade'); }); });
+        }
+        async function initiateTrade(tUid) { if (!db || !state.userId) return; const tId = [state.userId, tUid].sort().join('_'); try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', tId), { id: tId, status: 'requested', initiator: state.userId, receiver: tUid, timestamp: getNow(), [state.userId]: { locked: false, offers: [null, null, null], name: state.profile.name }, [tUid]: { locked: false, offers: [null, null, null], name: state.onlineUsers[tUid]?.name || 'Trainer' }, chat: [] }); showToast("Link request transmitted.", "info"); } catch (e) { showToast("Target out of range.", "error"); } }
+        function openTradeUI(tId, pId) {
+            state.activeTrade = { id: tId, partnerId: pId, localOffers: [null, null, null] }; document.getElementById('trade-partner-name').textContent = state.onlineUsers[pId]?.name || 'Trainer';
             document.querySelectorAll('.my-slot').forEach(slot => { slot.querySelector('.my-img').classList.add('hidden'); slot.querySelector('.my-plus').classList.remove('hidden'); slot.querySelector('.btn-remove').classList.add('hidden'); });
             document.querySelectorAll('.their-slot').forEach(slot => { slot.querySelector('.their-img').classList.add('hidden'); slot.querySelector('.their-q').classList.remove('hidden'); });
-            
-            document.getElementById('modal-trade').classList.add('active');
-            firebaseListeners.activeTrade = onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'trades', tradeId), (docSnap) => {
-                if (docSnap.exists()) handleTradeSync(docSnap.data(), partnerId); else forceCloseTrade();
-            }, () => {});
+            document.getElementById('modal-trade').classList.add('active'); firebaseListeners.activeTrade = onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'trades', tId), (snap) => { if (snap.exists()) handleTradeSync(snap.data(), pId); else forceCloseTrade(); });
         }
-
-        function handleTradeSync(data, partnerId) {
-            if (data.status === 'cancelled' || data.status === 'rejected') { forceCloseTrade("Link severed.", "error"); return; }
-            if (data.status === 'completed') { finalizeTradeLocally(data); return; }
-            
-            const me = data[state.userId] || { locked: false, offers: [null,null,null] };
-            const them = data[partnerId] || { locked: false, offers: [null,null,null] };
-            
-            // Update Their slots
-            document.querySelectorAll('.their-slot').forEach((slot, i) => {
-                const offer = them.offers[i];
-                if (offer) { slot.querySelector('.their-img').src = offer.image; slot.querySelector('.their-img').classList.remove('hidden'); slot.querySelector('.their-q').classList.add('hidden'); } 
-                else { slot.querySelector('.their-img').classList.add('hidden'); slot.querySelector('.their-q').classList.remove('hidden'); }
-            });
-            
-            const btnLock = document.getElementById('btn-trade-lock'), btnAccept = document.getElementById('btn-trade-accept');
-            const myStatus = document.getElementById('my-trade-status'), theirStatus = document.getElementById('their-trade-status');
-            
-            theirStatus.textContent = them.locked ? 'Locked' : 'Selecting...';
-            myStatus.textContent = me.locked ? 'Locked' : 'Selecting...';
-
-            if (me.locked) {
-                btnLock.textContent = 'Unlock'; btnLock.style.background = '#ef4444';
-                document.querySelectorAll('.btn-remove').forEach(b => b.classList.add('hidden'));
-            } else {
-                btnLock.textContent = 'Lock Offer'; btnLock.style.background = '#151821';
-                document.querySelectorAll('.my-slot').forEach((slot, i) => { if(state.activeTrade.localOffers[i]) slot.querySelector('.btn-remove').classList.remove('hidden'); });
-            }
-            
-            if (me.locked && them.locked) {
-                btnAccept.classList.remove('hidden'); btnLock.classList.add('hidden');
-                if (me.accepted) { btnAccept.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing'; btnAccept.disabled = true; } 
-                else { btnAccept.innerHTML = '<i class="fa-solid fa-check"></i> Accept'; btnAccept.disabled = false; }
-                if (me.accepted && them.accepted) finishTradeFirebase(data);
-            } else {
-                btnAccept.classList.add('hidden'); btnLock.classList.remove('hidden');
-                if(me.accepted) updateTradeState({ accepted: false });
-            }
-            renderChat(data.chat);
+        function handleTradeSync(d, pId) {
+            if (d.status === 'cancelled' || d.status === 'rejected') return forceCloseTrade("Link severed.", "error"); if (d.status === 'completed') return finalizeTradeLocally(d);
+            const m = d[state.userId] || { locked: false, offers: [null,null,null] }; const t = d[pId] || { locked: false, offers: [null,null,null] };
+            document.querySelectorAll('.their-slot').forEach((slot, i) => { const o = t.offers[i]; if (o) { slot.querySelector('.their-img').src = o.image; slot.querySelector('.their-img').classList.remove('hidden'); slot.querySelector('.their-q').classList.add('hidden'); } else { slot.querySelector('.their-img').classList.add('hidden'); slot.querySelector('.their-q').classList.remove('hidden'); } });
+            const bL = document.getElementById('btn-trade-lock'), bA = document.getElementById('btn-trade-accept'); const mS = document.getElementById('my-trade-status'), tS = document.getElementById('their-trade-status');
+            tS.textContent = t.locked ? 'Locked' : 'Selecting...'; mS.textContent = m.locked ? 'Locked' : 'Selecting...';
+            if (m.locked) { bL.textContent = 'Unlock'; bL.style.background = '#ef4444'; document.querySelectorAll('.btn-remove').forEach(b => b.classList.add('hidden')); } else { bL.textContent = 'Lock Offer'; bL.style.background = '#151821'; document.querySelectorAll('.my-slot').forEach((slot, i) => { if(state.activeTrade.localOffers[i]) slot.querySelector('.btn-remove').classList.remove('hidden'); }); }
+            if (m.locked && t.locked) { bA.classList.remove('hidden'); bL.classList.add('hidden'); if (m.accepted) { bA.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing'; bA.disabled = true; } else { bA.innerHTML = '<i class="fa-solid fa-check"></i> Accept'; bA.disabled = false; } if (m.accepted && t.accepted && d.initiator === state.userId && d.status !== 'completed') updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), { status: 'completed' }); } else { bA.classList.add('hidden'); bL.classList.remove('hidden'); if(m.accepted) updateTradeState({ accepted: false }); }
+            renderChat(d.chat);
         }
-
-        let activeSlotIndex = 0;
-        function openSelectCardModal(index) {
-            if (document.getElementById('my-trade-status').textContent === 'Locked') return;
-            activeSlotIndex = index;
-            const grid = document.getElementById('trade-collection-grid'); grid.innerHTML = '';
-            
-            // Only show cards not currently offered in other slots
-            const offeredIds = state.activeTrade.localOffers.filter(o => o).map(o => o.id);
-            const availableCards = state.collection.filter(c => !offeredIds.includes(c.id));
-
-            if (availableCards.length === 0) { grid.innerHTML = '<div class="col-span-full text-center py-10">No available cards.</div>'; } 
-            else {
-                availableCards.forEach(card => {
-                    const el = document.createElement('div');
-                    el.className = `relative aspect-[63/88] border-4 ${card.rarityClass} rounded-2xl bg-[#f3f4f6] cursor-pointer overflow-hidden p-2`;
-                    el.innerHTML = `<img src="${card.image}" class="w-full h-full object-contain filter drop-shadow">`;
-                    el.addEventListener('click', () => {
-                        state.activeTrade.localOffers[activeSlotIndex] = card;
-                        const slot = document.querySelector(`.my-slot[data-index="${activeSlotIndex}"]`);
-                        slot.querySelector('.my-img').src = card.image; slot.querySelector('.my-img').classList.remove('hidden');
-                        slot.querySelector('.my-plus').classList.add('hidden'); slot.querySelector('.btn-remove').classList.remove('hidden');
-                        updateTradeState({ offers: state.activeTrade.localOffers });
-                        document.getElementById('modal-select-card').classList.remove('active');
-                    });
-                    grid.appendChild(el);
-                });
-            }
+        function openSelectCardModal(idx, mode) {
+            if (mode === 'trade' && document.getElementById('my-trade-status').textContent === 'Locked') return;
+            activeSlotIndex = idx; state.selectingFor = mode; const grid = document.getElementById('select-collection-grid'); grid.innerHTML = '';
+            const offIds = mode === 'trade' ? state.activeTrade.localOffers.filter(o => o).map(o => o.id) : (mode === 'battle' ? state.teamSelection.map(o=>o.id) : []); const avail = state.collection.filter(c => !offIds.includes(c.id));
+            if (avail.length === 0) { grid.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500 font-bold tracking-widest uppercase">No available cards.</div>'; } 
+            else { avail.forEach(c => { const el = document.createElement('div'); el.className = `relative aspect-[63/88] border-4 ${c.rarityClass} rounded-2xl bg-[#f3f4f6] cursor-pointer overflow-hidden p-2 hover:scale-105 transition-transform shadow-lg`; el.innerHTML = `<img src="${c.image}" class="w-full h-full object-contain filter drop-shadow">`;
+                el.addEventListener('click', () => { document.getElementById('modal-select-card').classList.remove('active'); if(mode==='trade') { state.activeTrade.localOffers[activeSlotIndex] = c; const s = document.querySelector(`.my-slot[data-index="${activeSlotIndex}"]`); s.querySelector('.my-img').src = c.image; s.querySelector('.my-img').classList.remove('hidden'); s.querySelector('.my-plus').classList.add('hidden'); s.querySelector('.btn-remove').classList.remove('hidden'); updateTradeState({ offers: state.activeTrade.localOffers }); } else if(mode==='battle' || mode==='switch' || mode==='raid') { if(battleSelectionCallback) battleSelectionCallback(c); } }); grid.appendChild(el); }); }
             document.getElementById('modal-select-card').classList.add('active');
         }
-
-        function removeOffer(index) {
-            state.activeTrade.localOffers[index] = null;
-            const slot = document.querySelector(`.my-slot[data-index="${index}"]`);
-            slot.querySelector('.my-img').classList.add('hidden');
-            slot.querySelector('.my-plus').classList.remove('hidden');
-            slot.querySelector('.btn-remove').classList.add('hidden');
-            updateTradeState({ offers: state.activeTrade.localOffers });
-        }
-
-        function toggleTradeLock() {
-            const isLocked = document.getElementById('my-trade-status').textContent === 'Locked';
-            const hasOffer = state.activeTrade.localOffers.some(o => o !== null);
-            if (isLocked) updateTradeState({ locked: false }); 
-            else if (hasOffer) updateTradeState({ locked: true });
-        }
-
+        function removeOffer(i) { state.activeTrade.localOffers[i] = null; const s = document.querySelector(`.my-slot[data-index="${i}"]`); s.querySelector('.my-img').classList.add('hidden'); s.querySelector('.my-plus').classList.remove('hidden'); s.querySelector('.btn-remove').classList.add('hidden'); updateTradeState({ offers: state.activeTrade.localOffers }); }
+        function toggleTradeLock() { const L = document.getElementById('my-trade-status').textContent === 'Locked'; const H = state.activeTrade.localOffers.some(o => o !== null); if (L) updateTradeState({ locked: false }); else if (H) updateTradeState({ locked: true }); }
         function acceptTrade() { updateTradeState({ accepted: true }); }
+        async function updateTradeState(upd) { if (!state.activeTrade || !db) return; const fU = {}; for (const k in upd) fU[`${state.userId}.${k}`] = upd[k]; try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), fU); } catch(e) {} }
+        function finalizeTradeLocally(d) { const m = d[state.userId], t = d[state.activeTrade.partnerId]; if (m && t) { m.offers.forEach(o => { if(o) state.collection = state.collection.filter(c => c.id !== o.id); }); let g = 0; t.offers.forEach(o => { if(o) { state.collection.unshift({ ...o, id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), showcase: false, acquiredAt: Date.now() }); g++; } }); state.profile.trades++; gainXP(g * 50, "Trade Complete"); saveCloudData(); renderCollection(); showToast(`Sync Complete! Received ${g} cards.`, "success", 5000); } forceCloseTrade(); }
+        async function cancelTrade() { if (state.activeTrade && db) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), { status: 'cancelled' }); forceCloseTrade(); }
+        function forceCloseTrade() { if (firebaseListeners.activeTrade) { firebaseListeners.activeTrade(); firebaseListeners.activeTrade = null; } state.activeTrade = null; document.getElementById('modal-trade').classList.remove('active'); }
+        async function sendChat() { const i = document.getElementById('trade-chat-input'); const t = i.value.trim(); if (!t || !state.activeTrade || !db) return; i.value = ''; try { const r = doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id); const s = await getDoc(r); if (s.exists()) { const c = s.data().chat || []; c.push({ senderId: state.userId, name: state.profile.name, text: t }); if(c.length > 25) c.shift(); await updateDoc(r, { chat: c }); } } catch(e) {} }
+        function renderChat(cA) { const c = document.getElementById('trade-chat-messages'); if(!cA) return; const b = c.scrollHeight - c.clientHeight <= c.scrollTop + 10; c.innerHTML = ''; cA.forEach(m => { const i = m.senderId === state.userId; c.innerHTML += `<div class="flex flex-col ${i ? 'items-end' : 'items-start'}"><div class="px-4 py-2 max-w-[85%] text-xs font-bold ${i ? 'bg-blue-600 text-white rounded-2xl' : 'bg-[#1f2330] text-gray-200 rounded-2xl border border-[#262b3a]'}">${m.text}</div></div>`; }); if(b) c.scrollTop = c.scrollHeight; }
 
-        async function updateTradeState(updates) {
-            if (!state.activeTrade || !db) return;
-            const fbUpdates = {}; for (const key in updates) fbUpdates[`${state.userId}.${key}`] = updates[key];
-            try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), fbUpdates); } catch(e) {}
+        function initBattle(tUid, tName) { if(state.collection.length < 3) return showToast("Need at least 3 cards to battle.", "error"); state.teamSelection = []; 
+            const pickNext = () => { if(state.teamSelection.length < 3) { openSelectCardModal(0, 'battle'); battleSelectionCallback = (c) => { state.teamSelection.push(c); pickNext(); }; } else { sendBattleReq(tUid); } }; pickNext();
         }
+        async function sendBattleReq(tUid) { const bId = 'b_' + Date.now() + '_' + state.userId; await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', bId), { id: bId, status: 'requested', initiator: state.userId, initiatorName: state.profile.name, receiver: tUid, t1: state.teamSelection, t2: [], active1: 0, active2: 0, timestamp: getNow(), turn: state.userId, log: 'Waiting for opponent...' }); showToast("Battle Challenge Sent!", "info"); battleSelectionCallback = null; }
+        function acceptBattle(d) { if(state.collection.length < 3) return showToast("Need 3 cards to accept.", "error"); state.teamSelection = []; 
+            const pickNext = async () => { if(state.teamSelection.length < 3) { openSelectCardModal(0, 'battle'); battleSelectionCallback = (c) => { state.teamSelection.push(c); pickNext(); }; } else { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', d.id), { status: 'active', t2: state.teamSelection, active2: 0, log: 'Battle Commenced!' }); battleSelectionCallback = null; } }; pickNext();
+        }
+        function startBattleSession(d) {
+            state.activeBattle = d; document.getElementById('modal-battle-ui').classList.add('active'); const isP1 = d.initiator === state.userId;
+            
+            document.querySelector('.close-battle').onclick = async () => { if(state.activeBattle) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', state.activeBattle.id), { status: 'cancelled' }); document.getElementById('modal-battle-ui').classList.remove('active'); state.activeBattle = null; if(unsubscribeBattle) unsubscribeBattle(); };
+            
+            const unsubscribeBattle = onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'battles', d.id), (snap) => {
+                if(!snap.exists()) return; const bData = snap.data(); state.activeBattle = bData; if(bData.status === 'cancelled') { document.getElementById('modal-battle-ui').classList.remove('active'); state.activeBattle = null; unsubscribeBattle(); return showToast("Battle ended.", "error"); }
+                
+                myActiveTeam = isP1 ? bData.t1 : bData.t2; oppActiveTeam = isP1 ? bData.t2 : bData.t1;
+                const mIdx = isP1 ? bData.active1 : bData.active2; const oIdx = isP1 ? bData.active2 : bData.active1;
+                const mC = myActiveTeam[mIdx]; const oC = oppActiveTeam[oIdx];
+                
+                document.getElementById('battle-opp-name').textContent = isP1 ? "Opponent" : d.initiatorName;
+                document.getElementById('bat-my-img').src = mC.image; document.getElementById('bat-my-name').textContent = mC.name;
+                document.getElementById('bat-opp-img').src = oC.image; document.getElementById('bat-opp-name').textContent = oC.name;
+                document.getElementById('bat-my-hp').style.width = `${Math.max(0, (mC.hp/mC.maxHp)*100)}%`; document.getElementById('bat-opp-hp').style.width = `${Math.max(0, (oC.hp/oC.maxHp)*100)}%`;
+                
+                document.getElementById('my-team-count').innerHTML = myActiveTeam.map((c,i) => `<div class="w-3 h-3 rounded-full ${c.hp > 0 ? (i===mIdx ? 'bg-blue-400' : 'bg-green-500') : 'bg-red-900 border border-red-500'}"></div>`).join('');
+                document.getElementById('opp-team-count').innerHTML = oppActiveTeam.map((c,i) => `<div class="w-3 h-3 rounded-full ${c.hp > 0 ? (i===oIdx ? 'bg-blue-400' : 'bg-green-500') : 'bg-red-900 border border-red-500'}"></div>`).join('');
 
-        async function finishTradeFirebase(data) {
-            if (data.initiator === state.userId && data.status !== 'completed') 
-                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), { status: 'completed' });
-        }
-
-        function finalizeTradeLocally(data) {
-            const me = data[state.userId], them = data[state.activeTrade.partnerId];
-            if (me && them) {
-                // Remove my offers
-                me.offers.forEach(o => { if(o) state.collection = state.collection.filter(c => c.id !== o.id); });
-                // Add their offers
-                let gained = 0;
-                them.offers.forEach(o => {
-                    if(o) {
-                        state.collection.unshift({ ...o, id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), showcase: false, acquiredAt: Date.now() });
-                        gained++;
-                    }
-                });
-                state.profile.trades++;
-                gainXP(gained * 50, "Trade Complete");
-                saveCloudData(); renderCollection();
-                showToast(`Sync Complete! Received ${gained} cards.`, "success", 5000);
-            }
-            forceCloseTrade();
-        }
-
-        async function cancelTrade() {
-            if (state.activeTrade && db) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), { status: 'cancelled' });
-            forceCloseTrade();
-        }
-
-        function forceCloseTrade() {
-            if (firebaseListeners.activeTrade) { firebaseListeners.activeTrade(); firebaseListeners.activeTrade = null; }
-            state.activeTrade = null; document.getElementById('modal-trade').classList.remove('active');
-        }
-
-        async function sendChat() {
-            const input = document.getElementById('trade-chat-input'); const txt = input.value.trim();
-            if (!txt || !state.activeTrade || !db) return; input.value = '';
-            try {
-                const ref = doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id);
-                const snap = await getDoc(ref);
-                if (snap.exists()) {
-                    const chat = snap.data().chat || [];
-                    chat.push({ senderId: state.userId, name: state.profile.name, text: txt });
-                    if(chat.length > 25) chat.shift(); await updateDoc(ref, { chat });
-                }
-            } catch(e) {}
-        }
-        function renderChat(chatArr) {
-            const container = document.getElementById('trade-chat-messages'); if(!chatArr) return;
-            const isScrolledToBottom = container.scrollHeight - container.clientHeight <= container.scrollTop + 10;
-            container.innerHTML = '';
-            chatArr.forEach(msg => {
-                const isMe = msg.senderId === state.userId;
-                container.innerHTML += `<div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}"><div class="px-4 py-2 max-w-[85%] text-xs font-bold ${isMe ? 'bg-blue-600 text-white rounded-2xl' : 'bg-[#1f2330] text-gray-200 rounded-2xl border border-[#262b3a]'}">${msg.text}</div></div>`;
+                const btnMoves = document.querySelectorAll('.btn-move'); 
+                for(let i=0; i<4; i++) { if(mC.moves[i]) { btnMoves[i].textContent = mC.moves[i].n; btnMoves[i].onclick = () => execMove(i); btnMoves[i].classList.remove('hidden'); } else { btnMoves[i].classList.add('hidden'); } }
+                
+                document.getElementById('battle-log').textContent = bData.log;
+                const controls = document.getElementById('battle-controls'); if(bData.turn === state.userId && bData.status === 'active' && mC.hp > 0) { controls.classList.remove('opacity-50', 'pointer-events-none'); } else { controls.classList.add('opacity-50', 'pointer-events-none'); }
+                
+                if(bData.status === 'completed') { controls.classList.add('hidden'); setTimeout(() => { document.getElementById('modal-battle-ui').classList.remove('active'); state.activeBattle = null; unsubscribeBattle(); if(bData.winner === state.userId) { gainXP(100, "Victory"); state.profile.coins += 50; state.profile.battles++; saveCloudData(); showToast("Victory! +50 Coins", "success"); } else { gainXP(20, "Defeat"); state.profile.battles++; saveCloudData(); showToast("Defeat.", "error"); } }, 3000); }
+                else if(mC.hp <= 0 && bData.status === 'active') { forceSwitch(bData, isP1); }
             });
-            if(isScrolledToBottom) container.scrollTop = container.scrollHeight;
+        }
+        function forceSwitch(bData, isP1) {
+            const team = isP1 ? bData.t1 : bData.t2; const aliveIdx = team.findIndex(c => c.hp > 0);
+            if(aliveIdx !== -1) { if(bData.turn === state.userId) { const update = isP1 ? { active1: aliveIdx, turn: bData.receiver } : { active2: aliveIdx, turn: bData.initiator }; updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', bData.id), update); } }
+        }
+        async function execMove(idx) {
+            const b = state.activeBattle; if(!b) return; const isP1 = b.initiator === state.userId; 
+            const mIdx = isP1 ? b.active1 : b.active2; const oIdx = isP1 ? b.active2 : b.active1;
+            const mC = isP1 ? b.t1[mIdx] : b.t2[mIdx]; const oC = isP1 ? b.t2[oIdx] : b.t1[oIdx]; 
+            const dmg = mC.moves[idx].p + Math.floor(Math.random()*10);
+            oC.hp -= dmg; const logMsg = `${mC.name} used ${mC.moves[idx].n} for ${dmg} DMG!`;
+            let stat = 'active', win = null; 
+            const oppTeam = isP1 ? b.t2 : b.t1; const allDead = oppTeam.every(c => c.hp <= 0);
+            if(allDead) { stat = 'completed'; win = state.userId; }
+            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', b.id), { t1: b.t1, t2: b.t2, log: logMsg, turn: isP1 ? b.receiver : b.initiator, status: stat, winner: win });
         }
 
-        async function initiateBattle(targetUid, targetName) {
-            if (state.collection.length < 3) return showToast("You need at least 3 cards to battle.", "error");
+        function openRaidModal(d) {
+            document.getElementById('raid-modal-img').src = d.sprite;
+            document.getElementById('raid-modal-name').textContent = d.name;
+            document.getElementById('raid-modal-hp-text').textContent = `${Math.ceil(d.hp)} / ${d.maxHp}`;
+            document.getElementById('raid-modal-hp-fill').style.width = `${(d.hp/d.maxHp)*100}%`;
+            document.getElementById('modal-raid').classList.add('active');
             
-            // Auto select best 3 cards
-            const bestCards = [...state.collection].sort((a,b) => b.bst - a.bst).slice(0, 3);
-            const teamPayload = bestCards.map(c => ({ name: c.name, bst: c.bst, image: c.image, hp: c.hp, atk: c.atk, def: c.def }));
-
-            const battleId = 'b_' + Date.now() + '_' + state.userId;
-            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', battleId), {
-                id: battleId, status: 'requested', initiator: state.userId, initiatorName: state.profile.name,
-                receiver: targetUid, timestamp: getNow(), initiatorTeam: teamPayload
-            });
-            showToast("Battle Challenge Sent!", "info");
-        }
-
-        async function processBattle(data) {
-            if (state.collection.length < 3) {
-                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', data.id), { status: 'rejected' });
-                return showToast("Not enough cards to battle.", "error");
-            }
-            const bestCards = [...state.collection].sort((a,b) => b.bst - a.bst).slice(0, 3);
-            const myTeam = bestCards.map(c => ({ name: c.name, bst: c.bst, image: c.image, hp: c.hp, atk: c.atk, def: c.def }));
-
-            let p1Wins = 0, p2Wins = 0;
-            const log = [];
-            for(let i=0; i<3; i++) {
-                const c1 = data.initiatorTeam[i];
-                const c2 = myTeam[i];
-                const score1 = c1.bst + c1.atk; // Simple battle calc
-                const score2 = c2.bst + c2.atk;
-                if (score2 > score1) p2Wins++; else p1Wins++;
-                log.push({ c1: c1.name, c2: c2.name, winner: score2 > score1 ? 'p2' : 'p1' });
-            }
-            
-            const winnerId = p2Wins > p1Wins ? state.userId : data.initiator;
-            
-            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', data.id), {
-                status: 'completed', receiverTeam: myTeam, log, winnerId
-            });
-            
-            // Show result locally for receiver
-            showBattleResult({ ...data, receiverTeam: myTeam, log, winnerId });
-        }
-
-        function showBattleResult(data) {
-            const isMeInitiator = data.initiator === state.userId;
-            const didIWin = data.winnerId === state.userId;
-            const myTeam = isMeInitiator ? data.initiatorTeam : data.receiverTeam;
-            const theirTeam = isMeInitiator ? data.receiverTeam : data.initiatorTeam;
-            const oppName = isMeInitiator ? "Opponent" : data.initiatorName;
-
-            document.getElementById('battle-title').textContent = didIWin ? "VICTORY" : "DEFEAT";
-            document.getElementById('battle-title').className = `text-4xl font-black uppercase tracking-widest mb-6 ${didIWin ? 'text-green-400' : 'text-red-500'}`;
-            
-            let html = '';
-            for(let i=0; i<3; i++) {
-                const iWonRound = data.log[i].winner === (isMeInitiator ? 'p1' : 'p2');
-                html += `<div class="flex justify-between items-center bg-[#0b0c10] p-3 rounded-xl border border-[#262b3a]">
-                    <div class="flex flex-col items-center w-1/3">
-                        <img src="${myTeam[i].image}" class="h-12 object-contain drop-shadow mb-1">
-                        <span class="text-[9px] font-bold text-white truncate w-full text-center">${myTeam[i].name}</span>
-                    </div>
-                    <div class="font-black ${iWonRound ? 'text-green-500' : 'text-red-500'} text-xl">VS</div>
-                    <div class="flex flex-col items-center w-1/3 opacity-50">
-                        <img src="${theirTeam[i].image}" class="h-12 object-contain drop-shadow mb-1">
-                        <span class="text-[9px] font-bold text-white truncate w-full text-center">${theirTeam[i].name}</span>
-                    </div>
-                </div>`;
-            }
-            document.getElementById('battle-details').innerHTML = html;
-            
-            const rewardEl = document.getElementById('battle-reward');
-            if (didIWin) {
-                const coins = 30 + Math.floor(Math.random() * 20);
-                document.getElementById('battle-reward-amt').textContent = coins;
-                rewardEl.classList.remove('hidden');
-                state.profile.coins += coins;
-                state.profile.battles++;
-                gainXP(150, "Battle Won");
-            } else {
-                rewardEl.classList.add('hidden');
-                state.profile.battles++;
-                gainXP(20, "Battle Lost");
-            }
-            document.getElementById('modal-battle-result').classList.add('active');
+            document.getElementById('btn-raid-attack').onclick = () => {
+                if(state.collection.length === 0) return showToast("You have no cards to attack with!", "error");
+                openSelectCardModal(0, 'raid');
+                battleSelectionCallback = async (card) => {
+                    document.getElementById('modal-raid').classList.remove('active');
+                    const rRef = doc(db, 'artifacts', appId, 'public', 'data', 'raids', 'activeBoss');
+                    try {
+                        const rSnap = await getDoc(rRef);
+                        if(rSnap.exists() && rSnap.data().hp > 0) {
+                            const cur = rSnap.data();
+                            const dmg = card.atk * 5 + Math.floor(Math.random()*100);
+                            const nHp = cur.hp - dmg;
+                            
+                            showToast(`Dealt ${dmg} DMG to ${cur.name} with ${card.name}!`, "info");
+                            gainXP(20, "Raid Hit"); state.profile.coins += 5; saveCloudData();
+                            
+                            if(nHp <= 0) {
+                                await updateDoc(rRef, { hp: 0, status: 'completed' });
+                                state.profile.coins += 500; gainXP(500, "Raid Boss Defeated!"); saveCloudData();
+                                showToast(`You dealt the killing blow to ${cur.name}! +500 Coins`, "success");
+                            } else {
+                                await updateDoc(rRef, { hp: nHp });
+                            }
+                        }
+                    } catch (e) { showToast("Raid attack failed.", "error"); }
+                    battleSelectionCallback = null;
+                };
+            };
         }
 
         window.addEventListener('DOMContentLoaded', initApp);
