@@ -5,22 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pokemon: TCG Local</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         @import url('https://fonts.cdnfonts.com/css/pokemon-solid');
         :root {
-            --bg: #0b0c10;
-            --surface: #151821;
-            --surface-hover: #1f2330;
-            --text: #f8f9fa;
-            --text-muted: #9ca3af;
-            --primary: #3b82f6;
-            --primary-glow: rgba(59, 130, 246, 0.5);
+            --bg: #0b0c10; --surface: #151821; --surface-hover: #1f2330;
+            --text: #f8f9fa; --text-muted: #9ca3af;
+            --primary: #3b82f6; --primary-glow: rgba(59, 130, 246, 0.5);
             --border: #262b3a;
-            --valor: #ef4444;
-            --mystic: #3b82f6;
-            --instinct: #eab308;
+            --valor: #ef4444; --mystic: #3b82f6; --instinct: #eab308;
             --holo: linear-gradient(135deg, rgba(255,0,204,0.4), rgba(51,51,255,0.4), rgba(0,255,255,0.4));
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; background-image: radial-gradient(circle at 50% 0%, #151821 0%, #0b0c10 100%); background-attachment: fixed; }
@@ -60,6 +55,7 @@
         .team-btn[data-team="Mystic"].selected i { transform: scale(1.2); text-shadow: 0 0 15px var(--mystic); }
         .team-btn[data-team="Instinct"].selected { background: rgba(234, 179, 8, 0.15); border-color: var(--instinct); color: var(--instinct); box-shadow: 0 8px 25px rgba(234, 179, 8, 0.25); }
         .team-btn[data-team="Instinct"].selected i { transform: scale(1.2); text-shadow: 0 0 15px var(--instinct); }
+        
         .flip-card { background-color: transparent; aspect-ratio: 63/88; perspective: 1500px; cursor: pointer; width: 100%; height: 100%; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); transform-style: preserve-3d; }
         .flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
@@ -96,17 +92,28 @@
         .pack-item:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 30px 50px rgba(0,0,0,0.6), inset 0 2px 15px rgba(255,255,255,0.15); border-color: #4b5563; }
         .pack-item:active { transform: scale(0.96); }
         .pack-price { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5); padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 12px; color: #fbbf24; border: 1px solid #fbbf24; display: flex; align-items: center; gap: 4px; }
+        
         @keyframes pokeball-throw { 0% { transform: translateY(150px) scale(0) rotate(-180deg); opacity: 0; } 50% { transform: translateY(-50px) scale(1.5) rotate(20deg); opacity: 1; } 70% { transform: translateY(0) scale(1.2) rotate(-10deg); } 85% { transform: translateY(-20px) scale(1) rotate(5deg); } 100% { transform: translateY(0) scale(1) rotate(0); } }
         @keyframes pokeball-shake { 0%, 100% { transform: translateX(0) rotate(0); } 20% { transform: translateX(-15px) rotate(-15deg); } 40% { transform: translateX(15px) rotate(15deg); } 60% { transform: translateX(-10px) rotate(-10deg); } 80% { transform: translateX(10px) rotate(10deg); } }
         @keyframes pokeball-flash { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(3) drop-shadow(0 0 40px rgba(255,255,255,1)); } }
         @keyframes pack-appear { 0% { transform: scale(0); opacity: 0; filter: blur(10px); } 100% { transform: scale(1); opacity: 1; filter: blur(0); } }
         @keyframes rip-shake { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(-3deg) scale(1.02); } 75% { transform: rotate(3deg) scale(1.02); } }
+        @keyframes damage-pop { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-50px) scale(1.5); opacity: 0; } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        @keyframes attack-lunge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px) scale(1.1); } }
+        @keyframes attack-lunge-opp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(30px) scale(1.1); } }
         .anim-pokeball-throw { animation: pokeball-throw 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         .anim-pokeball-shake { animation: pokeball-shake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite; }
         .anim-pokeball-flash { animation: pokeball-flash 0.5s ease-out forwards; }
         .anim-pack-appear { animation: pack-appear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
         .anim-rip-shake { animation: rip-shake 0.2s ease-in-out infinite; }
         .anim-rip-top-new { transform: translateY(-30%) translateX(-20%) rotate(-35deg); opacity: 0; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .anim-damage { animation: damage-pop 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; position: absolute; font-weight: 900; font-size: 28px; color: #ef4444; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; z-index: 50; pointer-events: none; }
+        .anim-shake { animation: shake 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+        .anim-lunge { animation: attack-lunge 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+        .anim-lunge-opp { animation: attack-lunge-opp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+        .move-type-badge { padding: 2px 6px; border-radius: 4px; font-size: 8px; font-weight: 900; text-transform: uppercase; color: white; text-shadow: 1px 1px 0 rgba(0,0,0,0.5); }
+        
         .modal-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 100; padding: 24px; animation: screenFadeIn 0.3s ease-out; }
         .modal-overlay.active { display: flex; }
         .toast-container { position: fixed; top: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 12px; pointer-events: none; width: 90%; max-width: 350px; }
@@ -161,6 +168,7 @@
         <span id="event-timer" class="ml-2 font-mono text-yellow-300 bg-black bg-opacity-30 px-2 py-0.5 rounded"></span>
         <i class="fa-solid fa-star fa-spin ml-2"></i>
     </div>
+    
     <header class="md:hidden">
         <div class="font-pokemon text-2xl drop-shadow-md">PokeLocal</div>
         <div class="flex items-center text-xs bg-[#0b0c10] px-4 py-2 rounded-full border border-[#262b3a] shadow-inner">
@@ -218,6 +226,7 @@
                 <p class="text-sm text-blue-400 font-bold animate-pulse tracking-wide">Syncing secure local instance...</p>
             </div>
         </div>
+        
         <div id="screen-setup" class="screen">
             <div class="card-surface p-6 md:p-10 max-w-lg mx-auto mt-4 md:mt-12 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 via-blue-500 to-yellow-500"></div>
@@ -246,6 +255,7 @@
                 </div>
             </div>
         </div>
+        
         <div id="screen-packs" class="screen">
             <div class="text-center mb-10 mt-4 md:mt-8">
                 <h2 class="text-4xl font-black text-white mb-4 tracking-widest uppercase text-shadow-md">Card Shop</h2>
@@ -275,65 +285,57 @@
                     <p class="text-[11px] text-pink-300 font-bold tracking-widest uppercase relative z-10 bg-black bg-opacity-40 inline-block px-3 py-1 rounded border border-pink-500 border-opacity-50 shadow-md">Trade Unlock</p>
                 </div>
             </div>
+            
             <h3 class="text-center text-lg font-black text-yellow-500 mb-6 tracking-widest uppercase"><i class="fa-solid fa-store mr-2"></i> Premium Packs</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto pb-12 px-4">
-                <!-- Base Set -->
                 <div class="pack-item premium-pack" data-type="base" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
                     <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Base Set</h3>
                     <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 1 • 3 Cards</p>
                 </div>
-                <!-- Neo Genesis -->
                 <div class="pack-item premium-pack" data-type="neo" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
                     <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Neo Genesis</h3>
                     <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 2 • 3 Cards</p>
                 </div>
-                <!-- Ruby & Sapphire -->
                 <div class="pack-item premium-pack" data-type="ruby_sapphire" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
                     <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Ruby & Sapphire</h3>
                     <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 3 • 3 Cards</p>
                 </div>
-                <!-- Diamond & Pearl -->
                 <div class="pack-item premium-pack" data-type="diamond_pearl" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/483.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
                     <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Diamond & Pearl</h3>
                     <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 4 • 3 Cards</p>
                 </div>
-                <!-- Black & White -->
                 <div class="pack-item premium-pack" data-type="black_white" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/644.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
                     <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Black & White</h3>
                     <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 5 • 3 Cards</p>
                 </div>
-                <!-- XY - Mega Evolution -->
                 <div class="pack-item premium-pack" data-type="xy" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/716.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
                     <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">XY</h3>
                     <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 6 • 3 Cards</p>
                 </div>
-                <!-- Sun & Moon -->
                 <div class="pack-item premium-pack" data-type="sun_moon" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/791.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
                     <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Sun & Moon</h3>
                     <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 7 • 3 Cards</p>
                 </div>
-                <!-- Sword & Shield -->
                 <div class="pack-item premium-pack" data-type="sword_shield" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/888.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
                     <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Sword & Shield</h3>
                     <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 8 • 3 Cards</p>
                 </div>
-                <!-- Scarlet & Violet -->
                 <div class="pack-item premium-pack" data-type="scarlet_violet" data-cost="100">
                     <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1007.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none hover:scale-110 transition-transform">
@@ -342,6 +344,7 @@
                 </div>
             </div>
         </div>
+        
         <div id="screen-collection" class="screen">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 bg-[#151821] p-6 rounded-3xl border-2 border-[#262b3a] shadow-xl gap-4">
                 <div class="flex items-center gap-5">
@@ -372,6 +375,7 @@
                 <p class="text-sm mt-3 text-gray-500 font-bold">Try adjusting filters or rip more packs.</p>
             </div>
         </div>
+        
         <div id="screen-network" class="screen">
             <div class="radar-layout">
                 <div class="radar-container shadow-2xl relative order-2 md:order-1 flex-1 mb-8 md:mb-0">
@@ -408,6 +412,7 @@
                 </div>
             </div>
         </div>
+        
         <div id="screen-info" class="screen">
             <div class="card-surface p-8 md:p-12 mb-8 bg-gradient-to-br from-[#1f2330] to-[#0b0c10] shadow-2xl relative overflow-hidden mt-4 border-t-4 border-t-blue-500">
                 <div class="absolute -right-10 -top-10 opacity-[0.03] rotate-12">
@@ -491,28 +496,43 @@
             <div id="admin-sales-list" class="space-y-4"></div>
         </div>
     </main>
+
     <div id="modal-raid" class="modal-overlay z-[160]">
-        <div class="card-surface w-full max-w-md p-6 relative bg-[#0b0c10] border-2 border-red-500 shadow-[0_0_50px_rgba(239,68,68,0.5)]">
-            <button class="close-raid absolute top-4 right-4 text-gray-400 hover:text-white bg-[#151821] w-8 h-8 rounded-full border border-[#262b3a] flex justify-center items-center shadow-inner transition-colors"><i class="fa-solid fa-times"></i></button>
-            <div class="text-center mb-6">
-                <h3 class="font-black text-red-500 text-2xl tracking-widest uppercase mb-1">Network Raid</h3>
-                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Co-op Boss Battle</p>
+        <div class="card-surface w-full max-w-3xl flex flex-col h-[90vh] md:h-[80vh] overflow-hidden shadow-[0_0_50px_rgba(239,68,68,0.8)] border-4 border-red-500 relative bg-[#0b0c10]">
+            <div class="p-4 bg-[#151821] border-b-2 border-[#262b3a] flex justify-between items-center z-10">
+                <div class="font-black text-white text-lg tracking-widest uppercase">Network Raid <span class="text-gray-600 mx-2">|</span> <span id="raid-modal-name" class="text-red-500">Boss Name</span></div>
+                <button class="close-raid text-gray-400 hover:text-red-400 w-10 h-10 rounded-full flex items-center justify-center border border-[#262b3a] transition-all text-lg"><i class="fa-solid fa-times"></i></button>
             </div>
-            <div class="flex flex-col items-center mb-6">
-                <div class="w-32 h-32 bg-red-900 bg-opacity-20 rounded-full flex items-center justify-center border-4 border-red-500 relative mb-4 shadow-[0_0_30px_rgba(239,68,68,0.4)]">
-                    <img id="raid-modal-img" src="" class="w-24 h-24 object-contain filter drop-shadow-lg animate-bounce-slow">
-                </div>
-                <h4 id="raid-modal-name" class="text-xl font-black text-white uppercase tracking-widest text-shadow-md mb-2">Boss Name</h4>
-                <div class="w-full max-w-[200px]">
-                    <div class="flex justify-between text-[10px] font-black tracking-widest uppercase text-gray-300 mb-1">
-                        <span>HP</span><span id="raid-modal-hp-text"></span>
+            <div class="flex-1 flex flex-col relative overflow-hidden p-6 gap-6" id="raid-arena">
+                <div class="absolute inset-0 bg-gradient-to-b from-[#2a0a0a] to-[#0b0c10] opacity-80 z-0"></div>
+                <div class="flex justify-between items-center w-full z-10 relative">
+                    <div class="w-1/3 flex flex-col items-center relative" id="raid-player-container">
+                        <span class="text-[10px] font-black text-blue-400 tracking-widest uppercase mb-2">Your Card</span>
+                        <img id="raid-my-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="h-24 md:h-32 object-contain drop-shadow-xl filter transition-transform cursor-pointer hover:scale-110">
+                        <div class="w-full max-w-[120px] mt-2"><div class="health-bar"><div id="raid-my-hp" class="health-fill w-full bg-blue-500"></div></div></div>
+                        <span id="raid-my-name" class="text-xs font-black text-white mt-1 uppercase tracking-widest text-center w-full truncate">Select Card</span>
                     </div>
-                    <div class="health-bar h-3 bg-gray-800"><div id="raid-modal-hp-fill" class="health-fill bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)]" style="width:100%"></div></div>
+                    <div class="font-black text-4xl text-gray-600 italic animate-pulse">VS</div>
+                    <div class="w-1/3 flex flex-col items-center relative" id="raid-boss-container">
+                        <span class="text-[10px] font-black text-red-400 tracking-widest uppercase mb-2">Boss</span>
+                        <img id="raid-modal-img" src="" class="h-28 md:h-40 object-contain drop-shadow-[0_0_20px_rgba(239,68,68,0.6)] filter transition-transform animate-bounce-slow">
+                        <div class="w-full max-w-[150px] mt-2"><div class="health-bar h-3"><div id="raid-modal-hp-fill" class="health-fill w-full bg-red-600 shadow-[0_0_10px_rgba(239,68,68,0.8)]"></div></div></div>
+                        <span id="raid-modal-hp-text" class="text-[10px] font-black text-red-400 mt-1 uppercase tracking-widest"></span>
+                    </div>
+                </div>
+                <div class="w-full text-center z-10 mt-auto"><span id="raid-log" class="text-xs font-bold text-white bg-black bg-opacity-70 px-4 py-2 rounded-xl border border-red-900 block min-h-[40px] flex items-center justify-center">Tap your Pokeball to send out a Pokemon!</span></div>
+            </div>
+            <div class="p-6 bg-[#151821] border-t-2 border-[#262b3a] z-10" id="raid-controls">
+                <div class="grid grid-cols-2 gap-4" id="raid-moves-container">
+                    <button class="btn-raid-move btn-secondary py-3 text-[10px] md:text-xs tracking-widest uppercase shadow-md opacity-50 pointer-events-none" data-move="0">---</button>
+                    <button class="btn-raid-move btn-secondary py-3 text-[10px] md:text-xs tracking-widest uppercase shadow-md opacity-50 pointer-events-none" data-move="1">---</button>
+                    <button class="btn-raid-move btn-secondary py-3 text-[10px] md:text-xs tracking-widest uppercase shadow-md opacity-50 pointer-events-none" data-move="2">---</button>
+                    <button class="btn-raid-move btn-secondary py-3 text-[10px] md:text-xs tracking-widest uppercase shadow-md opacity-50 pointer-events-none" data-move="3">---</button>
                 </div>
             </div>
-            <button id="btn-raid-attack" class="btn-primary w-full py-4 text-sm bg-gradient-to-r from-red-600 to-red-500 shadow-[0_10px_20px_rgba(239,68,68,0.4)]"><i class="fa-solid fa-khanda mr-2"></i> Select Card & Attack</button>
         </div>
     </div>
+    
     <div id="modal-pack-rip" class="modal-overlay z-[200]">
         <div class="relative w-full h-full flex flex-col items-center justify-center">
             <img id="rip-pokeball" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-32 h-32 hidden absolute z-50 filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]">
@@ -540,7 +560,7 @@
                 <button id="btn-prev-card" class="btn-secondary flex-1 py-5 rounded-2xl text-xl shadow-lg border-2"><i class="fa-solid fa-arrow-left"></i></button>
                 <button id="btn-next-card" class="btn-primary flex-1 py-5 rounded-2xl text-xl shadow-[0_10px_25px_rgba(37,99,235,0.4)] border-2 border-blue-400"><i class="fa-solid fa-arrow-right"></i></button>
             </div>
-            <p class="text-xs font-black tracking-widest uppercase text-gray-500 mt-10 text-center bg-[#0b0c10] px-6 py-2 rounded-full border border-[#262b3a]"><i class="fa-solid fa-hand-pointer mr-3 text-blue-400"></i>Tap card to reveal stats</p>
+            <p class="text-xs font-black tracking-widest uppercase text-gray-500 mt-10 text-center bg-[#0b0c10] px-6 py-2 rounded-full border border-[#262b3a]"><i class="fa-solid fa-hand-pointer mr-3 text-blue-400"></i>Tap card to flip</p>
         </div>
     </div>
     <div id="modal-card-detail" class="modal-overlay">
@@ -625,6 +645,7 @@
             <button id="btn-save-modal-action" class="btn-primary w-full py-4 text-sm shadow-md">Action</button>
         </div>
     </div>
+    
     <div id="modal-battle-ui" class="modal-overlay z-[200]">
         <div class="card-surface w-full max-w-3xl flex flex-col h-[90vh] md:h-[80vh] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] border-4 border-blue-500 relative bg-[#0b0c10]">
             <div class="p-4 bg-[#151821] border-b-2 border-[#262b3a] flex justify-between items-center z-10">
@@ -662,6 +683,7 @@
             </div>
         </div>
     </div>
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -676,10 +698,27 @@
         let db, auth; let firebaseListeners = { presence: null, incomingTrade: null, activeTrade: null, battles: null, sales: null, events: null, raids: null };
         let selectedTeam = ''; let serverTimeOffset = 0; let activeSlotIndex = 0; let currentDetailCard = null; let battleSelectionCallback = null; let currentEventTimer = null; let myActiveTeam = []; let oppActiveTeam = [];
 
+        const typeColors = { normal: '#A8A77A', fire: '#EE8130', water: '#6390F0', electric: '#F7D02C', grass: '#7AC74C', ice: '#96D9D6', fighting: '#C22E28', poison: '#A33EA1', ground: '#E2BF65', flying: '#A98FF3', psychic: '#F95587', bug: '#A6B91A', rock: '#B6A136', ghost: '#735797', dragon: '#6F35FC', dark: '#705848', steel: '#B7B7CE', fairy: '#D685AD' };
+        
+        const SFX = {
+            init() { document.body.addEventListener('click', () => { if(Tone.context.state !== 'running') Tone.start(); }, { once: true }); },
+            play(type) {
+                if(Tone.context.state !== 'running') return;
+                try {
+                    if(type === 'rip') { const synth = new Tone.MembraneSynth().toDestination(); synth.triggerAttackRelease("C2", "8n"); }
+                    else if(type === 'hit') { const synth = new Tone.NoiseSynth({noise:{type:'white'}}).toDestination(); synth.triggerAttackRelease("16n"); }
+                    else if(type === 'super_effective') { const synth = new Tone.PolySynth(Tone.Synth).toDestination(); synth.triggerAttackRelease(["C4", "E4", "G4"], "8n"); }
+                    else if(type === 'faint') { const synth = new Tone.FMSynth().toDestination(); synth.triggerAttackRelease("A1", "4n"); }
+                    else if(type === 'win') { const synth = new Tone.PolySynth(Tone.Synth).toDestination(); const now = Tone.now(); synth.triggerAttack("C4", now); synth.triggerAttack("E4", now + 0.1); synth.triggerAttack("G4", now + 0.2); synth.triggerAttack("C5", now + 0.3); synth.releaseAll(now + 1); }
+                } catch(e) {}
+            }
+        };
+
         async function fetchServerTime() { try { const res = await fetch('https://worldtimeapi.org/api/timezone/Etc/UTC'); if (res.ok) { const data = await res.json(); serverTimeOffset = new Date(data.datetime).getTime() - Date.now(); return; } } catch (e) {} }
         function getNow() { return Date.now() + serverTimeOffset; }
 
         async function initApp() {
+            SFX.init();
             fetchPogoRarities(); await fetchServerTime();
             try {
                 const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app);
@@ -709,6 +748,7 @@
             if (actions) { toast.querySelector('.btn-accept').addEventListener('click', () => { actions.onAccept(); removeToast(toast); }); toast.querySelector('.btn-decline').addEventListener('click', () => { actions.onDecline(); removeToast(toast); }); if(duration > 0) setTimeout(() => { if(toast.parentNode) { actions.onDecline(); removeToast(toast); } }, duration); } else { setTimeout(() => removeToast(toast), duration); }
         }
         function removeToast(toast) { if(!toast) return; toast.classList.add('hiding'); toast.addEventListener('animationend', () => toast.remove()); }
+        
         async function loadCloudData() {
             if (!db || !state.userId) return showSetupScreen();
             try {
@@ -876,13 +916,30 @@
                 const reqs = generatePackIds(type);
                 const promises = reqs.map(r => fetch(`${POKEAPI_BASE}/pokemon/${r.id}`).then(res => res.json()).then(data => ({ data, reg: r.reg })));
                 const results = await Promise.all(promises);
-                state.currentPulls = results.map(res => {
+                
+                const enrichedResults = await Promise.all(results.map(async (res) => {
+                    const data = res.data;
+                    const cMoves = [];
+                    const availableMoves = data.moves.sort(() => 0.5 - Math.random()).slice(0, 4);
+                    for (const m of availableMoves) {
+                        try {
+                            const mData = await fetch(m.move.url).then(r => r.json());
+                            let pwr = mData.power || Math.floor(Math.random() * 40) + 20;
+                            cMoves.push({ n: mData.name.replace('-', ' '), p: pwr, t: mData.type.name });
+                        } catch(e) {
+                            cMoves.push({ n: m.move.name.replace('-', ' '), p: 40, t: 'normal' });
+                        }
+                    }
+                    if(cMoves.length === 0) cMoves.push({n: "Struggle", p: 50, t: 'normal'});
+                    res.detailedMoves = cMoves;
+                    return res;
+                }));
+
+                state.currentPulls = enrichedResults.map(res => {
                     const data = res.data; let hp = 0, atk = 0, def = 0, spd = 0, bst = 0;
                     data.stats.forEach(s => { bst += s.base_stat; if(s.stat.name === 'hp') hp = s.base_stat; if(s.stat.name === 'attack') atk = s.base_stat; if(s.stat.name === 'defense') def = s.base_stat; if(s.stat.name === 'speed') spd = s.base_stat; });
                     const r = getRarity(data.id, bst); const isM = type === 'holo' || bst > 600; const img = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default;
-                    const cMoves = []; for(let i=0; i<Math.min(4, data.moves.length); i++) { const md = data.moves[i].move; cMoves.push({ n: md.name, p: Math.floor((atk*0.5) + (Math.random()*20)) }); }
-                    if(cMoves.length === 0) cMoves.push({n: "Struggle", p: 10});
-                    return { id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: `${data.name} ${res.reg}`.trim(), types: data.types.map(t => t.type.name), hp: hp * 3, maxHp: hp * 3, atk, def, spd, bst, image: img, gif: data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || img, rarity: isM ? 'Mythic Holo' : r.name, rarityClass: isM ? 'rarity-legendary mythic-holo' : r.class, showcase: isM, acquiredAt: Date.now(), moves: cMoves };
+                    return { id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: `${data.name} ${res.reg}`.trim(), types: data.types.map(t => t.type.name), hp: hp * 3, maxHp: hp * 3, atk, def, spd, bst, image: img, gif: data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || img, rarity: isM ? 'Mythic Holo' : r.name, rarityClass: isM ? 'rarity-legendary mythic-holo' : r.class, showcase: isM, acquiredAt: Date.now(), moves: res.detailedMoves };
                 });
                 if(type === 'daily') state.packs.openedToday++; if(type === 'holo') state.packs.holoClaimedToday = true;
                 let xG = type === 'holo' ? 0 : 10; state.currentPulls.forEach(c => { if (c.rarityClass.includes('mythic')) xG += 50; else if (c.rarityClass.includes('legendary')) xG += 20; else if (c.rarityClass.includes('rare')) xG += 5; });
@@ -896,7 +953,7 @@
             pack.classList.add('hidden'); pack.classList.remove('anim-rip-shake'); document.getElementById('rip-top-half').className = "absolute top-0 left-0 w-full h-[30%] bg-gradient-to-b from-blue-700 to-blue-600 rounded-t-3xl shadow-2xl border-4 border-b-0 border-blue-400 flex flex-col items-center justify-center overflow-hidden z-20 origin-bottom-left transition-all duration-700";
             inst.classList.add('hidden'); modal.classList.add('active'); setTimeout(() => { pack.classList.remove('hidden'); pack.classList.add('anim-pack-appear'); setTimeout(() => { pack.classList.remove('anim-pack-appear'); pack.classList.add('anim-rip-shake'); inst.classList.remove('hidden'); }, 600); }, 300);
         }
-        function triggerPackRipFinish() { if (state.currentPulls.length === 0) return; const pack = document.getElementById('rip-pack-container'); const tH = document.getElementById('rip-top-half'); pack.classList.remove('anim-rip-shake'); document.getElementById('rip-instructions').classList.add('hidden'); tH.classList.add('anim-rip-top-new'); setTimeout(() => { document.getElementById('modal-pack-rip').classList.remove('active'); displayPulls(); }, 800); }
+        function triggerPackRipFinish() { if (state.currentPulls.length === 0) return; const pack = document.getElementById('rip-pack-container'); const tH = document.getElementById('rip-top-half'); pack.classList.remove('anim-rip-shake'); document.getElementById('rip-instructions').classList.add('hidden'); tH.classList.add('anim-rip-top-new'); SFX.play('rip'); setTimeout(() => { document.getElementById('modal-pack-rip').classList.remove('active'); displayPulls(); }, 800); }
         function displayPulls() { document.getElementById('modal-pulls').classList.add('active'); document.getElementById('pull-total').textContent = state.currentPulls.length; state.pullIndex = 0; renderCurrentPull(); }
         function renderCurrentPull() { const c = state.currentPulls[state.pullIndex]; document.getElementById('single-pull-container').innerHTML = generateCardHTML(c); document.getElementById('pull-current').textContent = state.pullIndex + 1; document.getElementById('btn-prev-card').disabled = state.pullIndex === 0; document.getElementById('btn-next-card').disabled = state.pullIndex === state.currentPulls.length - 1; }
 
@@ -914,7 +971,27 @@
         }
 
         function getRarity(id, bst) { if (state.pogoRarities[id]) { const r = state.pogoRarities[id].toLowerCase(); if (r.includes('mythic')) return { name: 'Mythic Holo', class: 'rarity-legendary mythic-holo' }; if (r.includes('legendary')) return { name: r, class: 'rarity-legendary' }; if (r.includes('rare') || r.includes('ultra')) return { name: r, class: 'rarity-rare' }; return { name: r, class: 'rarity-common' }; } if (bst > 580) return { name: 'Legendary', class: 'rarity-legendary' }; if (bst > 450) return { name: 'Rare', class: 'rarity-rare' }; if (bst > 300) return { name: 'Uncommon', class: 'rarity-uncommon' }; return { name: 'Common', class: 'rarity-common' }; }
-        function generateCardHTML(cardData, showInstance = false) { return `<div class="flip-card ${showInstance && cardData.showcase ? 'holo-effect' : ''}"><div class="flip-card-inner"><div class="flip-card-front flex flex-col bg-[#f3f4f6] ${cardData.rarityClass}"><div class="card-header"><div class="card-name">${cardData.name}</div><div class="card-hp">HP ${cardData.hp}</div></div><div class="card-img-container"><img src="${cardData.image}" class="card-img" loading="lazy"></div><div class="p-3 bg-white text-gray-800 font-black border-t border-gray-200 pb-4 text-xs tracking-wide"><div class="flex justify-between mb-1"><span>ATK</span> <span class="text-blue-600">${cardData.atk}</span></div><div class="flex justify-between"><span>DEF</span> <span class="text-blue-600">${cardData.def}</span></div></div></div><div class="flip-card-back p-6 text-center"><div class="w-32 h-32 bg-black bg-opacity-50 rounded-full flex items-center justify-center mb-6 mx-auto border-4 border-[#2563eb] shadow-inner relative overflow-hidden"><img src="${cardData.gif || cardData.image}" class="w-24 h-24 object-contain gamified-gif relative z-10" loading="lazy"></div><div class="text-2xl font-pokemon text-white mb-4 tracking-widest drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">${cardData.name}</div><div class="text-[11px] text-blue-200 mt-auto block font-bold tracking-widest uppercase bg-[#1e3a8a] py-2 rounded-lg border border-blue-400">BST: ${cardData.bst}</div></div></div></div>`; }
+        function generateCardHTML(cardData, showInstance = false) { 
+            let movesHtml = '';
+            if (cardData.moves && cardData.moves.length > 0) {
+                movesHtml = cardData.moves.slice(0, 2).map(m => `
+                    <div class="flex justify-between items-center mb-1 text-[10px]">
+                        <div class="flex items-center gap-1">
+                            <span class="move-type-badge" style="background-color: ${typeColors[m.t] || '#777'}">${m.t}</span>
+                            <span class="font-bold text-gray-700 capitalize truncate max-w-[80px]">${m.n}</span>
+                        </div>
+                        <span class="font-black text-blue-600">${m.p}</span>
+                    </div>
+                `).join('');
+            } else {
+                movesHtml = `
+                    <div class="flex justify-between mb-1"><span>ATK</span> <span class="text-blue-600">${cardData.atk}</span></div>
+                    <div class="flex justify-between"><span>DEF</span> <span class="text-blue-600">${cardData.def}</span></div>
+                `;
+            }
+
+            return `<div class="flip-card ${showInstance && cardData.showcase ? 'holo-effect' : ''}"><div class="flip-card-inner"><div class="flip-card-front flex flex-col bg-[#f3f4f6] ${cardData.rarityClass}"><div class="card-header"><div class="card-name">${cardData.name}</div><div class="card-hp">HP ${cardData.hp}</div></div><div class="card-img-container"><img src="${cardData.image}" class="card-img" loading="lazy"></div><div class="p-2 bg-white text-gray-800 border-t border-gray-200 pb-3 text-xs tracking-wide flex-1 flex flex-col justify-center">${movesHtml}</div></div><div class="flip-card-back p-6 text-center"><div class="w-32 h-32 bg-black bg-opacity-50 rounded-full flex items-center justify-center mb-6 mx-auto border-4 border-[#2563eb] shadow-inner relative overflow-hidden"><img src="${cardData.gif || cardData.image}" class="w-24 h-24 object-contain gamified-gif relative z-10" loading="lazy"></div><div class="text-2xl font-pokemon text-white mb-4 tracking-widest drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">${cardData.name}</div><div class="text-[11px] text-blue-200 mt-auto block font-bold tracking-widest uppercase bg-[#1e3a8a] py-2 rounded-lg border border-blue-400">BST: ${cardData.bst}</div></div></div></div>`; 
+        }
 
         function setupFirebaseListeners() {
             if (!db || !state.userId || firebaseListeners.presence) return; const n = getNow();
@@ -931,6 +1008,12 @@
                         document.getElementById('raid-hp-fill').style.width = `${(d.hp/d.maxHp)*100}%`; 
                         document.getElementById('raid-boss-img').src = d.sprite;
                         rb.onclick = () => openRaidModal(d); 
+                        
+                        // Update active raid UI if open
+                        if (document.getElementById('modal-raid').classList.contains('active')) {
+                            document.getElementById('raid-modal-hp-text').textContent = `${Math.ceil(d.hp)} / ${d.maxHp}`;
+                            document.getElementById('raid-modal-hp-fill').style.width = `${(d.hp/d.maxHp)*100}%`;
+                        }
                     } else {
                         document.getElementById('raid-boss-node').classList.add('hidden');
                         document.getElementById('modal-raid').classList.remove('active');
@@ -979,7 +1062,7 @@
             try {
                 const res = await fetch(`${POKEAPI_BASE}/pokemon/${pId.toLowerCase()}`); const data = await res.json();
                 let hp = 0, atk = 0, def = 0, spd = 0, bst = 0; data.stats.forEach(s => { bst += s.base_stat; if(s.stat.name === 'hp') hp = s.base_stat; if(s.stat.name === 'attack') atk = s.base_stat; if(s.stat.name === 'defense') def = s.base_stat; if(s.stat.name === 'speed') spd = s.base_stat; });
-                const r = getRarity(data.id, bst); const img = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default; const cMoves = []; for(let i=0; i<Math.min(4, data.moves.length); i++) { const md = data.moves[i].move; cMoves.push({ n: md.name, p: Math.floor((atk*0.5) + (Math.random()*20)) }); } if(cMoves.length === 0) cMoves.push({n: "Struggle", p: 10});
+                const r = getRarity(data.id, bst); const img = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default; const cMoves = []; for(let i=0; i<Math.min(4, data.moves.length); i++) { const md = data.moves[i].move; cMoves.push({ n: md.name, p: Math.floor((atk*0.5) + (Math.random()*20)), t: 'normal' }); } if(cMoves.length === 0) cMoves.push({n: "Struggle", p: 10, t: 'normal'});
                 const card = { id: 'gift_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: data.name, types: data.types.map(t => t.type.name), hp: hp * 3, maxHp: hp * 3, atk, def, spd, bst, image: img, gif: data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || img, rarity: r.name, rarityClass: r.class, showcase: true, acquiredAt: Date.now(), moves: cMoves };
                 const pSnap = await getDoc(doc(db, 'artifacts', appId, 'users', tUid, 'userData', 'profile'));
                 if(pSnap.exists()) { const pd = pSnap.data(); pd.collection.unshift(card); await setDoc(doc(db, 'artifacts', appId, 'users', tUid, 'userData', 'profile'), pd); showToast(`Gifted ${card.name} to ${tName}!`, "success"); }
@@ -1058,13 +1141,19 @@
                 document.getElementById('opp-team-count').innerHTML = oppActiveTeam.map((c,i) => `<div class="w-3 h-3 rounded-full ${c.hp > 0 ? (i===oIdx ? 'bg-blue-400' : 'bg-green-500') : 'bg-red-900 border border-red-500'}"></div>`).join('');
 
                 const btnMoves = document.querySelectorAll('.btn-move'); 
-                for(let i=0; i<4; i++) { if(mC.moves[i]) { btnMoves[i].textContent = mC.moves[i].n; btnMoves[i].onclick = () => execMove(i); btnMoves[i].classList.remove('hidden'); } else { btnMoves[i].classList.add('hidden'); } }
+                for(let i=0; i<4; i++) { 
+                    if(mC.moves[i]) { 
+                        btnMoves[i].innerHTML = `<span class="block text-[8px] mb-1 opacity-80" style="color: ${typeColors[mC.moves[i].t] || '#fff'}">${mC.moves[i].t}</span>${mC.moves[i].n}`; 
+                        btnMoves[i].onclick = () => execMove(i); 
+                        btnMoves[i].classList.remove('hidden'); 
+                    } else { btnMoves[i].classList.add('hidden'); } 
+                }
                 
                 document.getElementById('battle-log').textContent = bData.log;
                 const controls = document.getElementById('battle-controls'); if(bData.turn === state.userId && bData.status === 'active' && mC.hp > 0) { controls.classList.remove('opacity-50', 'pointer-events-none'); } else { controls.classList.add('opacity-50', 'pointer-events-none'); }
                 
-                if(bData.status === 'completed') { controls.classList.add('hidden'); setTimeout(() => { document.getElementById('modal-battle-ui').classList.remove('active'); state.activeBattle = null; unsubscribeBattle(); if(bData.winner === state.userId) { gainXP(100, "Victory"); state.profile.coins += 50; state.profile.battles++; saveCloudData(); showToast("Victory! +50 Coins", "success"); } else { gainXP(20, "Defeat"); state.profile.battles++; saveCloudData(); showToast("Defeat.", "error"); } }, 3000); }
-                else if(mC.hp <= 0 && bData.status === 'active') { forceSwitch(bData, isP1); }
+                if(bData.status === 'completed') { controls.classList.add('hidden'); SFX.play('win'); setTimeout(() => { document.getElementById('modal-battle-ui').classList.remove('active'); state.activeBattle = null; unsubscribeBattle(); if(bData.winner === state.userId) { gainXP(100, "Victory"); state.profile.coins += 50; state.profile.battles++; saveCloudData(); showToast("Victory! +50 Coins", "success"); } else { gainXP(20, "Defeat"); state.profile.battles++; saveCloudData(); showToast("Defeat.", "error"); } }, 3000); }
+                else if(mC.hp <= 0 && bData.status === 'active') { SFX.play('faint'); forceSwitch(bData, isP1); }
             });
         }
         function forceSwitch(bData, isP1) {
@@ -1075,49 +1164,118 @@
             const b = state.activeBattle; if(!b) return; const isP1 = b.initiator === state.userId; 
             const mIdx = isP1 ? b.active1 : b.active2; const oIdx = isP1 ? b.active2 : b.active1;
             const mC = isP1 ? b.t1[mIdx] : b.t2[mIdx]; const oC = isP1 ? b.t2[oIdx] : b.t1[oIdx]; 
-            const dmg = mC.moves[idx].p + Math.floor(Math.random()*10);
-            oC.hp -= dmg; const logMsg = `${mC.name} used ${mC.moves[idx].n} for ${dmg} DMG!`;
+            
+            SFX.play('hit');
+            const myImg = document.getElementById('bat-my-img'); const oppImg = document.getElementById('bat-opp-img');
+            myImg.classList.add('anim-lunge'); setTimeout(() => myImg.classList.remove('anim-lunge'), 300);
+            setTimeout(() => { oppImg.classList.add('anim-shake'); setTimeout(()=>oppImg.classList.remove('anim-shake'), 300); }, 150);
+            
+            let multiplier = 1;
+            if (Math.random() < 0.1) { multiplier = 1.5; SFX.play('super_effective'); }
+            
+            const dmg = Math.floor(((mC.moves[idx].p + (mC.atk/2)) * multiplier) / 2);
+            oC.hp -= dmg; 
+            const logMsg = `${mC.name} used ${mC.moves[idx].n} for ${dmg} DMG! ${multiplier > 1 ? '(CRIT!)' : ''}`;
+            
+            const dmgEl = document.createElement('div'); dmgEl.className = 'anim-damage'; dmgEl.textContent = `-${dmg}`; oppImg.parentElement.appendChild(dmgEl); setTimeout(() => dmgEl.remove(), 1000);
+
             let stat = 'active', win = null; 
             const oppTeam = isP1 ? b.t2 : b.t1; const allDead = oppTeam.every(c => c.hp <= 0);
             if(allDead) { stat = 'completed'; win = state.userId; }
             await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', b.id), { t1: b.t1, t2: b.t2, log: logMsg, turn: isP1 ? b.receiver : b.initiator, status: stat, winner: win });
         }
 
+        let activeRaidData = null;
+        let activeRaidCard = null;
+
         function openRaidModal(d) {
+            activeRaidData = d;
             document.getElementById('raid-modal-img').src = d.sprite;
             document.getElementById('raid-modal-name').textContent = d.name;
             document.getElementById('raid-modal-hp-text').textContent = `${Math.ceil(d.hp)} / ${d.maxHp}`;
             document.getElementById('raid-modal-hp-fill').style.width = `${(d.hp/d.maxHp)*100}%`;
             document.getElementById('modal-raid').classList.add('active');
             
-            document.getElementById('btn-raid-attack').onclick = () => {
+            const myImg = document.getElementById('raid-my-img');
+            myImg.onclick = () => {
                 if(state.collection.length === 0) return showToast("You have no cards to attack with!", "error");
                 openSelectCardModal(0, 'raid');
-                battleSelectionCallback = async (card) => {
-                    document.getElementById('modal-raid').classList.remove('active');
-                    const rRef = doc(db, 'artifacts', appId, 'public', 'data', 'raids', 'activeBoss');
-                    try {
-                        const rSnap = await getDoc(rRef);
-                        if(rSnap.exists() && rSnap.data().hp > 0) {
-                            const cur = rSnap.data();
-                            const dmg = card.atk * 5 + Math.floor(Math.random()*100);
-                            const nHp = cur.hp - dmg;
-                            
-                            showToast(`Dealt ${dmg} DMG to ${cur.name} with ${card.name}!`, "info");
-                            gainXP(20, "Raid Hit"); state.profile.coins += 5; saveCloudData();
-                            
-                            if(nHp <= 0) {
-                                await updateDoc(rRef, { hp: 0, status: 'completed' });
-                                state.profile.coins += 500; gainXP(500, "Raid Boss Defeated!"); saveCloudData();
-                                showToast(`You dealt the killing blow to ${cur.name}! +500 Coins`, "success");
-                            } else {
-                                await updateDoc(rRef, { hp: nHp });
-                            }
-                        }
-                    } catch (e) { showToast("Raid attack failed.", "error"); }
-                    battleSelectionCallback = null;
+                battleSelectionCallback = (card) => {
+                    activeRaidCard = JSON.parse(JSON.stringify(card)); // Clone to not ruin original object
+                    document.getElementById('raid-my-img').src = card.image;
+                    document.getElementById('raid-my-name').textContent = card.name;
+                    document.getElementById('raid-my-hp').style.width = '100%';
+                    
+                    const btnMoves = document.querySelectorAll('.btn-raid-move');
+                    for(let i=0; i<4; i++) { 
+                        if(card.moves && card.moves[i]) { 
+                            btnMoves[i].innerHTML = `<span class="block text-[8px] mb-1 opacity-80" style="color: ${typeColors[card.moves[i].t] || '#fff'}">${card.moves[i].t}</span>${card.moves[i].n}`; 
+                            btnMoves[i].onclick = () => executeRaidAttack(i); 
+                            btnMoves[i].classList.remove('opacity-50', 'pointer-events-none');
+                        } else { 
+                            btnMoves[i].classList.add('opacity-50', 'pointer-events-none'); 
+                            btnMoves[i].innerHTML = '---';
+                        } 
+                    }
+                    document.getElementById('raid-log').textContent = `Go, ${card.name}!`;
                 };
             };
+        }
+
+        async function executeRaidAttack(idx) {
+            if(!activeRaidCard || activeRaidCard.hp <= 0) return showToast("Your Pokemon fainted! Send another.", "error");
+            const rRef = doc(db, 'artifacts', appId, 'public', 'data', 'raids', 'activeBoss');
+            try {
+                const rSnap = await getDoc(rRef);
+                if(rSnap.exists() && rSnap.data().hp > 0) {
+                    const cur = rSnap.data();
+                    const move = activeRaidCard.moves[idx];
+                    const dmg = Math.floor(move.p * (activeRaidCard.atk/30) + Math.random()*20);
+                    const nHp = Math.max(0, cur.hp - dmg);
+                    
+                    SFX.play('hit');
+                    const myImg = document.getElementById('raid-my-img');
+                    const bossImg = document.getElementById('raid-modal-img');
+                    myImg.classList.add('anim-lunge'); setTimeout(() => myImg.classList.remove('anim-lunge'), 300);
+                    setTimeout(() => { bossImg.classList.add('anim-shake'); setTimeout(()=>bossImg.classList.remove('anim-shake'), 300); }, 150);
+                    
+                    const dmgEl = document.createElement('div'); dmgEl.className = 'anim-damage'; dmgEl.textContent = `-${dmg}`; bossImg.parentElement.appendChild(dmgEl); setTimeout(() => dmgEl.remove(), 1000);
+
+                    document.getElementById('raid-log').textContent = `${activeRaidCard.name} hit ${cur.name} for ${dmg} DMG!`;
+                    gainXP(10, "Raid Hit"); state.profile.coins += 2; saveCloudData();
+                    
+                    if(nHp <= 0) {
+                        await updateDoc(rRef, { hp: 0, status: 'completed' });
+                        state.profile.coins += 500; gainXP(500, "Raid Boss Defeated!"); saveCloudData();
+                        SFX.play('win');
+                        showToast(`You dealt the killing blow to ${cur.name}! +500 Coins`, "success");
+                        document.getElementById('modal-raid').classList.remove('active');
+                    } else {
+                        // Boss counter-attack
+                        if (Math.random() < 0.35) {
+                            setTimeout(async () => {
+                                const bossDmg = Math.floor(cur.maxHp * 0.05 + Math.random()*30);
+                                activeRaidCard.hp -= bossDmg;
+                                document.getElementById('raid-my-hp').style.width = `${Math.max(0, (activeRaidCard.hp/activeRaidCard.maxHp)*100)}%`;
+                                document.getElementById('raid-log').textContent = `${cur.name} struck back for ${bossDmg} DMG!`;
+                                SFX.play('hit');
+                                bossImg.classList.add('anim-lunge-opp'); setTimeout(() => bossImg.classList.remove('anim-lunge-opp'), 300);
+                                setTimeout(() => { myImg.classList.add('anim-shake'); setTimeout(()=>myImg.classList.remove('anim-shake'), 300); }, 150);
+                                
+                                const bdmgEl = document.createElement('div'); bdmgEl.className = 'anim-damage'; bdmgEl.textContent = `-${bossDmg}`; myImg.parentElement.appendChild(bdmgEl); setTimeout(() => bdmgEl.remove(), 1000);
+
+                                if(activeRaidCard.hp <= 0) {
+                                    SFX.play('faint');
+                                    document.getElementById('raid-log').textContent = `${activeRaidCard.name} fainted! Tap Pokeball to switch.`;
+                                    myImg.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
+                                    document.querySelectorAll('.btn-raid-move').forEach(b => b.classList.add('opacity-50', 'pointer-events-none'));
+                                }
+                            }, 1000);
+                        }
+                        await updateDoc(rRef, { hp: nHp });
+                    }
+                }
+            } catch (e) { showToast("Raid attack failed.", "error"); }
         }
 
         window.addEventListener('DOMContentLoaded', initApp);
