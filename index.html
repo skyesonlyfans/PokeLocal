@@ -37,17 +37,11 @@
         }
         .font-pokemon { font-family: 'Pokemon Solid', sans-serif; letter-spacing: 2.5px; -webkit-text-stroke: 1.5px #2563eb; color: #ffcb05; text-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
         .card-surface { background-color: var(--surface); border-radius: 24px; border: 1px solid var(--border); box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+        
         .input-field { 
-            background-color: #0b0c10; 
-            border: 2px solid var(--border); 
-            color: var(--text); 
-            border-radius: 16px; 
-            padding: 16px; 
-            width: 100%; 
-            outline: none; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            font-weight: 600;
-            font-size: 16px;
+            background-color: #0b0c10; border: 2px solid var(--border); color: var(--text); 
+            border-radius: 16px; padding: 16px; width: 100%; outline: none; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 600; font-size: 16px;
         }
         .input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); transform: translateY(-2px); }
         .btn-primary { 
@@ -55,8 +49,7 @@
             color: white; border-radius: 16px; font-weight: 800; padding: 16px; border: none; cursor: pointer; text-align: center; 
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
             display: flex; justify-content: center; align-items: center; gap: 8px; 
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-            text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4); text-transform: uppercase; letter-spacing: 1px;
         }
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5); }
         .btn-primary:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4); }
@@ -64,29 +57,25 @@
         .btn-secondary { background-color: rgba(255,255,255,0.05); color: var(--text); border: 2px solid var(--border); border-radius: 16px; font-weight: 700; padding: 14px; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(4px); }
         .btn-secondary:hover { background-color: var(--surface-hover); border-color: #4b5563; }
         .btn-secondary:active { transform: scale(0.96); }
+
         header { 
             background-color: rgba(11, 12, 16, 0.85); backdrop-filter: blur(16px); 
             border-bottom: 1px solid var(--border); padding: 16px 24px; 
             display: flex; justify-content: space-between; align-items: center; 
             position: sticky; top: 0; z-index: 40; 
         }
-        .main-content { 
-            flex: 1; overflow-y: auto; padding: 24px; padding-bottom: 110px; 
-            scroll-behavior: smooth;
-        }
+        .main-content { flex: 1; overflow-y: auto; padding: 24px; padding-bottom: 110px; scroll-behavior: smooth; }
         .bottom-nav { 
             background-color: rgba(21, 24, 33, 0.95); backdrop-filter: blur(20px); 
             border-top: 1px solid var(--border); position: fixed; bottom: 0; width: 100%; 
             display: flex; justify-content: space-around; padding: 12px 0; 
             padding-bottom: calc(12px + env(safe-area-inset-bottom)); 
-            z-index: 50; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); 
-            transition: all 0.3s ease;
+            z-index: 50; box-shadow: 0 -10px 40px rgba(0,0,0,0.5); transition: all 0.3s ease;
         }
         .nav-item { 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             color: var(--text-muted); font-size: 11px; cursor: pointer; width: 72px; 
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            position: relative;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative;
         }
         .nav-item::after {
             content: ''; position: absolute; bottom: -12px; width: 4px; height: 4px; border-radius: 50%;
@@ -94,25 +83,17 @@
         }
         .nav-item.active { color: #fff; font-weight: 800; }
         .nav-item.active::after { opacity: 1; transform: translateY(0); box-shadow: 0 0 10px var(--primary-glow); }
-        .nav-icon-img { 
-            width: 28px; height: 28px; margin-bottom: 6px; 
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)) grayscale(100%) opacity(0.6);
-        }
-        .nav-item.active .nav-icon-img { 
-            transform: translateY(-6px) scale(1.2); 
-            filter: drop-shadow(0 6px 12px var(--primary-glow)) grayscale(0%) opacity(1); 
-        }
+        .nav-icon-img { width: 28px; height: 28px; margin-bottom: 6px; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)) grayscale(100%) opacity(0.6); }
+        .nav-item.active .nav-icon-img { transform: translateY(-6px) scale(1.2); filter: drop-shadow(0 6px 12px var(--primary-glow)) grayscale(0%) opacity(1); }
         .nav-icon-fa { font-size: 24px; margin-bottom: 6px; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); color: var(--text-muted); opacity: 0.8; display: block;}
         .nav-item.active .nav-icon-fa { transform: translateY(-6px) scale(1.2); color: var(--primary); text-shadow: 0 6px 12px var(--primary-glow); opacity: 1; }
+        
         .xp-bar-container { background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 8px; height: 10px; overflow: hidden; width: 100%; position: relative; margin-top: 4px; }
         .xp-bar-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #60a5fa); transition: width 0.5s ease-out; box-shadow: 0 0 10px rgba(59,130,246,0.5); }
         .screen { display: none; animation: screenFadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); max-width: 1200px; margin: 0 auto; width: 100%; }
         .screen.active { display: block; }
-        @keyframes screenFadeIn { 
-            from { opacity: 0; transform: translateY(20px) scale(0.98); } 
-            to { opacity: 1; transform: translateY(0) scale(1); } 
-        }
+        @keyframes screenFadeIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        
         .team-btn { 
             flex: 1; padding: 16px 8px; border-radius: 16px; border: 2px solid var(--border); 
             font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 11px;
@@ -127,6 +108,7 @@
         .team-btn[data-team="Mystic"].selected i { transform: scale(1.2); text-shadow: 0 0 15px var(--mystic); }
         .team-btn[data-team="Instinct"].selected { background: rgba(234, 179, 8, 0.15); border-color: var(--instinct); color: var(--instinct); box-shadow: 0 8px 25px rgba(234, 179, 8, 0.25); }
         .team-btn[data-team="Instinct"].selected i { transform: scale(1.2); text-shadow: 0 0 15px var(--instinct); }
+
         .flip-card { background-color: transparent; aspect-ratio: 63/88; perspective: 1500px; cursor: pointer; width: 100%; height: 100%; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); transform-style: preserve-3d; }
         .flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
@@ -136,15 +118,8 @@
             background-color: #f3f4f6; border: 8px solid #ffcb05; 
             -webkit-transform: translate3d(0,0,0); transform: translate3d(0,0,0);
         }
-        .flip-card-front {
-            isolation: isolate; 
-            opacity: 1;
-            transition: opacity 0s 0.25s; 
-        }
-        .flip-card.is-flipped .flip-card-front {
-            opacity: 0;
-            transition: opacity 0s 0.25s;
-        }
+        .flip-card-front { isolation: isolate; opacity: 1; transition: opacity 0s 0.25s; }
+        .flip-card.is-flipped .flip-card-front { opacity: 0; transition: opacity 0s 0.25s; }
         .flip-card-back { 
             transform: rotateY(180deg) translate3d(0,0,0); -webkit-transform: rotateY(180deg) translate3d(0,0,0);
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
@@ -167,8 +142,7 @@
         .card-img-container::before {
             content: ''; position: absolute; width: 150%; height: 150%; 
             background: repeating-conic-gradient(from 0deg, rgba(0,0,0,0.03) 0deg 15deg, transparent 15deg 30deg);
-            animation: spin 30s linear infinite; z-index: 1;
-            -webkit-backface-visibility: hidden; backface-visibility: hidden;
+            animation: spin 30s linear infinite; z-index: 1; -webkit-backface-visibility: hidden; backface-visibility: hidden;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .card-img { width: 100%; height: 100%; object-fit: contain; z-index: 2; filter: drop-shadow(0 12px 16px rgba(0,0,0,0.4)); transition: transform 0.3s; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
@@ -191,26 +165,26 @@
             -webkit-backface-visibility: hidden; backface-visibility: hidden;
         }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
         .radar-container { 
             position: relative; height: 350px; display: flex; justify-content: center; align-items: center; overflow: hidden; 
-            background: radial-gradient(circle, #1a1c23 0%, #0b0c10 100%); border-radius: 32px; border: 2px solid var(--border);
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+            background: radial-gradient(circle, #1a1c23 0%, #0b0c10 100%); border-radius: 32px; border: 2px solid var(--border); box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
         }
-        .radar-grid {
-            position: absolute; inset: 0; background-image: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
-            background-size: 30px 30px; opacity: 0.5;
-        }
+        .radar-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px); background-size: 30px 30px; opacity: 0.5; }
         .radar-pulse { position: absolute; width: 80px; height: 80px; border-radius: 50%; background: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.5); animation: pulse 4s infinite cubic-bezier(0.1, 0.8, 0.3, 1); }
         .radar-pulse:nth-child(3) { animation-delay: 1.3s; }
         .radar-pulse:nth-child(4) { animation-delay: 2.6s; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(8); opacity: 0; } }
+        
         .pack-item { 
             background: linear-gradient(160deg, #2a3042, #151821); border: 2px solid #3b4256; border-radius: 24px; 
-            padding: 50px 24px; text-align: center; cursor: pointer; box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 2px 10px rgba(255,255,255,0.1); 
+            padding: 24px; text-align: center; cursor: pointer; box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 2px 10px rgba(255,255,255,0.1); 
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; overflow: hidden; 
         }
         .pack-item:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 30px 50px rgba(0,0,0,0.6), inset 0 2px 15px rgba(255,255,255,0.15); border-color: #4b5563; }
         .pack-item:active { transform: scale(0.96); }
+        .pack-price { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5); padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 12px; color: #fbbf24; border: 1px solid #fbbf24; display: flex; align-items: center; gap: 4px; }
+        
         @keyframes pokeball-throw {
             0% { transform: translateY(150px) scale(0) rotate(-180deg); opacity: 0; }
             50% { transform: translateY(-50px) scale(1.5) rotate(20deg); opacity: 1; }
@@ -225,42 +199,39 @@
             60% { transform: translateX(-10px) rotate(-10deg); }
             80% { transform: translateX(10px) rotate(10deg); }
         }
-        @keyframes pokeball-flash {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(3) drop-shadow(0 0 40px rgba(255,255,255,1)); }
-        }
-        @keyframes pack-appear {
-            0% { transform: scale(0); opacity: 0; filter: blur(10px); }
-            100% { transform: scale(1); opacity: 1; filter: blur(0); }
-        }
-        @keyframes rip-shake {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-3deg) scale(1.02); }
-            75% { transform: rotate(3deg) scale(1.02); }
-        }
+        @keyframes pokeball-flash { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(3) drop-shadow(0 0 40px rgba(255,255,255,1)); } }
+        @keyframes pack-appear { 0% { transform: scale(0); opacity: 0; filter: blur(10px); } 100% { transform: scale(1); opacity: 1; filter: blur(0); } }
+        @keyframes rip-shake { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(-3deg) scale(1.02); } 75% { transform: rotate(3deg) scale(1.02); } }
+        
         .anim-pokeball-throw { animation: pokeball-throw 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         .anim-pokeball-shake { animation: pokeball-shake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite; }
         .anim-pokeball-flash { animation: pokeball-flash 0.5s ease-out forwards; }
         .anim-pack-appear { animation: pack-appear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
         .anim-rip-shake { animation: rip-shake 0.2s ease-in-out infinite; }
-        .anim-rip-top { transform: translateY(-150%) rotate(-15deg); opacity: 0; transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .anim-rip-bottom { transform: translateY(150%) rotate(15deg); opacity: 0; transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        /* NEW: Improved Rip Animation (Tears at top) */
+        .anim-rip-top-new { transform: translateY(-30%) translateX(-20%) rotate(-35deg); opacity: 0; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        
         .modal-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 100; padding: 24px; animation: screenFadeIn 0.3s ease-out; }
         .modal-overlay.active { display: flex; }
-        .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 12px; pointer-events: none; width: 90%; max-width: 450px; }
-        .toast { background: rgba(31, 41, 55, 0.95); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--primary); color: white; padding: 16px 20px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 16px; animation: slideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: auto; font-weight: 600; }
+        /* Adjusted Toast Container for non-blocking */
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 200; display: flex; flex-direction: column; gap: 12px; pointer-events: none; width: 90%; max-width: 350px; }
+        .toast { background: rgba(31, 41, 55, 0.95); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--primary); color: white; padding: 16px 20px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 16px; animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: auto; font-weight: 600; }
         .toast.success { border-left-color: #10b981; }
         .toast.error { border-left-color: #ef4444; }
-        .toast.hiding { animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-50px); opacity: 0; } }
-        .trade-slot { aspect-ratio: 63/88; border: 3px dashed var(--border); border-radius: 16px; display: flex; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.3); position: relative; overflow: hidden; transition: all 0.3s; }
+        .toast.hiding { animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+        
+        /* Trade multi-slots */
+        .trade-slot { aspect-ratio: 63/88; border: 3px dashed var(--border); border-radius: 16px; display: flex; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.3); position: relative; overflow: hidden; transition: all 0.3s; width: 100%; max-width: 90px; }
         .trade-slot:hover { border-color: #4b5563; background-color: rgba(0,0,0,0.5); }
-        .trade-slot img { width: 100%; height: 100%; object-fit: contain; padding: 8px; position: absolute; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+        .trade-slot img { width: 100%; height: 100%; object-fit: contain; padding: 4px; position: absolute; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+        
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         @keyframes bounce-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
         .animate-bounce-slow { animation: bounce-slow 2.5s infinite ease-in-out; }
+        
         @media (min-width: 768px) {
             body { flex-direction: row; }
             header { display: none; }
@@ -278,14 +249,13 @@
             .nav-item.active { background: linear-gradient(90deg, rgba(59,130,246,0.15), transparent); border-left: 4px solid var(--primary); border-radius: 0 16px 16px 0; }
             .nav-item.active .nav-icon-img { transform: scale(1.1); }
             .main-content { padding: 40px; padding-bottom: 40px; }
-            .pack-grid { display: flex; flex-direction: row; justify-content: center; gap: 32px; }
-            .pack-item { width: 300px; }
+            .pack-grid { justify-content: center; gap: 32px; }
             #collection-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
             @media (min-width: 1024px) { #collection-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
             @media (min-width: 1280px) { #collection-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
             .radar-layout { display: flex; gap: 40px; align-items: stretch; }
-            .radar-container { flex: 1; height: 450px; }
-            .radar-side { width: 350px; display: flex; flex-direction: column; justify-content: space-between; }
+            .radar-container { flex: 1; height: 500px; }
+            .radar-side { width: 380px; display: flex; flex-direction: column; justify-content: space-between; }
             .trade-modal-content { flex-direction: row; }
             .trade-modal-slots { flex-direction: row; gap: 40px; justify-content: center; padding: 40px; }
             .trade-modal-chat { border-left: 1px solid var(--border); border-top: none; width: 350px; }
@@ -302,12 +272,17 @@
         </div>
     </header>
     <div id="toast-container" class="toast-container"></div>
+    
     <nav class="bottom-nav">
         <div class="desktop-brand">
             <div class="font-pokemon drop-shadow-md mb-4">PokeLocal</div>
             <div class="flex items-center justify-center text-xs bg-[#0b0c10] px-4 py-2 rounded-full border border-[#262b3a] w-max mx-auto shadow-inner">
                 <div id="status-dot-desktop" class="w-3 h-3 rounded-full bg-red-500 mr-2 shadow-[0_0_10px_rgba(239,68,68,0.8)]"></div>
                 <span id="header-name-desktop" class="font-bold text-gray-200 truncate max-w-[120px]">Offline</span>
+            </div>
+            <div class="mt-4 flex items-center justify-center gap-2 bg-[#151821] py-2 px-4 rounded-full border border-yellow-600">
+                <i class="fa-solid fa-coins text-yellow-400"></i>
+                <span id="nav-coins-desktop" class="font-black text-yellow-400">0</span>
             </div>
         </div>
         <div class="nav-item active" data-target="screen-packs">
@@ -321,13 +296,18 @@
         <div class="nav-item relative" data-target="screen-network">
             <div id="trade-badge" class="absolute top-0 right-4 md:right-8 w-3 h-3 bg-red-500 rounded-full border-2 border-[#151821] hidden animate-bounce shadow-[0_0_10px_rgba(239,68,68,0.8)]"></div>
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/vs-seeker.png" class="nav-icon-img">
-            <span>Trade</span>
+            <span>Network</span>
         </div>
         <div class="nav-item" data-target="screen-info">
             <i class="fa-solid fa-user-astronaut nav-icon-fa"></i>
             <span>Profile</span>
         </div>
+        <div class="md:hidden flex items-center justify-center text-xs gap-1 absolute top-2 right-4">
+            <i class="fa-solid fa-coins text-yellow-400"></i>
+            <span id="nav-coins-mobile" class="font-black text-yellow-400">0</span>
+        </div>
     </nav>
+
     <main class="main-content">
         <div id="screen-loading" class="screen active">
             <div class="flex flex-col items-center justify-center h-[70vh]">
@@ -336,10 +316,12 @@
                     <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-4 bg-black rounded-full opacity-30 filter blur-md animate-pulse"></div>
                 </div>
                 <h2 class="text-2xl font-black text-white mb-3 tracking-widest uppercase text-center">Connecting</h2>
-                <p class="text-sm text-blue-400 font-bold animate-pulse tracking-wide">Syncing local instance...</p>
+                <p class="text-sm text-blue-400 font-bold animate-pulse tracking-wide">Syncing secure local instance...</p>
             </div>
         </div>
+
         <div id="screen-setup" class="screen">
+            <!-- Setup profile HTML (Same as original, truncated for brevity in chunking, full code below) -->
             <div class="card-surface p-6 md:p-10 max-w-lg mx-auto mt-4 md:mt-12 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 via-blue-500 to-yellow-500"></div>
                 <div class="text-center mb-10">
@@ -351,13 +333,6 @@
                     <p class="text-sm text-gray-400 mt-3 font-medium px-4">Establish your local identity to sync trades and packs.</p>
                 </div>
                 <div id="profile-form" class="space-y-6">
-                    <div class="bg-[#0b0c10] p-4 rounded-2xl border border-red-500 border-opacity-30 flex gap-4 items-start shadow-inner">
-                        <i class="fa-solid fa-triangle-exclamation text-red-500 text-xl mt-1"></i>
-                        <div>
-                            <h4 class="text-xs font-bold text-red-400 uppercase tracking-widest mb-1">Local Storage Warning</h4>
-                            <p class="text-[11px] text-gray-400 font-medium leading-relaxed">You are playing on an Anonymous Local Session. <b>If you clear your browser data, your cards will be permanently lost.</b></p>
-                        </div>
-                    </div>
                     <div>
                         <label class="block text-[11px] font-black text-blue-400 mb-3 tracking-widest uppercase">Unique Trainer Name</label>
                         <input type="text" id="setup-username" class="input-field" placeholder="e.g. AshKetchum" maxlength="15">
@@ -374,59 +349,73 @@
                         <label class="block text-[11px] font-black text-blue-400 mb-3 tracking-widest uppercase">Select Buddy Pokemon</label>
                         <div class="flex gap-3">
                             <input type="text" id="setup-buddy-input" class="input-field flex-1" placeholder="Name or ID (e.g. pikachu)">
-                            <button id="btn-fetch-buddy" class="btn-secondary whitespace-nowrap border-blue-500 text-blue-400 hover:bg-blue-900 hover:bg-opacity-20 transition-colors">Find</button>
+                            <button id="btn-fetch-buddy" class="btn-secondary whitespace-nowrap border-blue-500 text-blue-400">Find</button>
                         </div>
                         <div id="setup-buddy-preview" class="mt-4 flex flex-col items-center justify-center min-h-[80px] bg-[#0b0c10] border border-dashed border-[#262b3a] rounded-xl py-4">
                             <span class="text-[10px] text-gray-600 font-bold uppercase tracking-widest">No Buddy Selected</span>
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-[11px] font-black text-blue-400 mb-3 tracking-widest uppercase">Status Message</label>
-                        <input type="text" id="setup-info" class="input-field" placeholder="e.g. Looking for Charizard" maxlength="30">
-                    </div>
                     <button id="btn-save-profile" class="btn-primary w-full mt-8 py-5 text-lg shadow-[0_10px_30px_rgba(37,99,235,0.4)]">Initialize Setup</button>
                 </div>
             </div>
         </div>
+
         <div id="screen-packs" class="screen">
-            <div class="text-center mb-12 mt-4 md:mt-8">
-                <h2 class="text-4xl font-black text-white mb-4 tracking-widest uppercase text-shadow-md">Daily Drop</h2>
+            <div class="text-center mb-10 mt-4 md:mt-8">
+                <h2 class="text-4xl font-black text-white mb-4 tracking-widest uppercase text-shadow-md">Card Shop</h2>
                 <div class="inline-flex items-center gap-3 bg-[#151821] px-6 py-3 rounded-full border-2 border-[#262b3a] shadow-lg">
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/premier-ball.png" class="w-6 h-6">
-                    <p class="text-sm text-gray-300 font-bold uppercase tracking-widest">Available: <span id="packs-count" class="text-blue-400 text-xl ml-2">2</span></p>
+                    <p class="text-sm text-gray-300 font-bold uppercase tracking-widest">Daily Free: <span id="packs-count" class="text-blue-400 text-xl ml-2">2</span></p>
                 </div>
-                <p class="text-xs text-gray-500 mt-4 font-bold tracking-widest uppercase" id="pack-timer"></p>
+                <p class="text-xs text-gray-500 mt-4 font-bold tracking-widest uppercase" id="pack-timer">Connecting to server time...</p>
             </div>
-            <div id="pack-container" class="pack-grid flex-col md:flex-row items-center gap-8 md:gap-12 pb-8">
-                <div id="the-pack" class="pack-item w-full max-w-xs md:max-w-none">
-                    <div class="w-28 h-28 mx-auto bg-[#0b0c10] rounded-full flex items-center justify-center mb-8 border-4 border-[#262b3a] shadow-inner relative z-10">
-                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-20 h-20 object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)]">
+
+            <!-- Daily Free Packs -->
+            <div class="pack-grid flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 pb-8 border-b border-[#262b3a] mb-8">
+                <div id="the-pack" class="pack-item w-full max-w-xs md:max-w-[280px]">
+                    <div class="pack-price text-green-400 border-green-400">FREE</div>
+                    <div class="w-24 h-24 mx-auto bg-[#0b0c10] rounded-full flex items-center justify-center mb-6 border-4 border-[#262b3a] shadow-inner relative z-10">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-16 h-16 object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)]">
                     </div>
-                    <h3 class="font-black text-3xl text-white tracking-widest uppercase mb-2 relative z-10">Booster</h3>
-                    <p class="text-sm text-gray-400 font-bold tracking-widest uppercase relative z-10 bg-black bg-opacity-30 inline-block px-4 py-1.5 rounded-lg border border-[#333]">10 Cards</p>
+                    <h3 class="font-black text-2xl text-white tracking-widest uppercase mb-2 relative z-10">Daily Drop</h3>
+                    <p class="text-[11px] text-gray-400 font-bold tracking-widest uppercase relative z-10 bg-black bg-opacity-30 inline-block px-3 py-1 rounded border border-[#333]">3 Cards (Random)</p>
                 </div>
-                <div id="holo-pack" class="pack-item holo hidden w-full max-w-xs md:max-w-none border-pink-500 border-opacity-50">
+                
+                <div id="holo-pack" class="pack-item holo hidden w-full max-w-xs md:max-w-[280px] border-pink-500 border-opacity-50">
                     <div class="absolute inset-0 bg-gradient-to-br from-pink-600 via-purple-600 to-blue-600 opacity-20 z-0"></div>
-                    <div class="w-28 h-28 mx-auto bg-[#0b0c10] rounded-full flex items-center justify-center mb-8 border-4 border-pink-500 border-opacity-50 shadow-[0_0_30px_rgba(236,72,153,0.3)] relative z-10">
-                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png" class="w-20 h-20 object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)] animate-pulse">
+                    <div class="pack-price text-pink-400 border-pink-400">FREE</div>
+                    <div class="w-24 h-24 mx-auto bg-[#0b0c10] rounded-full flex items-center justify-center mb-6 border-4 border-pink-500 border-opacity-50 shadow-[0_0_30px_rgba(236,72,153,0.3)] relative z-10">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png" class="w-16 h-16 object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.5)] animate-pulse">
                     </div>
-                    <h3 class="font-black text-3xl text-white tracking-widest uppercase mb-2 relative z-10 text-shadow-md">Mythic</h3>
-                    <p class="text-sm text-pink-300 font-bold tracking-widest uppercase relative z-10 bg-black bg-opacity-40 inline-block px-4 py-1.5 rounded-lg border border-pink-500 border-opacity-50 shadow-md">Trade Unlock</p>
+                    <h3 class="font-black text-2xl text-white tracking-widest uppercase mb-2 relative z-10 text-shadow-md">Mythic</h3>
+                    <p class="text-[11px] text-pink-300 font-bold tracking-widest uppercase relative z-10 bg-black bg-opacity-40 inline-block px-3 py-1 rounded border border-pink-500 border-opacity-50 shadow-md">Trade Unlock</p>
                 </div>
             </div>
-            <div id="pulls-view" class="hidden flex-col items-center pb-12 mt-4 md:mt-0">
-                <div class="w-full max-w-md flex justify-between items-center mb-10 px-4">
-                    <span class="text-xs font-black text-gray-400 tracking-widest uppercase bg-[#151821] px-4 py-2.5 rounded-xl border-2 border-[#262b3a] shadow-lg">Card <span id="pull-current" class="text-white text-base mx-1">1</span> / <span id="pull-total">10</span></span>
-                    <button id="btn-collect-all" class="text-xs font-black text-blue-400 px-5 py-2.5 bg-[#151821] rounded-xl border-2 border-[#262b3a] hover:bg-[#1f2330] hover:border-blue-500 transition-all shadow-lg uppercase tracking-widest">Save Cards</button>
+
+            <!-- Premium Packs -->
+            <h3 class="text-center text-lg font-black text-yellow-500 mb-6 tracking-widest uppercase"><i class="fa-solid fa-store mr-2"></i> Premium Packs</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto pb-12 px-4">
+                <div class="pack-item premium-pack" data-type="gen1" data-cost="100">
+                    <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Kanto Classic</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 1 • 3 Cards • High Rarity Odds</p>
                 </div>
-                <div id="single-pull-container" class="w-full max-w-[320px] mx-auto relative mb-12 flex justify-center" style="perspective: 1500px;"></div>
-                <div class="flex gap-6 w-full max-w-md justify-center px-4">
-                    <button id="btn-prev-card" class="btn-secondary flex-1 py-5 rounded-2xl text-xl shadow-lg border-2"><i class="fa-solid fa-arrow-left"></i></button>
-                    <button id="btn-next-card" class="btn-primary flex-1 py-5 rounded-2xl text-xl shadow-[0_10px_25px_rgba(37,99,235,0.4)] border-2 border-blue-400"><i class="fa-solid fa-arrow-right"></i></button>
+                <div class="pack-item premium-pack" data-type="gen2" data-cost="100">
+                    <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Johto Journeys</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 2 • 3 Cards • High Rarity Odds</p>
                 </div>
-                <p class="text-xs font-black tracking-widest uppercase text-gray-500 mt-10 text-center bg-[#0b0c10] px-6 py-2 rounded-full border border-[#262b3a]"><i class="fa-solid fa-hand-pointer mr-3 text-blue-400"></i>Tap card to reveal stats</p>
+                <div class="pack-item premium-pack" data-type="gen3" data-cost="100">
+                    <div class="pack-price"><i class="fa-solid fa-coins"></i> 100</div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png" class="h-28 mx-auto object-contain drop-shadow-xl mb-4 pointer-events-none">
+                    <h3 class="font-black text-xl text-white tracking-widest uppercase mb-1">Hoenn Heroes</h3>
+                    <p class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Gen 3 • 3 Cards • High Rarity Odds</p>
+                </div>
             </div>
         </div>
+
         <div id="screen-collection" class="screen">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 bg-[#151821] p-6 rounded-3xl border-2 border-[#262b3a] shadow-xl gap-4">
                 <div class="flex items-center gap-5">
@@ -438,19 +427,26 @@
                         <p class="text-xs text-gray-400 font-bold tracking-widest uppercase"><span id="collection-total" class="text-blue-400 text-sm">0</span> Cards Vaulted</p>
                     </div>
                 </div>
-                <select id="filter-collection" class="w-full md:w-auto text-xs font-black uppercase tracking-widest border-2 border-[#262b3a] rounded-xl px-5 py-4 bg-[#0b0c10] text-white outline-none cursor-pointer shadow-md hover:border-blue-500 transition-colors">
-                    <option value="all">All Entries</option>
-                    <option value="showcase">Showcase ★</option>
-                    <option value="legendary">Legendary</option>
-                </select>
+                <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+                    <div class="relative w-full md:w-48">
+                        <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                        <input type="text" id="search-collection" placeholder="Search..." class="w-full text-xs font-black uppercase tracking-widest border-2 border-[#262b3a] rounded-xl pl-10 pr-4 py-4 bg-[#0b0c10] text-white outline-none shadow-md focus:border-blue-500 transition-colors">
+                    </div>
+                    <select id="filter-collection" class="w-full md:w-auto text-xs font-black uppercase tracking-widest border-2 border-[#262b3a] rounded-xl px-5 py-4 bg-[#0b0c10] text-white outline-none cursor-pointer shadow-md hover:border-blue-500 transition-colors">
+                        <option value="all">All Entries</option>
+                        <option value="showcase">Showcase ★</option>
+                        <option value="legendary">Legendary</option>
+                    </select>
+                </div>
             </div>
             <div id="collection-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 md:gap-6"></div>
             <div id="empty-collection" class="hidden text-center py-40 bg-[#151821] rounded-3xl border-2 border-dashed border-[#262b3a] mt-8">
                 <i class="fa-solid fa-book-open-reader text-6xl text-gray-700 mb-6 mx-auto opacity-50"></i>
-                <p class="font-black text-xl text-gray-400 uppercase tracking-widest">Binder is empty</p>
-                <p class="text-sm mt-3 text-gray-500 font-bold">Rip packs to start building.</p>
+                <p class="font-black text-xl text-gray-400 uppercase tracking-widest">No Matches</p>
+                <p class="text-sm mt-3 text-gray-500 font-bold">Try adjusting filters or rip more packs.</p>
             </div>
         </div>
+
         <div id="screen-network" class="screen">
             <div class="radar-layout">
                 <div class="radar-container shadow-2xl relative order-2 md:order-1 flex-1 mb-8 md:mb-0">
@@ -465,33 +461,13 @@
                     <div id="network-nodes"></div>
                     <button id="btn-refresh-network" class="absolute top-6 right-6 bg-[#0b0c10] text-gray-400 hover:text-white w-12 h-12 rounded-full border-2 border-[#262b3a] transition-all flex items-center justify-center shadow-lg hover:border-blue-500 z-40"><i class="fa-solid fa-radar fa-spin-pulse"></i></button>
                 </div>
-                <div class="radar-side order-1 md:order-2 flex flex-col gap-6 w-full md:w-[380px]">
-                    <div class="bg-[#151821] p-6 md:p-8 rounded-3xl border-2 border-[#262b3a] shadow-xl">
-                        <div class="flex items-center gap-4 mb-6 pb-6 border-b border-[#262b3a]">
-                            <div class="w-12 h-12 bg-[#0b0c10] rounded-full flex items-center justify-center border border-[#262b3a]">
-                                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/vs-seeker.png" class="w-7 h-7">
-                            </div>
-                            <div>
-                                <h3 class="font-black text-white text-lg tracking-widest uppercase">Direct Sync</h3>
-                                <div class="text-xs text-gray-400 font-bold mt-1">Code: <span id="my-pairing-code" class="text-blue-400 tracking-widest text-base bg-[#0b0c10] px-2 py-0.5 rounded border border-[#262b3a] ml-1">---</span></div>
-                            </div>
-                        </div>
-                        <div class="flex gap-5 items-center">
-                            <div class="p-2 bg-white rounded-xl shadow-inner">
-                                <img id="qr-code-img" src="" class="w-[72px] h-[72px] object-contain" alt="QR">
-                            </div>
-                            <div class="flex-1 flex flex-col gap-2">
-                                <input type="text" id="input-pairing-code" placeholder="6-DIGIT" class="input-field py-3 text-center tracking-[0.3em] text-lg font-black bg-[#0b0c10] border-2" maxlength="6">
-                                <button id="btn-join-code" class="btn-primary py-3 text-sm"><i class="fa-solid fa-link mr-1"></i> Connect</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="radar-side order-1 md:order-2 flex flex-col gap-6 w-full md:w-[420px]">
                     <div class="bg-[#151821] p-6 rounded-3xl border-2 border-[#262b3a] shadow-xl flex-1 flex flex-col">
                         <div class="flex items-center gap-3 mb-5">
                             <div class="w-8 h-8 rounded-full bg-red-500 bg-opacity-20 flex items-center justify-center border border-red-500 text-red-500">
                                 <i class="fa-solid fa-satellite-dish"></i>
                             </div>
-                            <h3 class="font-black text-white text-sm tracking-widest uppercase">Nearby Signals</h3>
+                            <h3 class="font-black text-white text-sm tracking-widest uppercase">Nearby Trainers</h3>
                         </div>
                         <div id="network-list" class="space-y-4 hidden flex-1 overflow-y-auto pr-2 custom-scrollbar"></div>
                         <div id="network-empty" class="flex-1 flex flex-col justify-center items-center text-center py-8">
@@ -502,6 +478,7 @@
                 </div>
             </div>
         </div>
+
         <div id="screen-info" class="screen">
             <div class="card-surface p-8 md:p-12 mb-8 bg-gradient-to-br from-[#1f2330] to-[#0b0c10] shadow-2xl relative overflow-hidden mt-4 border-t-4 border-t-blue-500">
                 <div class="absolute -right-10 -top-10 opacity-[0.03] rotate-12">
@@ -518,7 +495,6 @@
                             <div class="flex flex-wrap gap-2 mb-3">
                                 <span id="info-team" class="text-[9px] px-2 py-1 rounded-md font-black uppercase tracking-widest border shadow-sm"></span>
                                 <span id="info-rank" class="text-[9px] px-2 py-1 bg-gradient-to-r from-gray-700 to-gray-600 text-white border border-gray-500 rounded-md font-black uppercase tracking-widest shadow-sm">Rank</span>
-                                <span id="info-prestige" class="hidden text-[9px] px-2 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white border border-pink-400 rounded-md font-black uppercase tracking-widest shadow-sm"><i class="fa-solid fa-star text-[8px] mr-1"></i>Prestige 1</span>
                             </div>
                             <div class="w-full max-w-[200px]">
                                 <div class="flex justify-between text-[9px] font-black tracking-widest uppercase text-gray-400 mb-1">
@@ -531,95 +507,84 @@
                             </div>
                         </div>
                     </div>
-                    <button id="btn-edit-profile" class="text-blue-400 text-xs font-black bg-[#0b0c10] px-4 py-3 rounded-xl border-2 border-[#262b3a] shadow-lg hover:bg-[#151821] hover:border-blue-500 transition-all uppercase tracking-widest"><i class="fa-solid fa-pen"></i></button>
                 </div>
-                <div class="flex gap-6 border-t border-[#262b3a] pt-8 relative z-10">
-                    <div class="flex-1 text-center bg-[#0b0c10] rounded-2xl p-5 border-2 border-[#262b3a] shadow-inner">
-                        <div class="text-gray-500 text-[11px] font-black tracking-widest uppercase mb-2">Collection</div>
-                        <div class="font-black text-white text-3xl" id="info-card-count">0</div>
+                <div class="flex gap-4 border-t border-[#262b3a] pt-8 relative z-10">
+                    <div class="flex-1 text-center bg-[#0b0c10] rounded-2xl p-4 border-2 border-[#262b3a] shadow-inner">
+                        <div class="text-gray-500 text-[10px] font-black tracking-widest uppercase mb-1">Cards</div>
+                        <div class="font-black text-white text-2xl" id="info-card-count">0</div>
                     </div>
-                    <div class="flex-1 text-center bg-[#0b0c10] rounded-2xl p-5 border-2 border-[#262b3a] shadow-inner">
-                        <div class="text-gray-500 text-[11px] font-black tracking-widest uppercase mb-2">Trades</div>
-                        <div class="font-black text-white text-3xl" id="info-trade-count">0</div>
+                    <div class="flex-1 text-center bg-[#0b0c10] rounded-2xl p-4 border-2 border-[#262b3a] shadow-inner">
+                        <div class="text-gray-500 text-[10px] font-black tracking-widest uppercase mb-1">Trades</div>
+                        <div class="font-black text-white text-2xl" id="info-trade-count">0</div>
+                    </div>
+                    <div class="flex-1 text-center bg-[#0b0c10] rounded-2xl p-4 border-2 border-[#262b3a] shadow-inner">
+                        <div class="text-gray-500 text-[10px] font-black tracking-widest uppercase mb-1">Battles</div>
+                        <div class="font-black text-white text-2xl" id="info-battle-count">0</div>
                     </div>
                 </div>
             </div>
-            <div class="flex justify-between items-center bg-[#151821] p-6 rounded-3xl border-2 border-[#262b3a] mb-8 shadow-xl">
-                <div class="flex items-center gap-4">
-                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/devon-parts.png" class="w-10 h-10">
-                    <div>
-                        <h4 class="font-black text-base text-white tracking-widest uppercase">Immersive Animations</h4>
-                        <p class="text-xs text-gray-400 font-bold mt-1">Enable 3D pack rips & effects</p>
-                    </div>
-                </div>
-                <label class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" id="toggle-animations" class="sr-only peer" checked>
-                    <div class="w-14 h-7 bg-[#0b0c10] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-400 after:border-gray-600 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600 peer-checked:after:bg-white border-2 border-[#262b3a]"></div>
-                </label>
-            </div>
-            <h3 class="font-black text-white text-sm tracking-widest uppercase mb-5 px-4 text-blue-400">Save Management</h3>
-            <div class="card-surface p-6 mb-8 shadow-xl border-blue-500 border-opacity-30">
-                <div class="flex flex-col gap-4">
-                    <div class="flex justify-between items-center bg-[#0b0c10] p-4 rounded-xl border border-[#262b3a]">
+            
+            <h3 class="font-black text-white text-sm tracking-widest uppercase mb-5 px-4 text-blue-400">Settings & Save Data</h3>
+            <div class="card-surface p-6 mb-8 shadow-xl">
+                <div class="flex justify-between items-center mb-6 pb-6 border-b border-[#262b3a]">
+                    <div class="flex items-center gap-4">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/devon-parts.png" class="w-10 h-10">
                         <div>
-                            <div class="font-black text-sm text-white uppercase tracking-widest">Slot 1</div>
-                            <div id="slot-1-status" class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Empty</div>
-                        </div>
-                        <div class="flex gap-2">
-                            <button id="btn-save-1" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-blue-500 transition-colors shadow-md">Save</button>
-                            <button id="btn-load-1" class="bg-[#151821] text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest border border-[#262b3a] hover:bg-[#1f2330] transition-colors shadow-md">Load</button>
+                            <h4 class="font-black text-sm text-white tracking-widest uppercase">Immersive Animations</h4>
+                            <p class="text-xs text-gray-400 font-bold mt-1">Enable 3D pack rips & effects</p>
                         </div>
                     </div>
-                    <div class="flex justify-between items-center bg-[#0b0c10] p-4 rounded-xl border border-[#262b3a]">
-                        <div>
-                            <div class="font-black text-sm text-white uppercase tracking-widest">Slot 2</div>
-                            <div id="slot-2-status" class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Empty</div>
-                        </div>
-                        <div class="flex gap-2">
-                            <button id="btn-save-2" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-blue-500 transition-colors shadow-md">Save</button>
-                            <button id="btn-load-2" class="bg-[#151821] text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest border border-[#262b3a] hover:bg-[#1f2330] transition-colors shadow-md">Load</button>
-                        </div>
-                    </div>
-                    <div class="border-t border-[#262b3a] mt-2 pt-4">
-                        <div class="font-black text-sm text-white uppercase tracking-widest mb-3">Export / Import Save</div>
-                        <div class="flex gap-2">
-                            <button id="btn-export-save" class="flex-1 bg-[#151821] text-white px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest border border-[#262b3a] hover:bg-[#1f2330] transition-colors shadow-md"><i class="fa-solid fa-file-export mr-2 text-blue-400"></i>Export</button>
-                            <button id="btn-import-save" class="flex-1 bg-[#151821] text-white px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest border border-[#262b3a] hover:bg-[#1f2330] transition-colors shadow-md"><i class="fa-solid fa-file-import mr-2 text-green-400"></i>Import</button>
-                        </div>
-                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="toggle-animations" class="sr-only peer" checked>
+                        <div class="w-14 h-7 bg-[#0b0c10] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-400 after:border-gray-600 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600 peer-checked:after:bg-white border-2 border-[#262b3a]"></div>
+                    </label>
                 </div>
-            </div>
-            <h3 class="font-black text-white text-sm tracking-widest uppercase mb-5 px-4 text-red-400">System Logs</h3>
-            <div class="card-surface divide-y divide-[#262b3a] mb-8 shadow-xl border-red-500 border-opacity-30 overflow-hidden">
-                <div class="p-6 bg-[#0b0c10]">
-                    <h4 class="font-black text-sm mb-3 text-red-400 flex items-center gap-3 tracking-widest uppercase"><i class="fa-solid fa-triangle-exclamation text-lg"></i> Warning: Data Persistence</h4>
-                    <p class="text-xs text-gray-400 font-medium leading-relaxed bg-[#151821] p-4 rounded-xl border border-red-500 border-opacity-20 shadow-inner">Because this app runs in an Anonymous Local Session, <b>clearing your browser cache without exporting will permanently delete your cards and profile.</b></p>
+                <div class="font-black text-sm text-white uppercase tracking-widest mb-4">Export / Import Save</div>
+                <p class="text-xs text-red-400 mb-4 bg-red-900 bg-opacity-20 p-3 rounded-lg border border-red-500 border-opacity-30">Warning: Playing on local session. Export your save to avoid losing cards if you clear browser data.</p>
+                <div class="flex gap-2">
+                    <button id="btn-export-save" class="flex-1 bg-[#151821] text-white px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest border border-[#262b3a] hover:bg-[#1f2330] transition-colors shadow-md"><i class="fa-solid fa-file-export mr-2 text-blue-400"></i>Export</button>
+                    <button id="btn-import-save" class="flex-1 bg-[#151821] text-white px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest border border-[#262b3a] hover:bg-[#1f2330] transition-colors shadow-md"><i class="fa-solid fa-file-import mr-2 text-green-400"></i>Import</button>
                 </div>
-            </div>
-            <div class="text-center mt-12 mb-4">
-                <p class="text-gray-500 text-xs font-bold uppercase tracking-widest">Created with 💖 by</p>
-                <a href="https://instagram.com/skyeprobably" target="_blank" class="inline-flex items-center gap-2 text-pink-400 font-black text-sm mt-3 bg-pink-500 bg-opacity-10 px-5 py-2.5 rounded-full border border-pink-500 border-opacity-30 hover:bg-opacity-20 hover:scale-105 transition-all shadow-md">
-                    <i class="fa-brands fa-instagram text-lg"></i> @skyeprobably
-                </a>
             </div>
         </div>
     </main>
+
+    <!-- Pack Rip Animation Modal -->
     <div id="modal-pack-rip" class="modal-overlay z-[200]">
         <div class="relative w-full h-full flex flex-col items-center justify-center">
             <img id="rip-pokeball" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-32 h-32 hidden absolute z-50 filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]">
-            <div class="relative w-64 h-96 cursor-pointer group flex flex-col items-center justify-center hidden" id="rip-pack-container">
+            <div class="relative w-64 h-96 cursor-pointer group flex flex-col items-center justify-center hidden perspective-1000" id="rip-pack-container">
                 <div class="absolute inset-0 z-10 w-full h-full shadow-[0_0_50px_rgba(37,99,235,0.4)]" id="rip-halves-wrapper">
-                    <div class="absolute top-0 left-0 w-full h-[50%] bg-gradient-to-b from-blue-700 to-blue-600 rounded-t-3xl shadow-2xl border-4 border-b-0 border-blue-400 flex flex-col items-center justify-center overflow-hidden z-20" id="rip-top-half">
-                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/premier-ball.png" class="w-16 h-16 translate-y-8 drop-shadow-md">
+                    <!-- Improved tear animation: top rips up and away -->
+                    <div class="absolute top-0 left-0 w-full h-[30%] bg-gradient-to-b from-blue-700 to-blue-600 rounded-t-3xl shadow-2xl border-4 border-b-0 border-blue-400 flex flex-col items-center justify-center overflow-hidden z-20 origin-bottom-left" id="rip-top-half">
+                        <div class="w-full h-2 absolute bottom-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-50 jagged-edge"></div>
                     </div>
-                    <div class="absolute bottom-0 left-0 w-full h-[50%] bg-gradient-to-t from-blue-800 to-blue-600 rounded-b-3xl shadow-2xl border-4 border-t-0 border-blue-400 flex flex-col items-center justify-start overflow-hidden z-20" id="rip-bottom-half">
-                        <div class="font-pokemon text-2xl text-white tracking-widest drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)] -translate-y-6">PokeLocal</div>
+                    <div class="absolute bottom-0 left-0 w-full h-[70%] bg-gradient-to-t from-blue-800 to-blue-600 rounded-b-3xl shadow-2xl border-4 border-t-0 border-blue-400 flex flex-col items-center justify-center overflow-hidden z-20" id="rip-bottom-half">
+                        <div class="font-pokemon text-3xl text-white tracking-widest drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">TCG</div>
                     </div>
                 </div>
             </div>
-            <p class="absolute bottom-24 text-white font-black text-xl tracking-[0.3em] uppercase animate-pulse drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)] bg-black bg-opacity-50 px-8 py-4 rounded-full border border-gray-600 hidden" id="rip-instructions">Tap to Rip Pack</p>
+            <p class="absolute bottom-24 text-white font-black text-xl tracking-[0.3em] uppercase animate-pulse drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)] bg-black bg-opacity-50 px-8 py-4 rounded-full border border-gray-600 hidden" id="rip-instructions">Tap to Tear Top</p>
         </div>
     </div>
+
+    <!-- Post-Rip Pulls Modal -->
+    <div id="modal-pulls" class="modal-overlay z-[150]">
+        <div id="pulls-view" class="flex flex-col items-center pb-12 w-full">
+            <div class="w-full max-w-md flex justify-between items-center mb-10 px-4">
+                <span class="text-xs font-black text-gray-400 tracking-widest uppercase bg-[#151821] px-4 py-2.5 rounded-xl border-2 border-[#262b3a] shadow-lg">Card <span id="pull-current" class="text-white text-base mx-1">1</span> / <span id="pull-total">3</span></span>
+                <button id="btn-collect-all" class="text-xs font-black text-blue-400 px-5 py-2.5 bg-[#151821] rounded-xl border-2 border-[#262b3a] hover:bg-[#1f2330] hover:border-blue-500 transition-all shadow-lg uppercase tracking-widest">Save Cards</button>
+            </div>
+            <div id="single-pull-container" class="w-full max-w-[320px] mx-auto relative mb-12 flex justify-center" style="perspective: 1500px;"></div>
+            <div class="flex gap-6 w-full max-w-md justify-center px-4">
+                <button id="btn-prev-card" class="btn-secondary flex-1 py-5 rounded-2xl text-xl shadow-lg border-2"><i class="fa-solid fa-arrow-left"></i></button>
+                <button id="btn-next-card" class="btn-primary flex-1 py-5 rounded-2xl text-xl shadow-[0_10px_25px_rgba(37,99,235,0.4)] border-2 border-blue-400"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <p class="text-xs font-black tracking-widest uppercase text-gray-500 mt-10 text-center bg-[#0b0c10] px-6 py-2 rounded-full border border-[#262b3a]"><i class="fa-solid fa-hand-pointer mr-3 text-blue-400"></i>Tap card to reveal stats</p>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
     <div id="modal-card-detail" class="modal-overlay">
         <div class="w-full max-w-sm flex flex-col items-center">
             <div id="detail-card-container" class="w-full max-w-[320px] mb-10 flex justify-center" style="perspective: 1500px;"></div>
@@ -631,39 +596,46 @@
             </div>
         </div>
     </div>
+
     <div id="modal-trade" class="modal-overlay">
-        <div class="card-surface w-full max-w-4xl h-[90vh] md:h-[75vh] flex flex-col overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] border-2">
-            <div class="p-6 border-b-2 border-[#262b3a] flex justify-between items-center bg-[#0b0c10]">
+        <div class="card-surface w-full max-w-5xl h-[95vh] md:h-[85vh] flex flex-col overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] border-2">
+            <div class="p-4 border-b-2 border-[#262b3a] flex justify-between items-center bg-[#0b0c10]">
                 <div class="flex items-center gap-4">
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/vs-seeker.png" class="w-8 h-8">
-                    <div class="font-black text-white text-xl tracking-widest uppercase">Trade Link <span class="text-gray-600 text-sm mx-3">|</span> <span id="trade-partner-name" class="text-blue-400">Trainer</span></div>
+                    <div class="font-black text-white text-lg tracking-widest uppercase">Trade Link <span class="text-gray-600 text-sm mx-2">|</span> <span id="trade-partner-name" class="text-blue-400">Trainer</span></div>
                 </div>
                 <button class="close-trade text-gray-400 hover:text-red-400 bg-[#151821] w-10 h-10 rounded-full flex items-center justify-center border border-[#262b3a] transition-all text-lg shadow-inner hover:border-red-500"><i class="fa-solid fa-times"></i></button>
             </div>
+            
             <div class="flex-1 flex flex-col md:flex-row trade-modal-content overflow-hidden bg-[#0b0c10]">
-                <div class="flex-1 flex flex-col md:flex-row trade-modal-slots p-6 gap-6 md:gap-12 items-center justify-center overflow-y-auto md:overflow-visible relative">
-                    <div class="w-full max-w-[130px] md:max-w-[200px] flex flex-col items-center">
-                        <span class="text-[10px] font-black text-blue-400 mb-2 md:mb-4 tracking-widest uppercase bg-blue-900 bg-opacity-20 px-4 py-1.5 rounded-full border border-blue-500 border-opacity-30 shadow-md">You Offer</span>
-                        <div id="my-offer-slot" class="trade-slot w-full cursor-pointer hover:border-blue-400 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] bg-[#151821] group">
-                            <i class="fa-solid fa-plus text-gray-600 text-3xl md:text-4xl group-hover:text-blue-400 transition-colors" id="my-offer-plus"></i>
-                            <img src="" id="my-offer-img" class="hidden rounded-xl">
-                            <button id="btn-remove-offer" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-8 h-8 md:w-10 md:h-10 text-sm md:text-base hidden shadow-xl z-10 border-2 border-[#151821] hover:bg-red-400 transition-colors"><i class="fa-solid fa-times"></i></button>
+                <!-- Trade Slots Area -->
+                <div class="flex-1 flex flex-col md:flex-row trade-modal-slots p-4 gap-4 md:gap-8 items-center justify-center overflow-y-auto md:overflow-visible relative">
+                    
+                    <!-- You Offer (Up to 3) -->
+                    <div class="w-full flex flex-col items-center">
+                        <span class="text-[10px] font-black text-blue-400 mb-2 md:mb-4 tracking-widest uppercase bg-blue-900 bg-opacity-20 px-4 py-1.5 rounded-full border border-blue-500 border-opacity-30 shadow-md">You Offer (Max 3)</span>
+                        <div id="my-offer-slots" class="flex gap-2 justify-center w-full">
+                            <!-- JS will generate 3 slots -->
                         </div>
-                        <span id="my-trade-status" class="text-[10px] md:text-[11px] font-black mt-3 md:mt-5 px-3 py-2 md:px-4 md:py-2.5 rounded-xl bg-[#151821] text-gray-400 border-2 border-[#262b3a] w-full text-center tracking-widest uppercase shadow-inner">Selecting...</span>
+                        <span id="my-trade-status" class="text-[10px] md:text-[11px] font-black mt-3 md:mt-5 px-3 py-2 md:px-4 md:py-2.5 rounded-xl bg-[#151821] text-gray-400 border-2 border-[#262b3a] w-full max-w-[200px] text-center tracking-widest uppercase shadow-inner">Selecting...</span>
                     </div>
-                    <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#151821] flex items-center justify-center border-2 md:border-4 border-[#0b0c10] shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10 relative md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
+                    
+                    <div class="w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#151821] flex items-center justify-center border-2 md:border-4 border-[#0b0c10] shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10 my-2 md:my-0 flex-shrink-0">
                         <i class="fa-solid fa-arrow-right-arrow-left rotate-90 md:rotate-0 text-gray-400 text-sm md:text-lg"></i>
                     </div>
-                    <div class="w-full max-w-[130px] md:max-w-[200px] flex flex-col items-center">
+                    
+                    <!-- They Offer (Up to 3) -->
+                    <div class="w-full flex flex-col items-center">
                         <span class="text-[10px] font-black text-red-400 mb-2 md:mb-4 tracking-widest uppercase bg-red-900 bg-opacity-20 px-4 py-1.5 rounded-full border border-red-500 border-opacity-30 shadow-md">They Offer</span>
-                        <div id="their-offer-slot" class="trade-slot w-full bg-[#151821]">
-                            <i class="fa-solid fa-question text-gray-700 text-3xl md:text-4xl opacity-50" id="their-offer-q"></i>
-                            <img src="" id="their-offer-img" class="hidden rounded-xl">
+                        <div id="their-offer-slots" class="flex gap-2 justify-center w-full">
+                            <!-- JS will generate 3 slots -->
                         </div>
-                        <span id="their-trade-status" class="text-[10px] md:text-[11px] font-black mt-3 md:mt-5 px-3 py-2 md:px-4 md:py-2.5 rounded-xl bg-[#151821] text-gray-400 border-2 border-[#262b3a] w-full text-center tracking-widest uppercase shadow-inner">Selecting...</span>
+                        <span id="their-trade-status" class="text-[10px] md:text-[11px] font-black mt-3 md:mt-5 px-3 py-2 md:px-4 md:py-2.5 rounded-xl bg-[#151821] text-gray-400 border-2 border-[#262b3a] w-full max-w-[200px] text-center tracking-widest uppercase shadow-inner">Selecting...</span>
                     </div>
                 </div>
-                <div class="h-48 md:h-full trade-modal-chat border-t-2 border-[#262b3a] flex flex-col bg-[#151821]">
+                
+                <!-- Chat -->
+                <div class="h-40 md:h-full trade-modal-chat border-t-2 border-[#262b3a] flex flex-col bg-[#151821]">
                     <div class="bg-[#0b0c10] px-5 py-3 border-b border-[#262b3a] flex items-center gap-3">
                         <i class="fa-solid fa-shield-halved text-green-500"></i>
                         <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Secure Comms Channel</span>
@@ -675,12 +647,14 @@
                     </div>
                 </div>
             </div>
+            
             <div class="p-6 border-t-2 border-[#262b3a] bg-[#0b0c10] flex gap-5">
-                <button id="btn-trade-lock" class="btn-secondary flex-1 py-5 text-white border-gray-600 bg-[#151821] tracking-widest uppercase text-xs md:text-sm">Lock Offer</button>
-                <button id="btn-trade-accept" class="btn-primary flex-1 hidden bg-gradient-to-r from-green-600 to-green-500 py-5 shadow-[0_10px_20px_rgba(34,197,94,0.4)] tracking-widest uppercase text-xs md:text-sm"><i class="fa-solid fa-check mr-2"></i>Accept Trade</button>
+                <button id="btn-trade-lock" class="btn-secondary flex-1 py-4 text-white border-gray-600 bg-[#151821] tracking-widest uppercase text-xs md:text-sm">Lock Offer</button>
+                <button id="btn-trade-accept" class="btn-primary flex-1 hidden bg-gradient-to-r from-green-600 to-green-500 py-4 shadow-[0_10px_20px_rgba(34,197,94,0.4)] tracking-widest uppercase text-xs md:text-sm"><i class="fa-solid fa-check mr-2"></i>Accept Trade</button>
             </div>
         </div>
     </div>
+
     <div id="modal-select-card" class="modal-overlay" style="z-index: 150;">
         <div class="card-surface w-full max-w-4xl h-[85vh] flex flex-col overflow-hidden bg-[#151821] border-2">
             <div class="p-6 border-b-2 border-[#262b3a] flex justify-between items-center bg-[#0b0c10]">
@@ -691,10 +665,11 @@
                 <button class="close-select text-gray-400 hover:text-white bg-[#151821] w-10 h-10 rounded-full border border-[#262b3a] shadow-inner transition-colors"><i class="fa-solid fa-times"></i></button>
             </div>
             <div class="flex-1 overflow-y-auto p-6 md:p-8 no-scrollbar bg-[#0b0c10]">
-                <div id="trade-collection-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5"></div>
+                <div id="trade-collection-grid" class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5"></div>
             </div>
         </div>
     </div>
+
     <div id="modal-save-data" class="modal-overlay z-[200]">
         <div class="card-surface w-full max-w-sm p-6 relative bg-[#151821]">
             <button class="close-save-modal absolute top-4 right-4 text-gray-400 hover:text-white bg-[#0b0c10] w-8 h-8 rounded-full border border-[#262b3a] flex justify-center items-center shadow-inner"><i class="fa-solid fa-times"></i></button>
@@ -704,13 +679,27 @@
             <button id="btn-save-modal-action" class="btn-primary w-full py-4 text-sm shadow-md">Action</button>
         </div>
     </div>
+
+    <!-- Battle Result Modal -->
+    <div id="modal-battle-result" class="modal-overlay z-[200]">
+        <div class="card-surface w-full max-w-md p-8 relative bg-[#151821] text-center border-4 border-blue-500">
+            <button class="close-battle absolute top-4 right-4 text-gray-400 hover:text-white bg-[#0b0c10] w-8 h-8 rounded-full border border-[#262b3a] flex justify-center items-center"><i class="fa-solid fa-times"></i></button>
+            <h2 id="battle-title" class="text-3xl font-black uppercase tracking-widest text-white mb-6">Battle Result</h2>
+            <div id="battle-details" class="flex flex-col gap-4 mb-8"></div>
+            <div id="battle-reward" class="text-xl font-black text-yellow-400 mb-6 hidden"><i class="fa-solid fa-coins mr-2"></i>+<span id="battle-reward-amt"></span> Coins</div>
+            <button class="btn-primary close-battle w-full">Return</button>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
         const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
         const TOTAL_POKEMON = 1025;
         const typeColors = { normal: '#A8A77A', fire: '#EE8130', water: '#6390F0', electric: '#F7D02C', grass: '#7AC74C', ice: '#96D9D6', fighting: '#C22E28', poison: '#A33EA1', ground: '#E2BF65', flying: '#A98FF3', psychic: '#F95587', bug: '#A6B91A', rock: '#B6A136', ghost: '#735797', dragon: '#6F35FC', dark: '#705848', steel: '#B7B7CE', fairy: '#D685AD' };
+        
         const fallbackConfig = {
           apiKey: "AIzaSyCcr1eMPHy66OrGNqw0sxHycmKOjZplhQw",
           authDomain: "pokelocal-464e3.firebaseapp.com",
@@ -721,17 +710,18 @@
         };
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'pokelocal-default';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : fallbackConfig;
+        
         const state = {
-            profile: { id: '', name: '', nameLower: '', team: '', info: '', trades: 0, settings: { skipAnimations: false }, xp: 0, buddy: null, lastCheckIn: 0 },
+            profile: { id: '', name: '', nameLower: '', team: '', info: '', trades: 0, battles: 0, coins: 0, settings: { skipAnimations: false }, xp: 0, buddy: null, lastCheckIn: 0 },
             collection: [],
             packs: { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false },
             onlineUsers: {},
             userId: null,
-            pairingCode: null,
             pendingBuddy: null,
-            currentPulls: [], pullIndex: 0, activeTrade: null, activePackIsHolo: false,
+            currentPulls: [], pullIndex: 0, activeTrade: null, activePackType: null,
             pogoRarities: {}
         };
+        
         const DOM = {
             screens: document.querySelectorAll('.screen'),
             navItems: document.querySelectorAll('.nav-item'),
@@ -741,15 +731,38 @@
             headerNameDesktop: document.getElementById('header-name-desktop'),
             packUI: document.getElementById('the-pack'),
             holoPackUI: document.getElementById('holo-pack'),
-            pullsView: document.getElementById('pulls-view'),
-            toastContainer: document.getElementById('toast-container'),
             loadingScreen: document.getElementById('screen-loading')
         };
+        
         let db, auth;
-        let firebaseListeners = { presence: null, incomingTrade: null, activeTrade: null };
+        let firebaseListeners = { presence: null, incomingTrade: null, activeTrade: null, battles: null };
         let selectedTeam = '';
+        let serverTimeOffset = 0;
+
+        // Fetch reliable server time for daily resets
+        async function fetchServerTime() {
+            try {
+                const res = await fetch('https://worldtimeapi.org/api/timezone/Etc/UTC');
+                if (res.ok) {
+                    const data = await res.json();
+                    const serverTime = new Date(data.datetime).getTime();
+                    serverTimeOffset = serverTime - Date.now();
+                    return serverTime;
+                }
+            } catch (e) {
+                console.warn("Time sync failed, using local");
+            }
+            return Date.now();
+        }
+
+        function getNow() {
+            return Date.now() + serverTimeOffset;
+        }
+
         async function initApp() {
             fetchPogoRarities();
+            await fetchServerTime();
+
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
@@ -770,7 +783,6 @@
                 DOM.statusDotDesktop.classList.replace('bg-red-500', 'bg-green-500');
                 DOM.statusDotDesktop.style.boxShadow = '0 0 10px rgba(34,197,94,0.8)';
                 await loadCloudData();
-                generatePairingCode();
             } catch (error) { 
                 if (!state.userId) {
                     state.userId = localStorage.getItem(`pokeLocal_userId_${appId}`) || ('guest_' + Math.random().toString(36).substring(2, 9));
@@ -780,9 +792,10 @@
                 showSetupScreen();
             }
             setupEventListeners();
+            initTradeSlotsUI();
             checkPackReset();
-            updateSlotUI();
         }
+
         async function fetchPogoRarities() {
             try {
                 const res = await fetch('https://pogoapi.net/api/v1/pokemon_rarity.json');
@@ -794,22 +807,30 @@
                 }
             } catch (e) { }
         }
+
         function showToast(msg, type = 'info', duration = 4000, actions = null) {
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             let icon = '<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" class="w-6 h-6">';
             if (type === 'success') icon = '<i class="fa-solid fa-circle-check text-green-400 text-2xl"></i>';
             if (type === 'error') icon = '<i class="fa-solid fa-circle-xmark text-red-400 text-2xl"></i>';
-            if (type === 'trade') icon = '<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/vs-seeker.png" class="w-8 h-8 filter drop-shadow">';
+            if (type === 'trade' || type === 'battle') icon = '<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/vs-seeker.png" class="w-8 h-8 filter drop-shadow">';
             let actionHtml = '';
             if (actions) {
-                actionHtml = `<div class="flex gap-3 ml-auto">
-                    <button class="bg-[#0b0c10] border border-[#262b3a] px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest btn-decline hover:bg-[#151821] transition">Decline</button>
-                    <button class="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest btn-accept hover:bg-blue-500 transition shadow-lg">Accept</button>
+                actionHtml = `<div class="flex gap-2 ml-auto">
+                    <button class="bg-[#0b0c10] border border-[#262b3a] px-3 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest btn-decline hover:bg-[#151821] transition">Decline</button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest btn-accept hover:bg-blue-500 transition shadow-lg">Accept</button>
                 </div>`;
             }
-            toast.innerHTML = `${icon}<div class="text-sm flex-1 tracking-wide">${msg}</div>${actionHtml}`;
-            DOM.toastContainer.appendChild(toast);
+            toast.innerHTML = `${icon}<div class="text-xs md:text-sm flex-1 tracking-wide">${msg}</div>${actionHtml}`;
+            
+            // Limit to 3 toasts max
+            const container = document.getElementById('toast-container');
+            if (container.children.length >= 3) {
+                removeToast(container.firstElementChild);
+            }
+            container.appendChild(toast);
+            
             if (actions) {
                 toast.querySelector('.btn-accept').addEventListener('click', () => { actions.onAccept(); removeToast(toast); });
                 toast.querySelector('.btn-decline').addEventListener('click', () => { actions.onDecline(); removeToast(toast); });
@@ -819,9 +840,11 @@
             }
         }
         function removeToast(toast) {
+            if(!toast) return;
             toast.classList.add('hiding');
             toast.addEventListener('animationend', () => toast.remove());
         }
+
         async function loadCloudData() {
             if (!db || !state.userId) return showSetupScreen();
             try {
@@ -829,9 +852,9 @@
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    state.profile = data.profile || { id: state.userId, name: '', nameLower: '', team: '', info: '', trades: 0, settings: { skipAnimations: false }, xp: 0, buddy: null, lastCheckIn: 0 };
-                    if (!state.profile.settings) state.profile.settings = { skipAnimations: false };
-                    if (state.profile.xp === undefined) state.profile.xp = 0;
+                    state.profile = data.profile || { id: state.userId, name: '', nameLower: '', team: '', info: '', trades: 0, battles: 0, coins: 0, settings: { skipAnimations: false }, xp: 0, buddy: null, lastCheckIn: 0 };
+                    if (state.profile.coins === undefined) state.profile.coins = 0;
+                    if (state.profile.battles === undefined) state.profile.battles = 0;
                     state.collection = data.collection || [];
                     state.packs = data.packs || { openedToday: 0, lastReset: 0, holoUnlocked: false, holoClaimedToday: false };
                     document.getElementById('toggle-animations').checked = !state.profile.settings.skipAnimations;
@@ -851,77 +874,23 @@
                     state.profile.id = state.userId;
                     showSetupScreen();
                 }
-            } catch(e) {
-                showSetupScreen();
-            }
+            } catch(e) { showSetupScreen(); }
         }
-        function showSetupScreen() {
-            switchScreen('screen-setup');
-        }
-        async function checkUsernameUnique(username) {
-            if (!db) return true;
-            try {
-                const lowerName = username.toLowerCase();
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'usernames', lowerName);
-                const snap = await getDoc(docRef);
-                if (snap.exists() && snap.data().uid !== state.userId) {
-                    return false;
-                }
-            } catch (e) { return true; }
-            return true;
-        }
+        function showSetupScreen() { switchScreen('screen-setup'); }
+
         async function saveCloudData() {
             updateProfileUI();
             if (!db || !state.userId) return;
-            try {
-                await setDoc(doc(db, 'artifacts', appId, 'users', state.userId, 'userData', 'profile'), {
-                    profile: state.profile,
-                    collection: state.collection,
-                    packs: state.packs
-                });
-            } catch (e) { }
+            try { await setDoc(doc(db, 'artifacts', appId, 'users', state.userId, 'userData', 'profile'), { profile: state.profile, collection: state.collection, packs: state.packs }); } catch (e) { }
         }
+
         function switchScreen(id) {
             DOM.screens.forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if(id === 'screen-network' && db && state.profile.name) {
-                updatePresence(); 
-                renderNetworkList();
-            }
+            if(id === 'screen-network' && db && state.profile.name) { updatePresence(); renderNetworkList(); }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        async function generatePairingCode() {
-            if (!db || !state.userId) return;
-            state.pairingCode = Math.floor(100000 + Math.random() * 900000).toString();
-            document.getElementById('my-pairing-code').textContent = state.pairingCode;
-            document.getElementById('qr-code-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=pokelocal:${state.pairingCode}&color=151821&bgcolor=ffffff`;
-            try {
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'pairing_codes', state.pairingCode), { 
-                    uid: state.userId, timestamp: Date.now() 
-                });
-            } catch(e) {}
-        }
-        async function attemptJoinCode() {
-            const input = document.getElementById('input-pairing-code');
-            const code = input.value.trim();
-            if(code.length !== 6) return showToast("Enter a 6-digit code.", "error");
-            if(code === state.pairingCode) return showToast("Cannot trade with yourself.", "error");
-            input.value = '';
-            try {
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'pairing_codes', code);
-                const snap = await getDoc(docRef);
-                if(snap.exists()) {
-                    const data = snap.data();
-                    if(Date.now() - data.timestamp > 86400000) {
-                        showToast("Pairing code expired.", "error");
-                    } else {
-                        initiateTrade(data.uid);
-                    }
-                } else {
-                    showToast("Code not found or invalid.", "error");
-                }
-            } catch(e) { showToast("Failed to verify code.", "error"); }
-        }
+
         function setupEventListeners() {
             DOM.navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
@@ -932,222 +901,111 @@
                     switchScreen(target.dataset.target);
                 });
             });
+
             document.querySelectorAll('.team-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     document.querySelectorAll('.team-btn').forEach(b => b.classList.remove('selected'));
-                    const target = e.currentTarget;
-                    target.classList.add('selected');
-                    selectedTeam = target.dataset.team;
+                    e.currentTarget.classList.add('selected'); selectedTeam = e.currentTarget.dataset.team;
                 });
             });
-            document.getElementById('btn-fetch-buddy').addEventListener('click', async (e) => {
-                e.preventDefault();
-                const input = document.getElementById('setup-buddy-input').value.trim().toLowerCase();
-                const btn = document.getElementById('btn-fetch-buddy');
-                const preview = document.getElementById('setup-buddy-preview');
-                if (!input) return;
-                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
-                try {
-                    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${input}`);
-                    if (!res.ok) throw new Error();
-                    const data = await res.json();
-                    const gif = data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || data.sprites?.front_default;
-                    state.pendingBuddy = { id: data.id, name: data.name, gif };
-                    preview.innerHTML = `<img src="${gif}" class="w-16 h-16 object-contain animate-bounce-slow filter drop-shadow-md"> <span class="text-[10px] font-black uppercase tracking-widest text-green-400 mt-2 block">${data.name}</span>`;
-                } catch (err) {
-                    preview.innerHTML = '<span class="text-[10px] text-red-400 font-black uppercase tracking-widest">Not found</span>';
-                    state.pendingBuddy = null;
-                }
-                btn.innerHTML = 'Find';
-            });
+
             document.getElementById('btn-save-profile').addEventListener('click', async () => {
                 const username = document.getElementById('setup-username').value.trim();
-                const info = document.getElementById('setup-info').value.trim();
-                const btn = document.getElementById('btn-save-profile');
-                if (!username) { showToast("Trainer name is required.", "error"); return; }
-                if (username.length < 3) { showToast("Trainer name must be at least 3 characters.", "error"); return; }
-                if (!selectedTeam) { showToast("Please select a Faction.", "error"); return; }
-                const lowerName = username.toLowerCase();
-                const originalBtnContent = btn.innerHTML;
-                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Synching...';
-                btn.disabled = true;
-                try {
-                    if (lowerName !== state.profile.nameLower) {
-                        const isUnique = await checkUsernameUnique(username);
-                        if (!isUnique) {
-                            showToast(`"${username}" is already taken by another Trainer!`, "error");
-                            btn.innerHTML = originalBtnContent; btn.disabled = false; return;
-                        }
-                        if (state.profile.nameLower && db) {
-                            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'usernames', state.profile.nameLower)); } catch(e){}
-                        }
-                        if (db) {
-                            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'usernames', lowerName), { uid: state.userId });
-                        }
-                    }
-                    state.profile.name = username;
-                    state.profile.nameLower = lowerName;
-                    state.profile.team = selectedTeam;
-                    state.profile.info = info || 'Ready to trade';
-                    state.profile.id = state.userId;
-                    if (state.pendingBuddy) {
-                        state.profile.buddy = state.pendingBuddy;
-                        state.pendingBuddy = null;
-                    }
-                    await saveCloudData();
-                    setupFirebaseListeners(); 
-                    updatePresence();
-                    showToast("Identity Registered!", "success");
-                    DOM.navItems.forEach(n => n.classList.remove('active'));
-                    switchScreen('screen-packs');
-                    document.querySelector('[data-target="screen-packs"]').classList.add('active');
-                } catch(e) {
-                    showToast("Profile set to offline mode.", "info");
-                    DOM.navItems.forEach(n => n.classList.remove('active'));
-                    switchScreen('screen-packs');
-                    document.querySelector('[data-target="screen-packs"]').classList.add('active');
-                } finally {
-                    btn.innerHTML = originalBtnContent; btn.disabled = false;
-                }
+                if (!username || username.length < 3) { showToast("Valid trainer name required.", "error"); return; }
+                if (!selectedTeam) { showToast("Select a faction.", "error"); return; }
+                state.profile.name = username; state.profile.nameLower = username.toLowerCase();
+                state.profile.team = selectedTeam; state.profile.id = state.userId;
+                await saveCloudData(); setupFirebaseListeners(); updatePresence();
+                DOM.navItems.forEach(n => n.classList.remove('active')); switchScreen('screen-packs');
+                document.querySelector('[data-target="screen-packs"]').classList.add('active');
             });
-            document.getElementById('btn-edit-profile').addEventListener('click', () => {
-                document.getElementById('setup-username').value = state.profile.name;
-                document.getElementById('setup-info').value = state.profile.info;
-                document.querySelectorAll('.team-btn').forEach(b => {
-                    b.classList.remove('selected');
-                    if (b.dataset.team === state.profile.team) {
-                        b.classList.add('selected');
-                        selectedTeam = state.profile.team;
+
+            document.getElementById('toggle-animations').addEventListener('change', (e) => {
+                state.profile.settings.skipAnimations = !e.target.checked; saveCloudData();
+            });
+
+            // Pack Buttons
+            DOM.packUI.addEventListener('click', () => openPack('daily'));
+            DOM.holoPackUI.addEventListener('click', () => openPack('holo'));
+            document.querySelectorAll('.premium-pack').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const type = e.currentTarget.dataset.type;
+                    const cost = parseInt(e.currentTarget.dataset.cost);
+                    if (state.profile.coins >= cost) {
+                        state.profile.coins -= cost;
+                        saveCloudData();
+                        openPack(type);
+                    } else {
+                        showToast("Not enough coins! Level up or battle to earn more.", "error");
                     }
                 });
-                const preview = document.getElementById('setup-buddy-preview');
-                if (state.profile.buddy) {
-                    preview.innerHTML = `<img src="${state.profile.buddy.gif}" class="w-16 h-16 object-contain animate-bounce-slow filter drop-shadow-md"> <span class="text-[10px] font-black uppercase tracking-widest text-green-400 mt-2 block">${state.profile.buddy.name}</span>`;
-                } else {
-                    preview.innerHTML = '<span class="text-[10px] text-gray-600 font-bold uppercase tracking-widest">No Buddy Selected</span>';
-                }
-                switchScreen('screen-setup');
             });
-            document.getElementById('toggle-animations').addEventListener('change', (e) => {
-                state.profile.settings.skipAnimations = !e.target.checked;
-                saveCloudData();
-            });
-            document.getElementById('btn-join-code').addEventListener('click', attemptJoinCode);
-            DOM.packUI.addEventListener('click', () => openPack(false));
-            DOM.holoPackUI.addEventListener('click', () => openPack(true));
+
             document.getElementById('rip-pack-container').addEventListener('click', triggerPackRipFinish);
             document.getElementById('btn-next-card').addEventListener('click', () => { if (state.pullIndex < state.currentPulls.length - 1) { state.pullIndex++; renderCurrentPull(); } });
             document.getElementById('btn-prev-card').addEventListener('click', () => { if (state.pullIndex > 0) { state.pullIndex--; renderCurrentPull(); } });
+            
             document.getElementById('btn-collect-all').addEventListener('click', () => {
                 state.collection = [...state.currentPulls, ...state.collection];
                 state.currentPulls = []; saveCloudData(); renderCollection();
-                DOM.pullsView.classList.add('hidden'); DOM.pullsView.classList.remove('flex');
+                document.getElementById('modal-pulls').classList.remove('active');
                 updatePackUI();
-                DOM.navItems.forEach(n => n.classList.remove('active'));
-                document.querySelector('[data-target="screen-collection"]').classList.add('active');
-                switchScreen('screen-collection');
             });
+
+            document.getElementById('search-collection').addEventListener('input', renderCollection);
             document.getElementById('filter-collection').addEventListener('change', renderCollection);
+
             document.getElementById('btn-refresh-network').addEventListener('click', () => { 
                 const btn = document.getElementById('btn-refresh-network');
                 btn.classList.add('rotate-180'); setTimeout(() => btn.classList.remove('rotate-180'), 500);
                 if(db) { updatePresence(); renderNetworkList(); showToast("Radar pulse sent", "success"); }
             });
-            document.querySelectorAll('.close-modal, .close-select').forEach(btn => { btn.addEventListener('click', (e) => { e.target.closest('.modal-overlay').classList.remove('active'); }); });
-            document.getElementById('my-offer-slot').addEventListener('click', openSelectCardModal);
-            document.getElementById('btn-remove-offer').addEventListener('click', removeOffer);
+
+            document.querySelectorAll('.close-modal, .close-select, .close-battle').forEach(btn => { 
+                btn.addEventListener('click', (e) => { e.target.closest('.modal-overlay').classList.remove('active'); }); 
+            });
+
             document.getElementById('btn-trade-lock').addEventListener('click', toggleTradeLock);
             document.getElementById('btn-trade-accept').addEventListener('click', acceptTrade);
             document.querySelector('.close-trade').addEventListener('click', cancelTrade);
+            
             document.getElementById('btn-send-chat').addEventListener('click', sendChat);
             document.getElementById('trade-chat-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') sendChat(); });
-            document.addEventListener('click', (e) => {
-                if (e.target.closest('.flip-card')) {
-                    e.target.closest('.flip-card').classList.toggle('is-flipped');
-                }
-            });
-            [1, 2].forEach(slot => {
-                document.getElementById(`btn-save-${slot}`).addEventListener('click', () => {
-                    if (!state.userId || !state.profile.name) { showToast("No active profile to save.", "error"); return; }
-                    localStorage.setItem(`pokeLocal_slot_${slot}_${appId}`, JSON.stringify({ uid: state.userId, name: state.profile.name }));
-                    updateSlotUI();
-                    showToast(`Saved to Slot ${slot}.`, "success");
-                });
-                document.getElementById(`btn-load-${slot}`).addEventListener('click', () => {
-                    const data = localStorage.getItem(`pokeLocal_slot_${slot}_${appId}`);
-                    if (!data) { showToast(`Slot ${slot} is empty.`, "error"); return; }
-                    try {
-                        const parsed = JSON.parse(data);
-                        localStorage.setItem(`pokeLocal_userId_${appId}`, parsed.uid);
-                        showToast(`Loading save...`, "info");
-                        setTimeout(() => window.location.reload(), 1000);
-                    } catch(e) { showToast("Corrupt save data.", "error"); }
-                });
-            });
+            
+            document.addEventListener('click', (e) => { if (e.target.closest('.flip-card')) e.target.closest('.flip-card').classList.toggle('is-flipped'); });
+
+            // Export / Import
             document.getElementById('btn-export-save').addEventListener('click', () => {
                 document.getElementById('save-modal-title').textContent = 'Export Save';
-                document.getElementById('save-modal-desc').textContent = 'Copy this code to load your account on another device.';
-                const encoded = btoa(`pokelocal_save:${state.userId}`);
-                const input = document.getElementById('save-data-code');
-                input.value = encoded;
-                input.readOnly = true;
+                document.getElementById('save-data-code').value = btoa(`pokelocal_save:${state.userId}`);
                 const btn = document.getElementById('btn-save-modal-action');
                 btn.textContent = 'Copy to Clipboard';
                 btn.onclick = () => {
-                    input.select();
-                    document.execCommand('copy');
-                    showToast("Code copied to clipboard!", "success");
-                    document.getElementById('modal-save-data').classList.remove('active');
+                    document.getElementById('save-data-code').select(); document.execCommand('copy');
+                    showToast("Code copied!", "success"); document.getElementById('modal-save-data').classList.remove('active');
                 };
                 document.getElementById('modal-save-data').classList.add('active');
             });
+
             document.getElementById('btn-import-save').addEventListener('click', () => {
                 document.getElementById('save-modal-title').textContent = 'Import Save';
-                document.getElementById('save-modal-desc').textContent = 'Paste your export code below to restore your account.';
-                const input = document.getElementById('save-data-code');
-                input.value = '';
-                input.readOnly = false;
+                document.getElementById('save-data-code').value = '';
                 const btn = document.getElementById('btn-save-modal-action');
                 btn.textContent = 'Restore Account';
                 btn.onclick = () => {
-                    const val = input.value.trim();
-                    if(!val) return showToast("Please paste a code.", "error");
                     try {
+                        const val = document.getElementById('save-data-code').value.trim();
                         const decoded = atob(val);
                         if (decoded.startsWith('pokelocal_save:')) {
-                            const uid = decoded.split(':')[1];
-                            localStorage.setItem(`pokeLocal_userId_${appId}`, uid);
-                            showToast("Account restored! Reloading...", "success");
-                            setTimeout(() => window.location.reload(), 1000);
-                        } else {
-                            showToast("Invalid save code.", "error");
-                        }
-                    } catch(e) { showToast("Invalid save code format.", "error"); }
+                            localStorage.setItem(`pokeLocal_userId_${appId}`, decoded.split(':')[1]);
+                            showToast("Account restored! Reloading...", "success"); setTimeout(() => window.location.reload(), 1000);
+                        } else throw new Error();
+                    } catch(e) { showToast("Invalid save code.", "error"); }
                 };
                 document.getElementById('modal-save-data').classList.add('active');
             });
-            document.querySelector('.close-save-modal').addEventListener('click', () => {
-                document.getElementById('modal-save-data').classList.remove('active');
-            });
         }
-        function updateSlotUI() {
-            [1, 2].forEach(slot => {
-                const data = localStorage.getItem(`pokeLocal_slot_${slot}_${appId}`);
-                const statusEl = document.getElementById(`slot-${slot}-status`);
-                if (data) {
-                    try {
-                        const parsed = JSON.parse(data);
-                        statusEl.textContent = `Trainer: ${parsed.name}`;
-                        statusEl.classList.remove('text-gray-500');
-                        statusEl.classList.add('text-green-400');
-                    } catch(e) { statusEl.textContent = 'Corrupt Data'; }
-                } else {
-                    statusEl.textContent = 'Empty';
-                    statusEl.classList.remove('text-green-400');
-                    statusEl.classList.add('text-gray-500');
-                }
-            });
-        }
+
         function updateProfileUI() {
             DOM.headerName.textContent = state.profile.name || 'Setup Profile';
             DOM.headerNameDesktop.textContent = state.profile.name || 'Setup Profile';
@@ -1156,62 +1014,242 @@
             document.getElementById('info-level').textContent = lvlInfo.level;
             document.getElementById('info-xp-text').textContent = `${(state.profile.xp || 0) - lvlInfo.currentLevelReq} / ${lvlInfo.nextLevelReq - lvlInfo.currentLevelReq} XP`;
             document.getElementById('info-xp-fill').style.width = `${lvlInfo.progress}%`;
-            const rankEl = document.getElementById('info-rank');
-            rankEl.textContent = lvlInfo.rankName;
-            rankEl.className = `text-[9px] px-2 py-1 bg-gradient-to-r ${lvlInfo.rankColor} rounded-md font-black uppercase tracking-widest shadow-sm border`;
-            const prestigeEl = document.getElementById('info-prestige');
-            if (lvlInfo.prestige > 0) {
-                prestigeEl.classList.remove('hidden');
-                prestigeEl.innerHTML = `<i class="fa-solid fa-star text-[8px] mr-1"></i>Prestige ${lvlInfo.prestige}`;
-            } else {
-                prestigeEl.classList.add('hidden');
-            }
-            const avatarFallback = document.getElementById('info-avatar-fallback');
-            const avatarImg = document.getElementById('info-avatar-img');
-            if (state.profile.buddy && state.profile.buddy.gif) {
-                avatarFallback.classList.add('hidden');
-                avatarImg.src = state.profile.buddy.gif;
-                avatarImg.classList.remove('hidden');
-            } else {
-                avatarFallback.classList.remove('hidden');
-                avatarImg.classList.add('hidden');
-            }
+            
+            document.getElementById('nav-coins-desktop').textContent = state.profile.coins;
+            document.getElementById('nav-coins-mobile').textContent = state.profile.coins;
+
             document.getElementById('info-card-count').textContent = state.collection.length;
             document.getElementById('info-trade-count').textContent = state.profile.trades;
-            const teamEl = document.getElementById('info-team');
-            teamEl.textContent = state.profile.team;
-            const c = state.profile.team === 'Valor' ? 'var(--valor)' : state.profile.team === 'Mystic' ? 'var(--mystic)' : 'var(--instinct)';
-            teamEl.style.color = c; teamEl.style.borderColor = c; teamEl.style.backgroundColor = `rgba(${c === 'var(--valor)' ? '239,68,68' : c === 'var(--mystic)' ? '59,130,246' : '234,179,8'}, 0.15)`;
+            document.getElementById('info-battle-count').textContent = state.profile.battles;
         }
+
         function getLevelInfo(xp) {
-            let level = 1;
-            while (xp >= (level * (level + 1) / 2) * 100) { level++; }
+            let level = 1; while (xp >= (level * (level + 1) / 2) * 100) { level++; }
             const currentLevelReq = ((level - 1) * level / 2) * 100;
             const nextLevelReq = (level * (level + 1) / 2) * 100;
             const progress = Math.max(0, Math.min(100, ((xp - currentLevelReq) / (nextLevelReq - currentLevelReq)) * 100));
-            const prestige = Math.floor((level - 1) / 50);
-            const displayLevel = ((level - 1) % 50) + 1; 
-            let rankName = "Unranked";
-            let rankColor = "from-gray-700 to-gray-600 border-gray-500";
-            if (displayLevel > 10) { rankName = "Bronze"; rankColor = "from-amber-700 to-yellow-600 border-yellow-500"; }
-            if (displayLevel > 20) { rankName = "Silver"; rankColor = "from-gray-400 to-gray-300 border-gray-200 text-gray-800"; }
-            if (displayLevel > 30) { rankName = "Gold"; rankColor = "from-yellow-500 to-yellow-300 border-yellow-200 text-yellow-900"; }
-            if (displayLevel > 40) { rankName = "Platinum"; rankColor = "from-cyan-500 to-blue-400 border-cyan-200"; }
-            return { level: displayLevel, prestige, rankName, rankColor, progress, currentLevelReq, nextLevelReq };
+            return { level, progress, currentLevelReq, nextLevelReq };
         }
+
         function gainXP(amount, reason = "") {
-            if (state.profile.xp === undefined) state.profile.xp = 0;
             const oldLevel = getLevelInfo(state.profile.xp).level;
             state.profile.xp += amount;
             const newLevel = getLevelInfo(state.profile.xp).level;
             if (newLevel > oldLevel) {
-                showToast(`Level Up! You are now Level ${newLevel}!`, "success", 4000);
+                const chestCoins = newLevel * 50;
+                state.profile.coins += chestCoins;
+                showToast(`Level Up! Lv ${newLevel} reached. Chest opened: +${chestCoins} Coins!`, "success", 6000);
             } else if (reason) {
                 showToast(`+${amount} XP (${reason})`, "info", 2000);
             }
-            saveCloudData();
-            updateProfileUI();
+            saveCloudData(); updateProfileUI();
         }
+
+        // Probability Based Pulls
+        function generatePackIds(type) {
+            let count = 3;
+            if(type === 'daily') count = 3;
+            else if(type === 'holo') count = 1;
+            else count = 3; // Premium packs
+
+            const ids = [];
+            for (let i = 0; i < count; i++) {
+                if (type === 'holo') {
+                    const holoIds = [144, 145, 146, 150, 151, 249, 250, 251, 384, 385]; 
+                    ids.push(holoIds[Math.floor(Math.random() * holoIds.length)]);
+                    continue;
+                }
+
+                // Probability: 60% Common, 25% Uncommon, 10% Rare, 5% Legendary
+                const rand = Math.random();
+                let targetRarity = rand < 0.05 ? 'legendary' : rand < 0.15 ? 'rare' : rand < 0.40 ? 'uncommon' : 'common';
+                
+                let rangeMin = 1, rangeMax = 151; // Default Kanto
+                if (type === 'gen2') { rangeMin = 152; rangeMax = 251; }
+                if (type === 'gen3') { rangeMin = 252; rangeMax = 386; }
+                
+                // Estimate IDs based on target rarity to apply probabilities
+                let pickedId = Math.floor(Math.random() * (rangeMax - rangeMin + 1)) + rangeMin;
+                // Soft enforcement: if it's a legendary roll, force picking from a legendary pool
+                if (targetRarity === 'legendary') {
+                    if (type === 'gen1' || type === 'daily') pickedId = [144, 145, 146, 150, 151][Math.floor(Math.random() * 5)];
+                    else if (type === 'gen2') pickedId = [243, 244, 245, 249, 250, 251][Math.floor(Math.random() * 6)];
+                    else if (type === 'gen3') pickedId = [377, 378, 379, 380, 381, 382, 383, 384, 385, 386][Math.floor(Math.random() * 10)];
+                }
+                ids.push(pickedId);
+            }
+            return ids;
+        }
+
+        function checkPackReset() {
+            const now = getNow();
+            const date = new Date(now);
+            const today = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()).getTime(); // UTC midnight reset
+            if (state.packs.lastReset < today) {
+                state.packs.openedToday = 0; state.packs.lastReset = today; state.packs.holoClaimedToday = false; saveCloudData();
+            }
+            if (state.profile.name && (!state.profile.lastCheckIn || state.profile.lastCheckIn < today)) {
+                state.profile.lastCheckIn = today; gainXP(50, "Daily Check-in");
+            }
+            updatePackUI();
+        }
+
+        function updatePackUI() {
+            const remaining = Math.max(0, 2 - state.packs.openedToday);
+            document.getElementById('packs-count').textContent = remaining;
+            if (remaining > 0) {
+                DOM.packUI.style.opacity = '1'; DOM.packUI.style.pointerEvents = 'auto'; DOM.packUI.style.filter = 'grayscale(0)';
+                document.getElementById('pack-timer').textContent = "Ready to Rip";
+                document.getElementById('pack-timer').classList.replace('text-gray-500', 'text-green-400');
+            } else {
+                DOM.packUI.style.opacity = '0.5'; DOM.packUI.style.pointerEvents = 'none'; DOM.packUI.style.filter = 'grayscale(100%)';
+                document.getElementById('pack-timer').textContent = "Resets Tomorrow (UTC)";
+                document.getElementById('pack-timer').classList.replace('text-green-400', 'text-gray-500');
+            }
+            if (state.packs.holoUnlocked && !state.packs.holoClaimedToday) DOM.holoPackUI.classList.remove('hidden');
+            else DOM.holoPackUI.classList.add('hidden');
+        }
+
+        async function openPack(type) {
+            if (type === 'daily' && state.packs.openedToday >= 2) return;
+            if (type === 'holo' && (!state.packs.holoUnlocked || state.packs.holoClaimedToday)) return;
+            
+            state.activePackType = type;
+            if (!state.profile.settings.skipAnimations) runGamifiedRipAnimation();
+            else { DOM.loadingScreen.classList.remove('hidden'); }
+            
+            try {
+                const ids = generatePackIds(type);
+                const promises = ids.map(id => fetch(`${POKEAPI_BASE}/pokemon/${id}`).then(r => r.json()));
+                const results = await Promise.all(promises);
+                
+                state.currentPulls = results.map(data => {
+                    let hp = 0, atk = 0, def = 0, spd = 0, bst = 0;
+                    data.stats.forEach(s => { bst += s.base_stat; if(s.stat.name === 'hp') hp = s.base_stat; if(s.stat.name === 'attack') atk = s.base_stat; if(s.stat.name === 'defense') def = s.base_stat; if(s.stat.name === 'speed') spd = s.base_stat; });
+                    const rarityInfo = getRarity(data.id, bst);
+                    const isMythic = type === 'holo' || bst > 600;
+                    const img = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default;
+                    const gif = data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || img;
+                    return {
+                        id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: data.name, types: data.types.map(t => t.type.name),
+                        hp, atk, def, spd, bst, image: img, gif: gif, rarity: isMythic ? 'Mythic Holo' : rarityInfo.name, rarityClass: isMythic ? 'rarity-legendary mythic-holo' : rarityInfo.class,
+                        showcase: isMythic, acquiredAt: Date.now()
+                    };
+                });
+                
+                if(type === 'daily') state.packs.openedToday++;
+                if(type === 'holo') state.packs.holoClaimedToday = true;
+                
+                let xpGain = type === 'holo' ? 0 : 10;
+                state.currentPulls.forEach(c => {
+                    if (c.rarityClass.includes('mythic-holo')) xpGain += 50;
+                    else if (c.rarityClass.includes('rarity-legendary')) xpGain += 20;
+                    else if (c.rarityClass.includes('rarity-rare')) xpGain += 5;
+                });
+                if(xpGain > 0) gainXP(xpGain, "Pack Ripped");
+                saveCloudData();
+                
+                if (state.profile.settings.skipAnimations) {
+                    DOM.loadingScreen.classList.add('hidden'); displayPulls();
+                }
+            } catch(e) {
+                showToast("Network error ripping pack.", "error");
+                document.getElementById('modal-pack-rip').classList.remove('active');
+                DOM.loadingScreen.classList.add('hidden'); updatePackUI();
+            }
+        }
+
+        // Modified Rip Animation (Tear Top)
+        function runGamifiedRipAnimation() {
+            const modal = document.getElementById('modal-pack-rip');
+            const pack = document.getElementById('rip-pack-container');
+            const instructions = document.getElementById('rip-instructions');
+            pack.classList.add('hidden');
+            pack.classList.remove('anim-rip-shake');
+            document.getElementById('rip-top-half').className = "absolute top-0 left-0 w-full h-[30%] bg-gradient-to-b from-blue-700 to-blue-600 rounded-t-3xl shadow-2xl border-4 border-b-0 border-blue-400 flex flex-col items-center justify-center overflow-hidden z-20 origin-bottom-left transition-all duration-700";
+            instructions.classList.add('hidden');
+            modal.classList.add('active');
+            
+            // Skip pokeball intro for brevity, go straight to pack
+            setTimeout(() => {
+                pack.classList.remove('hidden');
+                pack.classList.add('anim-pack-appear');
+                setTimeout(() => {
+                    pack.classList.remove('anim-pack-appear');
+                    pack.classList.add('anim-rip-shake');
+                    instructions.classList.remove('hidden');
+                }, 600);
+            }, 300);
+        }
+
+        function triggerPackRipFinish() {
+            if (state.currentPulls.length === 0) return; 
+            const pack = document.getElementById('rip-pack-container');
+            const topHalf = document.getElementById('rip-top-half');
+            pack.classList.remove('anim-rip-shake');
+            document.getElementById('rip-instructions').classList.add('hidden');
+            
+            topHalf.classList.add('anim-rip-top-new'); // New tear animation
+            setTimeout(() => {
+                document.getElementById('modal-pack-rip').classList.remove('active');
+                displayPulls();
+            }, 800);
+        }
+
+        function displayPulls() {
+            document.getElementById('modal-pulls').classList.add('active');
+            document.getElementById('pull-total').textContent = state.currentPulls.length;
+            state.pullIndex = 0; renderCurrentPull();
+        }
+
+        function renderCurrentPull() {
+            const card = state.currentPulls[state.pullIndex];
+            document.getElementById('single-pull-container').innerHTML = generateCardHTML(card);
+            document.getElementById('pull-current').textContent = state.pullIndex + 1;
+            document.getElementById('btn-prev-card').disabled = state.pullIndex === 0;
+            document.getElementById('btn-next-card').disabled = state.pullIndex === state.currentPulls.length - 1;
+        }
+
+        function renderCollection() {
+            const grid = document.getElementById('collection-grid');
+            const empty = document.getElementById('empty-collection');
+            const filter = document.getElementById('filter-collection').value;
+            const search = document.getElementById('search-collection').value.toLowerCase();
+            
+            let displayCards = state.collection;
+            if (filter === 'showcase') displayCards = displayCards.filter(c => c.showcase);
+            if (filter === 'legendary') displayCards = displayCards.filter(c => c.rarityClass.includes('rarity-legendary'));
+            if (search) displayCards = displayCards.filter(c => c.name.toLowerCase().includes(search));
+
+            document.getElementById('collection-total').textContent = state.collection.length;
+            grid.innerHTML = '';
+            
+            if (displayCards.length === 0) { grid.classList.add('hidden'); empty.classList.remove('hidden'); empty.classList.add('flex', 'flex-col'); } 
+            else {
+                grid.classList.remove('hidden'); empty.classList.add('hidden'); empty.classList.remove('flex', 'flex-col');
+                displayCards.forEach(card => {
+                    const el = document.createElement('div');
+                    el.className = `aspect-[63/88] rounded-2xl overflow-hidden cursor-pointer relative border-4 ${card.rarityClass} ${card.showcase ? 'holo-effect' : ''} bg-[#f3f4f6] shadow-lg hover:scale-105 hover:-translate-y-2 hover:shadow-[0_20px_30px_rgba(0,0,0,0.6)] transition-all duration-300 group`;
+                    let tagColor = 'text-gray-800 bg-gray-300';
+                    if (card.rarityClass.includes('legendary')) tagColor = 'text-yellow-900 bg-yellow-400';
+                    else if (card.rarityClass.includes('rare')) tagColor = 'text-purple-100 bg-purple-600';
+                    else if (card.rarityClass.includes('uncommon')) tagColor = 'text-green-900 bg-green-400';
+                    el.innerHTML = `
+                        <div class="absolute inset-0 p-2 flex justify-center items-center">
+                            <img src="${card.image}" class="w-full h-full object-contain filter drop-shadow z-10 transition-transform duration-500 group-hover:scale-110" loading="lazy">
+                        </div>
+                        <div class="absolute top-2 left-2 px-2 py-1 rounded shadow-md ${tagColor} text-[9px] font-black uppercase tracking-widest backdrop-blur-md z-30">${card.rarity.split(' ')[0]}</div>
+                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-80 text-white text-[10px] font-black py-2.5 px-2 text-center z-20 backdrop-blur-md border-t-2 border-gray-700 tracking-wider truncate">${card.name}</div>
+                    `;
+                    el.addEventListener('click', () => {
+                        document.getElementById('detail-card-container').innerHTML = generateCardHTML(card, true);
+                        document.getElementById('modal-card-detail').classList.add('active');
+                    });
+                    grid.appendChild(el);
+                });
+            }
+        }
+
         function getRarity(id, bst) {
             if (state.pogoRarities[id]) {
                 const r = state.pogoRarities[id].toLowerCase();
@@ -1225,448 +1263,310 @@
             if (bst > 300) return { name: 'Uncommon', class: 'rarity-uncommon' };
             return { name: 'Common', class: 'rarity-common' };
         }
+
         function generateCardHTML(cardData, showInstance = false) {
-            const badges = cardData.types.map(t => `<span class="px-2 py-0.5 rounded-md text-[9px] font-black text-white uppercase shadow-sm tracking-widest" style="background-color: ${typeColors[t] || '#777'}">${t}</span>`).join(' ');
-            let tagColor = 'text-gray-700 bg-gray-300';
-            if (cardData.rarityClass.includes('legendary')) tagColor = 'text-yellow-900 bg-yellow-400';
-            else if (cardData.rarityClass.includes('rare')) tagColor = 'text-purple-100 bg-purple-600';
-            else if (cardData.rarityClass.includes('uncommon')) tagColor = 'text-green-900 bg-green-400';
             return `
                 <div class="flip-card ${showInstance && cardData.showcase ? 'holo-effect' : ''}">
                     <div class="flip-card-inner">
                         <div class="flip-card-front flex flex-col bg-[#f3f4f6] ${cardData.rarityClass}">
                             <div class="card-header">
                                 <div class="card-name">${cardData.name}</div>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-[8px] font-black px-1.5 py-0.5 rounded shadow uppercase tracking-widest ${tagColor}">${cardData.rarity.split(' ')[0]}</span>
-                                    <div class="card-hp">HP ${cardData.hp}</div>
-                                </div>
+                                <div class="card-hp">HP ${cardData.hp}</div>
                             </div>
                             <div class="card-img-container">
                                 <img src="${cardData.image}" class="card-img" loading="lazy">
                             </div>
-                            <div class="p-3 bg-white flex justify-between items-center border-t-2 border-gray-200">
-                                <div class="flex gap-1.5">${badges}</div>
-                            </div>
-                            <div class="p-3 bg-white text-gray-800 font-black border-t border-gray-100 pb-4 text-xs tracking-wide">
-                                <div class="flex justify-between mb-1.5"><span>ATTACK</span> <span class="text-blue-600">${cardData.atk}</span></div>
-                                <div class="flex justify-between"><span>DEFENSE</span> <span class="text-blue-600">${cardData.def}</span></div>
-                                <div class="text-center text-[9px] text-gray-400 mt-3 pt-3 border-t-2 border-gray-100 uppercase tracking-widest bg-gray-50 rounded-b-md">Tap to flip</div>
+                            <div class="p-3 bg-white text-gray-800 font-black border-t border-gray-200 pb-4 text-xs tracking-wide">
+                                <div class="flex justify-between mb-1"><span>ATK</span> <span class="text-blue-600">${cardData.atk}</span></div>
+                                <div class="flex justify-between"><span>DEF</span> <span class="text-blue-600">${cardData.def}</span></div>
                             </div>
                         </div>
                         <div class="flip-card-back p-6 text-center">
-                            <div class="w-36 h-36 bg-black bg-opacity-50 rounded-full flex items-center justify-center mb-8 mx-auto border-4 border-[#2563eb] shadow-inner relative overflow-hidden">
-                                <div class="absolute inset-0 bg-blue-500 opacity-20 animate-pulse"></div>
-                                <img src="${cardData.gif || cardData.image}" class="w-32 h-32 object-contain gamified-gif relative z-10" loading="lazy">
+                            <div class="w-32 h-32 bg-black bg-opacity-50 rounded-full flex items-center justify-center mb-6 mx-auto border-4 border-[#2563eb] shadow-inner relative overflow-hidden">
+                                <img src="${cardData.gif || cardData.image}" class="w-24 h-24 object-contain gamified-gif relative z-10" loading="lazy">
                             </div>
-                            <div class="text-3xl font-pokemon text-white mb-4 tracking-widest drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">${cardData.name}</div>
-                            <div class="text-[11px] font-black text-white uppercase tracking-widest bg-black bg-opacity-60 px-5 py-2 rounded-xl border-2 border-blue-500 inline-block shadow-lg">${cardData.rarity}</div>
-                            <div class="text-[11px] text-blue-200 mt-auto block font-bold tracking-widest uppercase bg-[#1e3a8a] bg-opacity-50 py-2 rounded-lg border border-blue-400 border-opacity-30">BST: ${cardData.bst} <span class="mx-2 opacity-50">|</span> ID: #${cardData.apiId}</div>
-                            ${showInstance && cardData.showcase ? '<div class="absolute top-4 right-4 text-yellow-400 text-3xl drop-shadow-[0_0_15px_rgba(251,191,36,1)]"><i class="fa-solid fa-star"></i></div>' : ''}
+                            <div class="text-2xl font-pokemon text-white mb-4 tracking-widest drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">${cardData.name}</div>
+                            <div class="text-[11px] text-blue-200 mt-auto block font-bold tracking-widest uppercase bg-[#1e3a8a] py-2 rounded-lg border border-blue-400">BST: ${cardData.bst}</div>
                         </div>
                     </div>
                 </div>
             `;
         }
-        function checkPackReset() {
-            const now = new Date();
-            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-            if (state.packs.lastReset < today) {
-                state.packs.openedToday = 0; state.packs.lastReset = today; state.packs.holoClaimedToday = false; saveCloudData();
-            }
-            if (state.profile.name && (!state.profile.lastCheckIn || state.profile.lastCheckIn < today)) {
-                state.profile.lastCheckIn = today;
-                gainXP(50, "Daily Check-in");
-            }
-            updatePackUI();
-        }
-        function updatePackUI() {
-            DOM.packUI.classList.remove('hidden');
-            const remaining = Math.max(0, 2 - state.packs.openedToday);
-            document.getElementById('packs-count').textContent = remaining;
-            if (remaining > 0) {
-                DOM.packUI.style.opacity = '1'; DOM.packUI.style.pointerEvents = 'auto'; DOM.packUI.style.filter = 'grayscale(0)';
-                document.getElementById('pack-timer').textContent = "Ready to Rip";
-                document.getElementById('pack-timer').classList.replace('text-gray-500', 'text-green-400');
-            } else {
-                DOM.packUI.style.opacity = '0.5'; DOM.packUI.style.pointerEvents = 'none'; DOM.packUI.style.filter = 'grayscale(100%)';
-                document.getElementById('pack-timer').textContent = "Resets Tomorrow";
-                document.getElementById('pack-timer').classList.replace('text-green-400', 'text-gray-500');
-            }
-            if (state.packs.holoUnlocked && !state.packs.holoClaimedToday) {
-                DOM.holoPackUI.classList.remove('hidden');
-            } else {
-                DOM.holoPackUI.classList.add('hidden');
-            }
-        }
-        async function openPack(isHolo) {
-            if (!isHolo && state.packs.openedToday >= 2) return;
-            if (isHolo && (!state.packs.holoUnlocked || state.packs.holoClaimedToday)) return;
-            DOM.packUI.classList.add('hidden'); DOM.holoPackUI.classList.add('hidden');
-            state.activePackIsHolo = isHolo;
-            if (!state.profile.settings.skipAnimations) {
-                runGamifiedRipAnimation();
-            } else {
-                DOM.loadingScreen.classList.remove('hidden');
-                DOM.loadingScreen.querySelector('h2').textContent = "Contacting PokeAPI";
-                DOM.loadingScreen.querySelector('p').textContent = "Loading card data...";
-            }
-            try {
-                const count = isHolo ? 1 : 10;
-                const ids = Array.from({length: count}, () => {
-                    if (isHolo) {
-                        const holoIds = [144, 145, 146, 150, 151, 249, 250, 251, 384, 385]; 
-                        return holoIds[Math.floor(Math.random() * holoIds.length)];
-                    }
-                    const r = Math.random();
-                    if(r < 0.5) return Math.floor(Math.random() * 151) + 1;
-                    if(r < 0.8) return Math.floor(Math.random() * (493 - 151)) + 152;
-                    return Math.floor(Math.random() * (TOTAL_POKEMON - 493)) + 494;
-                });
-                const promises = ids.map(id => fetch(`${POKEAPI_BASE}/pokemon/${id}`).then(r => r.json()));
-                const results = await Promise.all(promises);
-                state.currentPulls = results.map(data => {
-                    let hp = 0, atk = 0, def = 0, spd = 0, bst = 0;
-                    data.stats.forEach(s => { bst += s.base_stat; if(s.stat.name === 'hp') hp = s.base_stat; if(s.stat.name === 'attack') atk = s.base_stat; if(s.stat.name === 'defense') def = s.base_stat; if(s.stat.name === 'speed') spd = s.base_stat; });
-                    const rarityInfo = getRarity(data.id, bst);
-                    const img = data.sprites?.other?.['official-artwork']?.front_default || data.sprites?.front_default;
-                    const gif = data.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default || img;
-                    return {
-                        id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), apiId: data.id, name: data.name, types: data.types.map(t => t.type.name),
-                        hp, atk, def, spd, bst, image: img, gif: gif, rarity: isHolo ? 'Mythic Holo' : rarityInfo.name, rarityClass: isHolo ? 'rarity-legendary mythic-holo' : rarityInfo.class,
-                        showcase: isHolo, acquiredAt: Date.now()
-                    };
-                });
-                if(!isHolo) { state.currentPulls.sort((a, b) => a.bst - b.bst); state.packs.openedToday++; }
-                else { state.packs.holoClaimedToday = true; }
-                let totalXpGained = isHolo ? 0 : 10;
-                state.currentPulls.forEach(card => {
-                    if (card.rarityClass.includes('mythic-holo')) totalXpGained += 50;
-                    else if (card.rarityClass.includes('rarity-legendary')) totalXpGained += 20;
-                    else if (card.rarityClass.includes('rarity-rare')) totalXpGained += 5;
-                });
-                if (totalXpGained > 0) gainXP(totalXpGained, "Pack Rewards");
-                saveCloudData(); 
-                if (state.profile.settings.skipAnimations) {
-                    DOM.loadingScreen.classList.add('hidden');
-                    displayPulls();
-                }
-            } catch(e) {
-                showToast("Network fetch failed. Try again.", "error");
-                document.getElementById('modal-pack-rip').classList.remove('active');
-                DOM.loadingScreen.classList.add('hidden'); updatePackUI();
-            }
-        }
-        function runGamifiedRipAnimation() {
-            const modal = document.getElementById('modal-pack-rip');
-            const ball = document.getElementById('rip-pokeball');
-            const pack = document.getElementById('rip-pack-container');
-            const instructions = document.getElementById('rip-instructions');
-            ball.className = "w-32 h-32 hidden absolute z-50 filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]";
-            pack.classList.add('hidden');
-            pack.classList.remove('anim-rip-shake');
-            document.getElementById('rip-top-half').className = "absolute top-0 left-0 w-full h-[50%] bg-gradient-to-b from-blue-700 to-blue-600 rounded-t-3xl shadow-2xl border-4 border-b-0 border-blue-400 flex flex-col items-center justify-center overflow-hidden z-20";
-            document.getElementById('rip-bottom-half').className = "absolute bottom-0 left-0 w-full h-[50%] bg-gradient-to-t from-blue-800 to-blue-600 rounded-b-3xl shadow-2xl border-4 border-t-0 border-blue-400 flex flex-col items-center justify-start overflow-hidden z-20";
-            instructions.classList.add('hidden');
-            modal.classList.add('active');
-            ball.classList.remove('hidden');
-            ball.classList.add('anim-pokeball-throw');
-            setTimeout(() => {
-                ball.classList.remove('anim-pokeball-throw');
-                ball.classList.add('anim-pokeball-shake');
-                setTimeout(() => {
-                    ball.classList.remove('anim-pokeball-shake');
-                    ball.classList.add('anim-pokeball-flash');
-                    setTimeout(() => {
-                        ball.classList.add('hidden');
-                        pack.classList.remove('hidden');
-                        pack.classList.add('anim-pack-appear');
-                        setTimeout(() => {
-                            pack.classList.remove('anim-pack-appear');
-                            pack.classList.add('anim-rip-shake');
-                            instructions.classList.remove('hidden');
-                        }, 600);
-                    }, 400);
-                }, 1500);
-            }, 1000);
-        }
-        function triggerPackRipFinish() {
-            if (state.currentPulls.length === 0) return; 
-            const pack = document.getElementById('rip-pack-container');
-            const topHalf = document.getElementById('rip-top-half');
-            const botHalf = document.getElementById('rip-bottom-half');
-            const instructions = document.getElementById('rip-instructions');
-            pack.classList.remove('anim-rip-shake');
-            instructions.classList.add('hidden');
-            topHalf.classList.add('anim-rip-top');
-            botHalf.classList.add('anim-rip-bottom');
-            setTimeout(() => {
-                document.getElementById('modal-pack-rip').classList.remove('active');
-                displayPulls();
-            }, 700);
-        }
-        function displayPulls() {
-            updatePackUI();
-            DOM.pullsView.classList.remove('hidden'); 
-            DOM.pullsView.classList.add('flex');
-            document.getElementById('pull-total').textContent = state.activePackIsHolo ? 1 : 10;
-            state.pullIndex = 0; 
-            renderCurrentPull();
-        }
-        function renderCurrentPull() {
-            const card = state.currentPulls[state.pullIndex];
-            const container = document.getElementById('single-pull-container');
-            container.innerHTML = generateCardHTML(card);
-            container.firstElementChild.style.animation = 'screenFadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            document.getElementById('pull-current').textContent = state.pullIndex + 1;
-            document.getElementById('btn-prev-card').disabled = state.pullIndex === 0;
-            document.getElementById('btn-next-card').disabled = state.pullIndex === state.currentPulls.length - 1;
-        }
-        function renderCollection() {
-            const grid = document.getElementById('collection-grid');
-            const empty = document.getElementById('empty-collection');
-            const filter = document.getElementById('filter-collection').value;
-            document.getElementById('collection-total').textContent = state.collection.length;
-            document.getElementById('info-card-count').textContent = state.collection.length;
-            grid.innerHTML = '';
-            let displayCards = state.collection;
-            if (filter === 'showcase') displayCards = displayCards.filter(c => c.showcase);
-            if (filter === 'legendary') displayCards = displayCards.filter(c => c.rarityClass.includes('rarity-legendary'));
-            if (displayCards.length === 0) { grid.classList.add('hidden'); empty.classList.remove('hidden'); empty.classList.add('flex', 'flex-col'); } 
-            else {
-                grid.classList.remove('hidden'); empty.classList.add('hidden'); empty.classList.remove('flex', 'flex-col');
-                displayCards.forEach(card => {
-                    const el = document.createElement('div');
-                    el.className = `aspect-[63/88] rounded-2xl overflow-hidden cursor-pointer relative border-4 ${card.rarityClass} ${card.showcase ? 'holo-effect' : ''} bg-[#f3f4f6] shadow-lg hover:scale-105 hover:-translate-y-2 hover:shadow-[0_20px_30px_rgba(0,0,0,0.6)] transition-all duration-300 group`;
-                    let tagColor = 'text-gray-800 bg-gray-300';
-                    if (card.rarityClass.includes('legendary')) tagColor = 'text-yellow-900 bg-yellow-400';
-                    else if (card.rarityClass.includes('rare')) tagColor = 'text-purple-100 bg-purple-600';
-                    else if (card.rarityClass.includes('uncommon')) tagColor = 'text-green-900 bg-green-400';
-                    el.innerHTML = `
-                        <div class="absolute inset-0 p-2 flex justify-center items-center bg-radial-gradient">
-                            <img src="${card.image}" class="w-full h-full object-contain filter drop-shadow z-10 transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                        </div>
-                        <div class="absolute top-2 left-2 px-2 py-1 rounded shadow-md ${tagColor} text-[9px] font-black uppercase tracking-widest backdrop-blur-md z-30">${card.rarity.split(' ')[0]}</div>
-                        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-80 text-white text-[10px] font-black py-2.5 px-2 truncate text-center z-20 backdrop-blur-md border-t-2 border-gray-700 tracking-wider">${card.name}</div>
-                        ${card.showcase ? '<div class="absolute top-2 right-2 text-yellow-400 z-30 drop-shadow-[0_0_10px_rgba(251,191,36,1)]"><i class="fa-solid fa-star text-sm"></i></div>' : ''}
-                    `;
-                    el.addEventListener('click', () => openCardDetail(card));
-                    grid.appendChild(el);
-                });
-            }
-        }
-        let activeDetailCard = null;
-        function openCardDetail(card) {
-            activeDetailCard = card;
-            document.getElementById('detail-card-container').innerHTML = generateCardHTML(card, true);
-            updateShowcaseBtn();
-            document.getElementById('modal-card-detail').classList.add('active');
-        }
-        function updateShowcaseBtn() {
-            const icon = document.getElementById('showcase-icon');
-            if (activeDetailCard.showcase) { icon.classList.replace('fa-regular', 'fa-solid'); icon.classList.add('text-yellow-400'); } 
-            else { icon.classList.replace('fa-solid', 'fa-regular'); icon.classList.remove('text-yellow-400'); }
-        }
-        document.getElementById('btn-toggle-showcase').addEventListener('click', () => {
-            if(!activeDetailCard) return;
-            const index = state.collection.findIndex(c => c.id === activeDetailCard.id);
-            if(index !== -1) {
-                state.collection[index].showcase = !state.collection[index].showcase;
-                activeDetailCard.showcase = state.collection[index].showcase;
-                saveCloudData(); updateShowcaseBtn(); renderCollection();
-                document.getElementById('detail-card-container').innerHTML = generateCardHTML(activeDetailCard, true);
-            }
-        });
+
         function setupFirebaseListeners() {
             if (!db || !state.userId || firebaseListeners.presence) return;
-            try {
-                const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'presence');
-                firebaseListeners.presence = onSnapshot(usersRef, (snapshot) => {
-                    state.onlineUsers = {}; const now = Date.now();
-                    snapshot.forEach(doc => { const data = doc.data(); if (data.id !== state.userId && (now - data.lastSeen) < 180000) state.onlineUsers[doc.id] = data; });
-                    renderNetworkList();
-                }, () => {});
-                const tradesRef = collection(db, 'artifacts', appId, 'public', 'data', 'trades');
-                firebaseListeners.incomingTrade = onSnapshot(tradesRef, (snapshot) => {
-                    snapshot.docChanges().forEach(change => {
-                        if (change.type === "added" || change.type === "modified") {
-                            const data = change.doc.data();
-                            if (data.receiver === state.userId && data.status === 'requested') {
-                                showToast(`Incoming Link from ${data[data.initiator].name}`, 'trade', 10000, {
-                                    onAccept: async () => { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'active' }); },
-                                    onDecline: async () => { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'rejected' }); }
-                                });
-                            }
-                            if (data.status === 'active' && (data.initiator === state.userId || data.receiver === state.userId) && !state.activeTrade) {
-                                 openTradeUI(data.id, data.initiator === state.userId ? data.receiver : data.initiator);
-                            }
+            const now = getNow();
+            firebaseListeners.presence = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'presence'), (snapshot) => {
+                state.onlineUsers = {}; 
+                snapshot.forEach(doc => { const d = doc.data(); if (d.id !== state.userId && (now - d.lastSeen) < 180000) state.onlineUsers[doc.id] = d; });
+                renderNetworkList();
+            }, () => {});
+
+            firebaseListeners.incomingTrade = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'trades'), (snapshot) => {
+                snapshot.docChanges().forEach(change => {
+                    const data = change.doc.data();
+                    if (change.type === "added" || change.type === "modified") {
+                        if (data.receiver === state.userId && data.status === 'requested') {
+                            showToast(`Trade Link from ${data[data.initiator].name}`, 'trade', 10000, {
+                                onAccept: () => updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'active' }),
+                                onDecline: () => updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', data.id), { status: 'rejected' })
+                            });
                         }
-                    });
-                }, () => {});
-            } catch (e) {}
+                        if (data.status === 'active' && (data.initiator === state.userId || data.receiver === state.userId) && !state.activeTrade) {
+                             openTradeUI(data.id, data.initiator === state.userId ? data.receiver : data.initiator);
+                        }
+                    }
+                });
+            }, () => {});
+            
+            // Battles
+            firebaseListeners.battles = onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'battles'), (snapshot) => {
+                snapshot.docChanges().forEach(change => {
+                    const data = change.doc.data();
+                    if (data.receiver === state.userId && data.status === 'requested') {
+                        showToast(`Battle Request from ${data.initiatorName}`, 'battle', 10000, {
+                            onAccept: () => processBattle(data),
+                            onDecline: () => updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', data.id), { status: 'rejected' })
+                        });
+                    }
+                    if (data.initiator === state.userId && data.status === 'completed') {
+                        showBattleResult(data);
+                    }
+                });
+            }, () => {});
+
             setInterval(updatePresence, 45000); 
             window.addEventListener('beforeunload', () => { if(db && state.userId) deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'presence', state.userId)); });
         }
+
         async function updatePresence() {
             if (!db || !state.userId || !state.profile.name) return;
-            try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'presence', state.userId), { id: state.userId, name: state.profile.name, team: state.profile.team, info: state.profile.info, trades: state.profile.trades, xp: state.profile.xp || 0, buddy: state.profile.buddy || null, lastSeen: Date.now() }); } catch(e) {}
+            try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'presence', state.userId), { id: state.userId, name: state.profile.name, team: state.profile.team, info: state.profile.info, lastSeen: getNow() }); } catch(e) {}
         }
+
         function renderNetworkList() {
             const list = document.getElementById('network-nodes');
             const textList = document.getElementById('network-list');
             const emptyState = document.getElementById('network-empty');
             list.innerHTML = ''; textList.innerHTML = '';
             const uids = Object.keys(state.onlineUsers);
-            if (uids.length > 0) { 
-                textList.classList.remove('hidden'); 
-                emptyState.classList.add('hidden');
-            } else {
-                textList.classList.add('hidden');
-                emptyState.classList.remove('hidden');
-            }
+            if (uids.length > 0) { textList.classList.remove('hidden'); emptyState.classList.add('hidden'); } 
+            else { textList.classList.add('hidden'); emptyState.classList.remove('hidden'); }
+            
             uids.forEach((uid, idx) => {
                 const u = state.onlineUsers[uid];
-                const c = u.team === 'Valor' ? 'var(--valor)' : u.team === 'Mystic' ? 'var(--mystic)' : 'var(--instinct)';
-                const bgC = u.team === 'Valor' ? 'rgba(239,68,68,0.2)' : u.team === 'Mystic' ? 'rgba(59,130,246,0.2)' : 'rgba(234,179,8,0.2)';
                 const angle = (idx / uids.length) * Math.PI * 2;
                 const radius = 30 + Math.random() * 15;
                 const x = 50 + Math.cos(angle) * radius; const y = 50 + Math.sin(angle) * radius;
-                const lvlInfo = getLevelInfo(u.xp || 0);
+                
                 const node = document.createElement('div');
-                node.className = 'user-node absolute cursor-pointer hover:scale-110 transition-transform hover:z-40 rounded-full border-4 shadow-lg flex items-center justify-center bg-[#151821] w-14 h-14';
+                node.className = 'user-node absolute cursor-pointer hover:scale-110 transition-transform rounded-full border-4 shadow-lg flex items-center justify-center bg-[#151821] w-14 h-14';
                 node.style.left = `calc(${x}% - 28px)`; node.style.top = `calc(${y}% - 28px)`;
-                node.style.borderColor = c;
-                if (u.buddy && u.buddy.gif) {
-                    node.innerHTML = `<img src="${u.buddy.gif}" class="w-10 h-10 object-contain"><span class="absolute -bottom-8 font-black text-[10px] text-white bg-black px-3 py-1.5 rounded-md border border-[#262b3a] tracking-widest uppercase whitespace-nowrap shadow-md flex items-center gap-1">${u.name} <span class="text-[8px] text-gray-400">Lv${lvlInfo.level}</span></span>`;
-                } else {
-                    node.innerHTML = `<span class="font-black text-xl" style="color:${c}">${u.name.charAt(0).toUpperCase()}</span><span class="absolute -bottom-8 font-black text-[10px] text-white bg-black px-3 py-1.5 rounded-md border border-[#262b3a] tracking-widest uppercase whitespace-nowrap shadow-md flex items-center gap-1">${u.name} <span class="text-[8px] text-gray-400">Lv${lvlInfo.level}</span></span>`;
-                }
+                node.innerHTML = `<span class="font-black text-xl text-blue-400">${u.name.charAt(0).toUpperCase()}</span><span class="absolute -bottom-8 font-black text-[10px] text-white bg-black px-3 py-1.5 rounded-md border tracking-widest uppercase shadow-md">${u.name}</span>`;
                 node.addEventListener('click', () => initiateTrade(uid));
                 list.appendChild(node);
+                
                 const el = document.createElement('div');
-                el.className = 'bg-[#0b0c10] border border-[#262b3a] rounded-2xl p-4 flex justify-between items-center shadow-inner hover:border-blue-500 transition-colors cursor-pointer';
-                let listAvatar = `<div class="w-12 h-12 rounded-full flex items-center justify-center font-black border-2 text-lg shadow-md" style="color:${c}; border-color:${c}; background-color:${bgC}">${u.name.charAt(0).toUpperCase()}</div>`;
-                if (u.buddy && u.buddy.gif) {
-                    listAvatar = `<div class="w-12 h-12 rounded-full flex items-center justify-center border-2 shadow-md bg-[#151821] overflow-hidden" style="border-color:${c};"><img src="${u.buddy.gif}" class="w-8 h-8 object-contain"></div>`;
-                }
-                el.innerHTML = `<div class="flex items-center gap-4">${listAvatar}<div class="flex flex-col"><span class="font-black text-sm text-white tracking-wide">${u.name} <span class="text-[10px] text-gray-500 ml-1">Lv${lvlInfo.level}</span></span><span class="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-widest bg-[#151821] px-2 py-0.5 rounded border border-[#262b3a] w-max">${u.info}</span></div></div><button class="btn-request-trade text-xs font-black bg-[#151821] border border-[#262b3a] hover:bg-blue-600 hover:border-blue-500 text-white px-5 py-3 rounded-xl transition-all shadow-md uppercase tracking-widest"><i class="fa-solid fa-link mr-1"></i> Link</button>`;
-                el.querySelector('.btn-request-trade').addEventListener('click', (e) => { e.stopPropagation(); initiateTrade(uid); });
+                el.className = 'bg-[#0b0c10] border border-[#262b3a] rounded-2xl p-4 flex justify-between items-center shadow-inner';
+                el.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#151821] flex items-center justify-center font-black text-blue-400 border border-blue-500 shadow-md">${u.name.charAt(0).toUpperCase()}</div>
+                        <span class="font-black text-sm text-white tracking-wide">${u.name}</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="btn-trade text-xs bg-[#151821] border border-[#262b3a] hover:bg-blue-600 text-white px-3 py-2 rounded-xl transition-all shadow-md"><i class="fa-solid fa-link"></i> Trade</button>
+                        <button class="btn-battle text-xs bg-[#151821] border border-[#262b3a] hover:bg-red-600 text-white px-3 py-2 rounded-xl transition-all shadow-md"><i class="fa-solid fa-fire"></i> Battle</button>
+                    </div>`;
+                el.querySelector('.btn-trade').addEventListener('click', () => initiateTrade(uid));
+                el.querySelector('.btn-battle').addEventListener('click', () => initiateBattle(uid, u.name));
                 textList.appendChild(el);
             });
         }
+
+        // Multi-card trade init UI
+        function initTradeSlotsUI() {
+            const mySlots = document.getElementById('my-offer-slots');
+            const theirSlots = document.getElementById('their-offer-slots');
+            mySlots.innerHTML = ''; theirSlots.innerHTML = '';
+            for(let i=0; i<3; i++) {
+                mySlots.innerHTML += `<div class="trade-slot my-slot group cursor-pointer" data-index="${i}">
+                    <i class="fa-solid fa-plus text-gray-600 text-2xl group-hover:text-blue-400 transition-colors my-plus"></i>
+                    <img src="" class="hidden rounded-xl my-img">
+                    <button class="btn-remove absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-6 h-6 text-xs hidden shadow-xl z-10 hover:bg-red-400"><i class="fa-solid fa-times"></i></button>
+                </div>`;
+                theirSlots.innerHTML += `<div class="trade-slot their-slot" data-index="${i}">
+                    <i class="fa-solid fa-question text-gray-700 text-2xl opacity-50 their-q"></i>
+                    <img src="" class="hidden rounded-xl their-img">
+                </div>`;
+            }
+            document.querySelectorAll('.my-slot').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    if (e.target.closest('.btn-remove')) {
+                        e.stopPropagation();
+                        removeOffer(parseInt(el.dataset.index));
+                    } else {
+                        openSelectCardModal(parseInt(el.dataset.index));
+                    }
+                });
+            });
+        }
+
         async function initiateTrade(targetUid) {
             if (!db || !state.userId) return;
             const tradeId = [state.userId, targetUid].sort().join('_');
             try {
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', tradeId), {
-                    id: tradeId, status: 'requested', initiator: state.userId, receiver: targetUid, timestamp: Date.now(),
-                    [state.userId]: { locked: false, offer: null, name: state.profile.name }, [targetUid]: { locked: false, offer: null, name: state.onlineUsers[targetUid]?.name || 'Trainer' }, chat: []
+                    id: tradeId, status: 'requested', initiator: state.userId, receiver: targetUid, timestamp: getNow(),
+                    [state.userId]: { locked: false, offers: [null, null, null], name: state.profile.name }, 
+                    [targetUid]: { locked: false, offers: [null, null, null], name: state.onlineUsers[targetUid]?.name || 'Trainer' }, chat: []
                 });
                 showToast("Link request transmitted.", "info");
-            } catch (e) { showToast("Signal failed. Target out of range.", "error"); }
+            } catch (e) { showToast("Target out of range.", "error"); }
         }
+
         function openTradeUI(tradeId, partnerId) {
-            state.activeTrade = { id: tradeId, partnerId: partnerId, localOffer: null };
+            state.activeTrade = { id: tradeId, partnerId: partnerId, localOffers: [null, null, null] };
             document.getElementById('trade-partner-name').textContent = state.onlineUsers[partnerId]?.name || 'Trainer';
-            document.getElementById('my-offer-img').classList.add('hidden'); document.getElementById('my-offer-img').src = '';
-            document.getElementById('my-offer-plus').classList.remove('hidden'); document.getElementById('btn-remove-offer').classList.add('hidden');
-            document.getElementById('their-offer-img').classList.add('hidden'); document.getElementById('their-offer-img').src = '';
-            document.getElementById('their-offer-q').classList.remove('hidden');
-            document.getElementById('trade-chat-messages').innerHTML = '<div class="text-center text-[10px] text-green-500 my-3 font-black uppercase tracking-widest bg-green-900 bg-opacity-20 py-2 rounded-lg border border-green-500 border-opacity-30 shadow-inner"><i class="fa-solid fa-lock mr-2"></i> Encrypted Channel Open</div>';
+            
+            document.querySelectorAll('.my-slot').forEach(slot => { slot.querySelector('.my-img').classList.add('hidden'); slot.querySelector('.my-plus').classList.remove('hidden'); slot.querySelector('.btn-remove').classList.add('hidden'); });
+            document.querySelectorAll('.their-slot').forEach(slot => { slot.querySelector('.their-img').classList.add('hidden'); slot.querySelector('.their-q').classList.remove('hidden'); });
+            
             document.getElementById('modal-trade').classList.add('active');
             firebaseListeners.activeTrade = onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'trades', tradeId), (docSnap) => {
-                if (docSnap.exists()) handleTradeSync(docSnap.data(), partnerId); else forceCloseTrade("Session closed.", "error");
+                if (docSnap.exists()) handleTradeSync(docSnap.data(), partnerId); else forceCloseTrade();
             }, () => {});
         }
+
         function handleTradeSync(data, partnerId) {
-            if (data.status === 'cancelled' || data.status === 'rejected') { forceCloseTrade("Trade link severed.", "error"); return; }
+            if (data.status === 'cancelled' || data.status === 'rejected') { forceCloseTrade("Link severed.", "error"); return; }
             if (data.status === 'completed') { finalizeTradeLocally(data); return; }
-            const me = data[state.userId] || { locked: false, offer: null }, them = data[partnerId] || { locked: false, offer: null };
-            const theirImg = document.getElementById('their-offer-img'), theirQ = document.getElementById('their-offer-q'), theirStatus = document.getElementById('their-trade-status');
-            if (them.offer) { theirImg.src = them.offer.image; theirImg.classList.remove('hidden'); theirQ.classList.add('hidden'); } 
-            else { theirImg.classList.add('hidden'); theirQ.classList.remove('hidden'); }
-            if (them.locked) { theirStatus.textContent = 'Locked'; theirStatus.className = 'text-[10px] md:text-[11px] font-black mt-3 md:mt-5 px-3 py-2 md:px-4 md:py-2.5 rounded-xl bg-green-500 bg-opacity-20 text-green-400 border border-green-500 border-opacity-30 w-full text-center tracking-widest uppercase shadow-md'; } 
-            else { theirStatus.textContent = them.offer ? 'Selected' : 'Selecting...'; theirStatus.className = 'text-[10px] md:text-[11px] font-black mt-3 md:mt-5 px-3 py-2 md:px-4 md:py-2.5 rounded-xl bg-[#151821] text-gray-400 border-2 border-[#262b3a] w-full text-center tracking-widest uppercase shadow-inner'; }
-            const myStatus = document.getElementById('my-trade-status'), btnLock = document.getElementById('btn-trade-lock'), btnAccept = document.getElementById('btn-trade-accept');
+            
+            const me = data[state.userId] || { locked: false, offers: [null,null,null] };
+            const them = data[partnerId] || { locked: false, offers: [null,null,null] };
+            
+            // Update Their slots
+            document.querySelectorAll('.their-slot').forEach((slot, i) => {
+                const offer = them.offers[i];
+                if (offer) { slot.querySelector('.their-img').src = offer.image; slot.querySelector('.their-img').classList.remove('hidden'); slot.querySelector('.their-q').classList.add('hidden'); } 
+                else { slot.querySelector('.their-img').classList.add('hidden'); slot.querySelector('.their-q').classList.remove('hidden'); }
+            });
+            
+            const btnLock = document.getElementById('btn-trade-lock'), btnAccept = document.getElementById('btn-trade-accept');
+            const myStatus = document.getElementById('my-trade-status'), theirStatus = document.getElementById('their-trade-status');
+            
+            theirStatus.textContent = them.locked ? 'Locked' : 'Selecting...';
+            myStatus.textContent = me.locked ? 'Locked' : 'Selecting...';
+
             if (me.locked) {
-                myStatus.textContent = 'Locked'; myStatus.className = 'text-[10px] md:text-[11px] font-black mt-3 md:mt-5 px-3 py-2 md:px-4 md:py-2.5 rounded-xl bg-green-500 bg-opacity-20 text-green-400 border border-green-500 border-opacity-30 w-full text-center tracking-widest uppercase shadow-md';
-                btnLock.textContent = 'Unlock'; btnLock.classList.replace('btn-secondary', 'btn-primary'); btnLock.style.background = '#ef4444'; btnLock.style.boxShadow = '0 10px 20px rgba(239,68,68,0.4)'; document.getElementById('btn-remove-offer').classList.add('hidden');
+                btnLock.textContent = 'Unlock'; btnLock.style.background = '#ef4444';
+                document.querySelectorAll('.btn-remove').forEach(b => b.classList.add('hidden'));
             } else {
-                myStatus.textContent = me.offer ? 'Selected' : 'Selecting...'; myStatus.className = 'text-[10px] md:text-[11px] font-black mt-3 md:mt-5 px-3 py-2 md:px-4 md:py-2.5 rounded-xl bg-[#151821] text-gray-400 border-2 border-[#262b3a] w-full text-center tracking-widest uppercase shadow-inner';
-                btnLock.textContent = 'Lock Offer'; btnLock.classList.replace('btn-primary', 'btn-secondary'); btnLock.style.background = '#151821'; btnLock.style.boxShadow = 'none'; if(me.offer) document.getElementById('btn-remove-offer').classList.remove('hidden');
+                btnLock.textContent = 'Lock Offer'; btnLock.style.background = '#151821';
+                document.querySelectorAll('.my-slot').forEach((slot, i) => { if(state.activeTrade.localOffers[i]) slot.querySelector('.btn-remove').classList.remove('hidden'); });
             }
+            
             if (me.locked && them.locked) {
                 btnAccept.classList.remove('hidden'); btnLock.classList.add('hidden');
-                if (me.accepted) { btnAccept.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Processing'; btnAccept.disabled = true; } else { btnAccept.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Accept Trade'; btnAccept.disabled = false; }
+                if (me.accepted) { btnAccept.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing'; btnAccept.disabled = true; } 
+                else { btnAccept.innerHTML = '<i class="fa-solid fa-check"></i> Accept'; btnAccept.disabled = false; }
                 if (me.accepted && them.accepted) finishTradeFirebase(data);
             } else {
-                btnAccept.classList.add('hidden'); btnLock.classList.remove('hidden'); if(me.accepted) updateTradeState({ accepted: false });
+                btnAccept.classList.add('hidden'); btnLock.classList.remove('hidden');
+                if(me.accepted) updateTradeState({ accepted: false });
             }
             renderChat(data.chat);
         }
-        function openSelectCardModal() {
-            if (!state.activeTrade || document.getElementById('my-trade-status').textContent === 'Locked') return;
+
+        let activeSlotIndex = 0;
+        function openSelectCardModal(index) {
+            if (document.getElementById('my-trade-status').textContent === 'Locked') return;
+            activeSlotIndex = index;
             const grid = document.getElementById('trade-collection-grid'); grid.innerHTML = '';
-            if (state.collection.length === 0) { grid.innerHTML = '<div class="col-span-2 md:col-span-5 text-center text-sm font-black uppercase tracking-widest text-gray-600 py-20 border-2 border-dashed border-[#262b3a] rounded-2xl">Binder is empty.</div>'; } 
+            
+            // Only show cards not currently offered in other slots
+            const offeredIds = state.activeTrade.localOffers.filter(o => o).map(o => o.id);
+            const availableCards = state.collection.filter(c => !offeredIds.includes(c.id));
+
+            if (availableCards.length === 0) { grid.innerHTML = '<div class="col-span-full text-center py-10">No available cards.</div>'; } 
             else {
-                state.collection.forEach(card => {
+                availableCards.forEach(card => {
                     const el = document.createElement('div');
-                    el.className = `relative aspect-[63/88] border-4 ${card.rarityClass} rounded-2xl bg-[#f3f4f6] cursor-pointer overflow-hidden p-2 flex justify-center items-center hover:scale-105 transition-all shadow-lg hover:shadow-[0_15px_25px_rgba(0,0,0,0.6)] group`;
-                    el.innerHTML = `<div class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-300 z-0"></div><img src="${card.image}" class="w-full h-full object-contain filter drop-shadow relative z-10 transition-transform duration-500 group-hover:scale-110 pointer-events-none">`;
-                    el.addEventListener('click', () => { selectOffer(card); document.getElementById('modal-select-card').classList.remove('active'); });
+                    el.className = `relative aspect-[63/88] border-4 ${card.rarityClass} rounded-2xl bg-[#f3f4f6] cursor-pointer overflow-hidden p-2`;
+                    el.innerHTML = `<img src="${card.image}" class="w-full h-full object-contain filter drop-shadow">`;
+                    el.addEventListener('click', () => {
+                        state.activeTrade.localOffers[activeSlotIndex] = card;
+                        const slot = document.querySelector(`.my-slot[data-index="${activeSlotIndex}"]`);
+                        slot.querySelector('.my-img').src = card.image; slot.querySelector('.my-img').classList.remove('hidden');
+                        slot.querySelector('.my-plus').classList.add('hidden'); slot.querySelector('.btn-remove').classList.remove('hidden');
+                        updateTradeState({ offers: state.activeTrade.localOffers });
+                        document.getElementById('modal-select-card').classList.remove('active');
+                    });
                     grid.appendChild(el);
                 });
             }
             document.getElementById('modal-select-card').classList.add('active');
         }
-        function selectOffer(card) {
-            state.activeTrade.localOffer = card;
-            document.getElementById('my-offer-img').src = card.image; document.getElementById('my-offer-img').classList.remove('hidden');
-            document.getElementById('my-offer-plus').classList.add('hidden'); document.getElementById('btn-remove-offer').classList.remove('hidden');
-            updateTradeState({ offer: { id: card.id, name: card.name, image: card.image, gif: card.gif, rarityClass: card.rarityClass, apiId: card.apiId, types: card.types, hp: card.hp, atk: card.atk, def: card.def, spd: card.spd, bst: card.bst, rarity: card.rarity }});
+
+        function removeOffer(index) {
+            state.activeTrade.localOffers[index] = null;
+            const slot = document.querySelector(`.my-slot[data-index="${index}"]`);
+            slot.querySelector('.my-img').classList.add('hidden');
+            slot.querySelector('.my-plus').classList.remove('hidden');
+            slot.querySelector('.btn-remove').classList.add('hidden');
+            updateTradeState({ offers: state.activeTrade.localOffers });
         }
-        function removeOffer(e) {
-            e.stopPropagation(); state.activeTrade.localOffer = null; document.getElementById('my-offer-img').classList.add('hidden');
-            document.getElementById('my-offer-plus').classList.remove('hidden'); e.currentTarget.classList.add('hidden'); updateTradeState({ offer: null });
-        }
+
         function toggleTradeLock() {
             const isLocked = document.getElementById('my-trade-status').textContent === 'Locked';
-            if (isLocked) updateTradeState({ locked: false }); else if (state.activeTrade.localOffer) updateTradeState({ locked: true });
+            const hasOffer = state.activeTrade.localOffers.some(o => o !== null);
+            if (isLocked) updateTradeState({ locked: false }); 
+            else if (hasOffer) updateTradeState({ locked: true });
         }
+
         function acceptTrade() { updateTradeState({ accepted: true }); }
+
         async function updateTradeState(updates) {
             if (!state.activeTrade || !db) return;
-            const ref = doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id);
             const fbUpdates = {}; for (const key in updates) fbUpdates[`${state.userId}.${key}`] = updates[key];
-            try { await updateDoc(ref, fbUpdates); } catch(e) {}
+            try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), fbUpdates); } catch(e) {}
         }
+
         async function finishTradeFirebase(data) {
-            if (!db || !state.activeTrade) return;
-            if (data.initiator === state.userId && data.status !== 'completed') await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), { status: 'completed' });
+            if (data.initiator === state.userId && data.status !== 'completed') 
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), { status: 'completed' });
         }
+
         function finalizeTradeLocally(data) {
             const me = data[state.userId], them = data[state.activeTrade.partnerId];
-            if (me && me.offer && them && them.offer) {
-                state.collection = state.collection.filter(c => c.id !== me.offer.id);
-                const newCard = { ...them.offer, id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), showcase: false, acquiredAt: Date.now() };
-                state.collection.unshift(newCard); state.profile.trades++;
-                state.packs.holoUnlocked = true;
-                gainXP(100, "Successful Trade");
-                saveCloudData(); renderCollection(); updatePackUI();
-                showToast(`Sync Complete! Obtained ${newCard.name}.`, "success", 5000);
+            if (me && them) {
+                // Remove my offers
+                me.offers.forEach(o => { if(o) state.collection = state.collection.filter(c => c.id !== o.id); });
+                // Add their offers
+                let gained = 0;
+                them.offers.forEach(o => {
+                    if(o) {
+                        state.collection.unshift({ ...o, id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5), showcase: false, acquiredAt: Date.now() });
+                        gained++;
+                    }
+                });
+                state.profile.trades++;
+                gainXP(gained * 50, "Trade Complete");
+                saveCloudData(); renderCollection();
+                showToast(`Sync Complete! Received ${gained} cards.`, "success", 5000);
             }
             forceCloseTrade();
         }
+
         async function cancelTrade() {
-            if (!state.activeTrade || !db) return forceCloseTrade();
-            try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), { status: 'cancelled' }); } catch(e) {}
+            if (state.activeTrade && db) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'trades', state.activeTrade.id), { status: 'cancelled' });
             forceCloseTrade();
         }
-        function forceCloseTrade(msg = null, type = 'info') {
+
+        function forceCloseTrade() {
             if (firebaseListeners.activeTrade) { firebaseListeners.activeTrade(); firebaseListeners.activeTrade = null; }
             state.activeTrade = null; document.getElementById('modal-trade').classList.remove('active');
-            if (msg) showToast(msg, type);
         }
+
         async function sendChat() {
             const input = document.getElementById('trade-chat-input'); const txt = input.value.trim();
             if (!txt || !state.activeTrade || !db) return; input.value = '';
@@ -1683,15 +1583,101 @@
         function renderChat(chatArr) {
             const container = document.getElementById('trade-chat-messages'); if(!chatArr) return;
             const isScrolledToBottom = container.scrollHeight - container.clientHeight <= container.scrollTop + 10;
-            container.innerHTML = '<div class="text-center text-[10px] text-green-500 my-3 font-black uppercase tracking-widest bg-green-900 bg-opacity-20 py-2 rounded-lg border border-green-500 border-opacity-30 shadow-inner"><i class="fa-solid fa-lock mr-2"></i> Encrypted Channel Open</div>';
+            container.innerHTML = '';
             chatArr.forEach(msg => {
                 const isMe = msg.senderId === state.userId;
-                const div = document.createElement('div'); div.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'}`;
-                div.innerHTML = `<span class="text-[9px] text-gray-500 mb-1 mx-3 font-black tracking-widest uppercase">${msg.name}</span><div class="px-5 py-3 max-w-[85%] text-sm font-bold ${isMe ? 'bg-blue-600 text-white rounded-2xl rounded-tr-sm shadow-md border border-blue-500' : 'bg-[#1f2330] text-gray-200 rounded-2xl rounded-tl-sm border border-[#262b3a] shadow-md'}">${msg.text}</div>`;
-                container.appendChild(div);
+                container.innerHTML += `<div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}"><div class="px-4 py-2 max-w-[85%] text-xs font-bold ${isMe ? 'bg-blue-600 text-white rounded-2xl' : 'bg-[#1f2330] text-gray-200 rounded-2xl border border-[#262b3a]'}">${msg.text}</div></div>`;
             });
             if(isScrolledToBottom) container.scrollTop = container.scrollHeight;
         }
+
+        async function initiateBattle(targetUid, targetName) {
+            if (state.collection.length < 3) return showToast("You need at least 3 cards to battle.", "error");
+            
+            // Auto select best 3 cards
+            const bestCards = [...state.collection].sort((a,b) => b.bst - a.bst).slice(0, 3);
+            const teamPayload = bestCards.map(c => ({ name: c.name, bst: c.bst, image: c.image, hp: c.hp, atk: c.atk, def: c.def }));
+
+            const battleId = 'b_' + Date.now() + '_' + state.userId;
+            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', battleId), {
+                id: battleId, status: 'requested', initiator: state.userId, initiatorName: state.profile.name,
+                receiver: targetUid, timestamp: getNow(), initiatorTeam: teamPayload
+            });
+            showToast("Battle Challenge Sent!", "info");
+        }
+
+        async function processBattle(data) {
+            if (state.collection.length < 3) {
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', data.id), { status: 'rejected' });
+                return showToast("Not enough cards to battle.", "error");
+            }
+            const bestCards = [...state.collection].sort((a,b) => b.bst - a.bst).slice(0, 3);
+            const myTeam = bestCards.map(c => ({ name: c.name, bst: c.bst, image: c.image, hp: c.hp, atk: c.atk, def: c.def }));
+
+            let p1Wins = 0, p2Wins = 0;
+            const log = [];
+            for(let i=0; i<3; i++) {
+                const c1 = data.initiatorTeam[i];
+                const c2 = myTeam[i];
+                const score1 = c1.bst + c1.atk; // Simple battle calc
+                const score2 = c2.bst + c2.atk;
+                if (score2 > score1) p2Wins++; else p1Wins++;
+                log.push({ c1: c1.name, c2: c2.name, winner: score2 > score1 ? 'p2' : 'p1' });
+            }
+            
+            const winnerId = p2Wins > p1Wins ? state.userId : data.initiator;
+            
+            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'battles', data.id), {
+                status: 'completed', receiverTeam: myTeam, log, winnerId
+            });
+            
+            // Show result locally for receiver
+            showBattleResult({ ...data, receiverTeam: myTeam, log, winnerId });
+        }
+
+        function showBattleResult(data) {
+            const isMeInitiator = data.initiator === state.userId;
+            const didIWin = data.winnerId === state.userId;
+            const myTeam = isMeInitiator ? data.initiatorTeam : data.receiverTeam;
+            const theirTeam = isMeInitiator ? data.receiverTeam : data.initiatorTeam;
+            const oppName = isMeInitiator ? "Opponent" : data.initiatorName;
+
+            document.getElementById('battle-title').textContent = didIWin ? "VICTORY" : "DEFEAT";
+            document.getElementById('battle-title').className = `text-4xl font-black uppercase tracking-widest mb-6 ${didIWin ? 'text-green-400' : 'text-red-500'}`;
+            
+            let html = '';
+            for(let i=0; i<3; i++) {
+                const iWonRound = data.log[i].winner === (isMeInitiator ? 'p1' : 'p2');
+                html += `<div class="flex justify-between items-center bg-[#0b0c10] p-3 rounded-xl border border-[#262b3a]">
+                    <div class="flex flex-col items-center w-1/3">
+                        <img src="${myTeam[i].image}" class="h-12 object-contain drop-shadow mb-1">
+                        <span class="text-[9px] font-bold text-white truncate w-full text-center">${myTeam[i].name}</span>
+                    </div>
+                    <div class="font-black ${iWonRound ? 'text-green-500' : 'text-red-500'} text-xl">VS</div>
+                    <div class="flex flex-col items-center w-1/3 opacity-50">
+                        <img src="${theirTeam[i].image}" class="h-12 object-contain drop-shadow mb-1">
+                        <span class="text-[9px] font-bold text-white truncate w-full text-center">${theirTeam[i].name}</span>
+                    </div>
+                </div>`;
+            }
+            document.getElementById('battle-details').innerHTML = html;
+            
+            const rewardEl = document.getElementById('battle-reward');
+            if (didIWin) {
+                const coins = 30 + Math.floor(Math.random() * 20);
+                document.getElementById('battle-reward-amt').textContent = coins;
+                rewardEl.classList.remove('hidden');
+                state.profile.coins += coins;
+                state.profile.battles++;
+                gainXP(150, "Battle Won");
+            } else {
+                rewardEl.classList.add('hidden');
+                state.profile.battles++;
+                gainXP(20, "Battle Lost");
+            }
+            document.getElementById('modal-battle-result').classList.add('active');
+        }
+
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
